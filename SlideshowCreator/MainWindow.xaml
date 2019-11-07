@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SlideshowCreator"
         mc:Ignorable="d"
-        Title="SlideShow Creator" Height="700" Width="800" WindowStartupLocation="CenterScreen">
+        Title="SlideShow Creator" Height="700" Width="800" WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged">
 
-    <DockPanel HorizontalAlignment="Stretch" LastChildFill="False" Background="#FFE4F1E5">
+    <DockPanel HorizontalAlignment="Stretch" LastChildFill="True" Background="#FFE4F1E5">
 
-        <Menu Margin="10,0,442,0" DockPanel.Dock="Top">
+        <Menu Margin="10,0,442,0" DockPanel.Dock="Top" Background="White">
             <MenuItem Header="File"  FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="1.233,2.166">
 
             </MenuItem>
@@ -21,18 +21,16 @@
             </MenuItem>
         </Menu>
 
-        <Border DockPanel.Dock="Left"  BorderBrush="Black" BorderThickness="2" Margin="10,10,10,136.4"  MinWidth="350" Background="#FFA03939">
+        <Border DockPanel.Dock="Bottom"  BorderBrush="Black" BorderThickness="1" Height="106" Margin="10,0,10,10" Background="Black"/>
+
+        <Border x:Name="pictureExplorer" DockPanel.Dock="Left"  BorderBrush="Black" BorderThickness="2" Margin="10,10,10,10"  Width="350" Background="#FFA03939">
 
         </Border>
 
-        <Border DockPanel.Dock="Right" BorderBrush="#FF75993F" BorderThickness="2" Margin="0,10,10,250"  MinWidth="376" Background="#FF279D2D">
-
-
-        </Border>
-
-
-        <Border DockPanel.Dock="Bottom"  BorderBrush="Black" BorderThickness="1" Height="106" Margin="-330.6,0,-366.4,10" Background="Black"/>
-
+        <StackPanel DockPanel.Dock="Right" Margin="0,10,10,10">
+            <Border  BorderBrush="#FF75993F" BorderThickness="2" Background="#FF279D2D" />
+            <Border  BorderBrush="#FF0808C7" BorderThickness="2" Background="#FF5630FF"  />
+        </StackPanel>
 
     </DockPanel>
 </Window>

@@ -29,5 +29,12 @@ namespace SlideshowCreator
         {
             this.Close();
         }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Border border = (Border) FindName("pictureExplorer");
+            border.Width = (e.NewSize.Width - 30) / 2;
+            Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
+        }
     }
 }
