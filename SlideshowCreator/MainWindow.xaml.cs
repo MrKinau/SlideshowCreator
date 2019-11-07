@@ -32,7 +32,7 @@ namespace SlideshowCreator
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Border pictureExplorer = (Border)FindName("pictureExplorer");
+            TabControl pictureExplorer = (TabControl) FindName("pictureExplorer");
             pictureExplorer.Width = (e.NewSize.Width - 30) / 2;
             Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
         }
