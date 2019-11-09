@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace SlideshowCreator
 {
@@ -37,6 +38,17 @@ namespace SlideshowCreator
             Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
         }
 
+        private void Add_Img_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog OpenFile = new OpenFileDialog();
+            OpenFile.Multiselect = true;
+            OpenFile.Title = "Select Picture(s)";
+            OpenFile.Filter = "ALL supported Graphics| *.jpeg; *.jpg;*.png;";
+            if (OpenFile.ShowDialog() == true)
+            {
+                Image1.Source = new BitmapImage(new Uri(OpenFile.FileName));
+            }
+        }
         private void Timeline_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             TimelineControl timeline = (TimelineControl)FindName("timeline");
