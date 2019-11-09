@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="SlideshowCreator.TimelineControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SlideshowCreator"
+             mc:Ignorable="d" 
+             UseLayoutRounding="True"
+             SnapsToDevicePixels="True">
+    <Border x:Name="border" BorderBrush="#FF262829" Background="#FF3C3F41" BorderThickness="1" MinHeight="100" MinWidth="400">
+        <ScrollViewer x:Name="mainScollbar" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden">
+            <Canvas x:Name="mainCanvas" Margin="4" Background="#FF3C3F41" MouseLeftButtonDown="MainCanvas_MouseLeftButtonDown" MouseRightButtonDown="MainCanvas_MouseRightButtonDown"/>
+        </ScrollViewer>
+    </Border>
+</UserControl>

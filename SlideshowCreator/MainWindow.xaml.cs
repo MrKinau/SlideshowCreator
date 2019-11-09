@@ -32,10 +32,23 @@ namespace SlideshowCreator
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            TabControl pictureExplorer = (TabControl) FindName("pictureExplorer");
+            TabControl pictureExplorer = (TabControl)FindName("pictureExplorerPanel");
             pictureExplorer.Width = (e.NewSize.Width - 30) / 2;
             Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
         }
 
+        private void Timeline_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            TimelineControl timeline = (TimelineControl)FindName("timeline");
+            if (e.HeightChanged)
+            {
+                foreach (TimelineElementControl element in timeline.Elements)
+                {
+                    element.updateHeight();
+                    element.update();
+                }
+            }
+            Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
+        }
     }
 }
