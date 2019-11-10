@@ -181,9 +181,15 @@ namespace SlideshowCreator
 
         private void MainCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
-            Mouse.OverrideCursor = null;
+            if (_moving != null)
+            {
+                _moving.Grabbed = false;
+                pack();
+            }
             _resizing = null;
             _moving = null;
+            Mouse.OverrideCursor = null;
+            pack();
         }
 
         private void MainCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
