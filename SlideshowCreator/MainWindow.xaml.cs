@@ -21,6 +21,7 @@ namespace SlideshowCreator
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,8 +34,8 @@ namespace SlideshowCreator
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            TabControl pictureExplorer = (TabControl)FindName("pictureExplorerPanel");
-            pictureExplorer.Width = (e.NewSize.Width - 30) / 2;
+            pictureExplorerPanel.MaxWidth = (e.NewSize.Width - 30) / 1.5;
+            pictureExplorerPanel.MinWidth = (e.NewSize.Width - 30) / 4;
             Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
         }
 
@@ -51,7 +52,6 @@ namespace SlideshowCreator
         }
         private void Timeline_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            TimelineControl timeline = (TimelineControl)FindName("timeline");
             if (e.HeightChanged)
             {
                 foreach (TimelineElementControl element in timeline.Elements)
@@ -60,7 +60,19 @@ namespace SlideshowCreator
                     element.update();
                 }
             }
+            else if (e.WidthChanged)
+            {
+                if (timeline.mainCanvas.ActualWidth < e.NewSize.Width - 8)
+                {
+                    timeline.mainCanvas.Width = e.NewSize.Width;
+                }
+            }
             Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
+        }
+
+        private void AddTestElement_Click(object sender, RoutedEventArgs e)
+        {
+            timeline.addTestElement();
         }
     }
 }

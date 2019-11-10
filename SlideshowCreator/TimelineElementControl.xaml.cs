@@ -27,6 +27,7 @@ namespace SlideshowCreator
         public double EndTime;
 
         public double ElementHeight;
+        public double TopSpacing;
 
         public TimelineElementControl(TimelineControl timeline, double startTime, double endTime)
         {
@@ -35,10 +36,9 @@ namespace SlideshowCreator
             this.StartTime = startTime;
             this.EndTime = endTime;
 
+            timeline.mainCanvas.Children.Add(this);
             updateHeight();
             update();
-            timeline.mainCanvas.Children.Add(this);
-            Canvas.SetLeft(this, startTime);
         }
 
         public TimelineElementControl()
@@ -50,11 +50,33 @@ namespace SlideshowCreator
         {
             tlElementContent.Width = EndTime - StartTime;
             tlElementContent.Height = ElementHeight;
+            Canvas.SetLeft(this, StartTime);
+            Canvas.SetTop(this, TopSpacing);
         }
 
         public void updateHeight()
         {
-            this.ElementHeight = timeline.ActualHeight - 27 - 19; // -27=Scrollbar, -19=space for music (should be scalable?)
+            this.TopSpacing = timeline.ActualHeight / 10.0;
+            this.ElementHeight = timeline.ActualHeight - 27 - 19 - TopSpacing; // -27=Scrollbar, -19=space for music (should be scalable?)
+        }
+
+        public void resizeAndPush(double newEndSize)
+        {
+            EndTime = (newEndSize - StartTime) > 20 ? newEndSize : StartTime + 20;
+            update();
+
+            TimelineElementControl lastElement = this;
+            foreach (TimelineElementControl element in timeline.Elements)
+            {
+                if (element.StartTime > StartTime)
+                {
+                    double alltime = element.EndTime - element.StartTime;
+                    element.StartTime = lastElement.EndTime;
+                    element.EndTime = element.StartTime + alltime;
+                    element.update();
+                    lastElement = element;
+                }
+            }
         }
     }
 }
