@@ -18,25 +18,52 @@
                 </MenuItem>
                 <MenuItem Header="Open"/>
                 <MenuItem Header="Add">
+                    <MenuItem.Icon>
+                        <Image Source="./Resources/icones/VSO_Add_whiteNoHalo_12x_16x.png"/>
+                    </MenuItem.Icon>
                     <MenuItem Header="Image"/>
                     <MenuItem Header="Music"/>
                 </MenuItem>
-                <MenuItem Header="Save"/>
-                <MenuItem Header="Save As"/>
+                <MenuItem Header="Save">
+                    <MenuItem.Icon>
+                        <Image Source="./Resources/icones/Save_grey_16x_24.bmp"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save As">
+                    <MenuItem.Icon>
+                        <Image Source="./Resources/icones/SaveAll_16x_24.bmp"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="Export/Create"/>
                 <MenuItem Header="Share on">
                     <MenuItem Header="Facebook"/>
                     <MenuItem Header="Youtube"/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Exit" Click="MenuItem_Click"/>
+                <MenuItem Header="Exit" Click="MenuItem_Click">
+                    <MenuItem.Icon>
+                        <Image Source="./Resources/icones/Close_WhiteNoHalo_12x_16x_24.bmp"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Edit" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <MenuItem Header="Add Effekt"/>
+                <MenuItem Header="Add Effekt">
+                    <MenuItem.Icon>
+                        <Image Source="./Resources/icones/MagicWand_16x_24.bmp"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="Edit Transition"/>
-                <MenuItem Header="Edit Picture"/>
+                <MenuItem Header="Edit Picture">
+                    <MenuItem.Icon>
+                        <Image Source="./Resources/icones/Image_18x16_24.bmp"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="Add Empty File"/>
-                <MenuItem Header="Add Text"/>
+                <MenuItem Header="Add Text">
+                    <MenuItem.Icon>
+                        <Image Source="./Resources/icones/TextElement_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="Endo"/>
                 <MenuItem Header="Redo"/>
 
@@ -73,12 +100,23 @@
 
 
                     </Grid>
-                    <Grid x:Name="Picture_Holder" DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFA59A9A">
-                        <Image Margin="2,2,2,2" Name="Image1" Stretch="Fill"/>
-                    </Grid>
+                    <DockPanel  DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFA59A9A">
+                        <UniformGrid x:Name="Picture_Holder" />
+                    </DockPanel>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Music"/>
+            <TabItem Header="Music">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom" Margin="5,5,5,5" Height="74" RenderTransformOrigin="0.5,0.5" Background="#FFC81C07">
+                        <Button x:Name="Add_Music" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="5,5,5,5" Height="29" Click="Add_Music_Click"/>
+
+
+                    </Grid>
+                    <DockPanel  DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFAB4545">
+                        <UniformGrid x:Name="Music_Holder" />
+                    </DockPanel>
+                </DockPanel>
+            </TabItem>
         </TabControl>
         <osc:DockPanelSplitter x:Name="pictureExplorerSplitter" DockPanel.Dock="Left" Margin="0,0,10,0" Width="5" Foreground="{x:Null}">
             <osc:DockPanelSplitter.Background>

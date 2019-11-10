@@ -121,5 +121,26 @@
   <ItemGroup>
     <Resource Include="Resources\Cursors\grabbing.cur" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icones\Save_grey_16x_24.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icones\Close_WhiteNoHalo_12x_16x_24.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icones\SaveAll_16x_24.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icones\VSO_Add_whiteNoHalo_12x_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icones\TextElement_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icones\MagicWand_16x_24.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icones\Image_18x16_24.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
