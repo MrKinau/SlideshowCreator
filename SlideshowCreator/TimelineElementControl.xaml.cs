@@ -62,8 +62,8 @@ namespace SlideshowCreator
 
         public void updateHeight()
         {
-            this.TopSpacing = timeline.ActualHeight / 10.0;
-            this.ElementHeight = timeline.ActualHeight - 27 - 19 - TopSpacing; // -27=Scrollbar, -19=space for music (should be scalable?)
+            this.ElementHeight = 60 > Math.Min(timeline.mainCanvas.ActualHeight / 2.0 , 100) ? 60 : Math.Min(timeline.mainCanvas.ActualHeight / 2.0, 100);
+            this.TopSpacing = ((timeline.mainCanvas.ActualHeight / 2.0) - (ElementHeight / 2.0)) + 10;
         }
 
         public void moveAndSwap(double newStartTime, double movingOffset)
