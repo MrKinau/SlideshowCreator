@@ -22,6 +22,8 @@ namespace SlideshowCreator
     {
 
         private TimelineElementControl _resizing = null;
+        private TimelineElementControl _moving = null;
+        private double _movingOffset = 0;
         private readonly Random _rnd = new Random();
 
         public List<TimelineElementControl> Elements = new List<TimelineElementControl>();
@@ -56,6 +58,13 @@ namespace SlideshowCreator
             if (isBetweenElementsOrAtEnd(x, y))
             {
                 _resizing = GetElementAt(x - 15, y);
+            }
+            else if (GetElementAt(x, y) != null)
+            {
+                Mouse.OverrideCursor = Cursors.Cross;
+                _moving = GetElementAt(x, y);
+                _movingOffset = x - GetElementAt(x, y).StartTime;
+                _moving.Grabbed = true;
             }
         }
 
@@ -115,7 +124,8 @@ namespace SlideshowCreator
             if (isBetweenElementsOrAtEnd(x, y) || _resizing != null)
             {
                 Mouse.OverrideCursor = Cursors.SizeWE;
-            } else
+            } 
+            else if (_moving == null)
             {
                 Mouse.OverrideCursor = Cursors.Arrow;
                 _resizing = null;
@@ -128,6 +138,12 @@ namespace SlideshowCreator
                     mainCanvas.Width = _resizing.EndTime + 100;
                 }
                 _resizing.resizeAndPush(x);
+            }
+
+            if (_moving != null)
+            {
+                Mouse.OverrideCursor = Cursors.Cross;
+                _moving.moveAndSwap(x, _movingOffset);
             }
         }
 
@@ -152,7 +168,14 @@ namespace SlideshowCreator
 
         private void MainCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (_moving != null)
+            {
+                Mouse.OverrideCursor = Cursors.Arrow;
+                _moving.Grabbed = false;
+                pack();
+            }
             _resizing = null;
+            _moving = null;
             mainCanvas.Width = GetLastElementEndtime() + 100;
         }
 
@@ -160,11 +183,29 @@ namespace SlideshowCreator
         {
             Mouse.OverrideCursor = null;
             _resizing = null;
+            _moving = null;
         }
 
         private void MainCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             mainScollbar.ScrollToHorizontalOffset(mainScollbar.HorizontalOffset - e.Delta);
+        }
+
+        public void pack()
+        {
+            if (Elements.Count < 1)
+                return;
+
+            TimelineElementControl lastElement = null;
+            foreach (TimelineElementControl element in Elements)
+            {
+
+                double alltime = element.EndTime - element.StartTime;
+                element.StartTime = lastElement == null ? 0 : lastElement.EndTime;
+                element.EndTime = element.StartTime + alltime;
+                element.update();
+                lastElement = element;
+            }
         }
     }
 }

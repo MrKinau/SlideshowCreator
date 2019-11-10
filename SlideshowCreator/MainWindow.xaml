@@ -29,7 +29,7 @@
                     <MenuItem Header="Youtube"/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Exit"/>
+                <MenuItem Header="Exit" Click="MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="Edit" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <MenuItem Header="Add Effekt"/>
@@ -52,7 +52,7 @@
         <DockPanel Background="#FF3C3F41" x:Name="timelinePanel" DockPanel.Dock="Bottom" MinHeight="130" MaxHeight="300" Margin="10,0,10,10">
             <StackPanel Width="150" DockPanel.Dock="Left" x:Name="timelineControls" Orientation="Vertical" Margin="0" VerticalAlignment="Center">
                 <Button x:Name="addTestElement" Content="add Test Element" Margin="10,10,10,5" Click="AddTestElement_Click"/>
-                <Button Content="placeholder" Margin="10,5" VerticalAlignment="Center"/>
+                <Button x:Name="packButton" Content="pack" Margin="10,5" VerticalAlignment="Center" Click="PackButton_Click"/>
                 <Button Content="placeholder" Margin="10,5" VerticalAlignment="Center"/>
                 <Button Content="placeholder" Margin="10,5,10,10" VerticalAlignment="Center"/>
 

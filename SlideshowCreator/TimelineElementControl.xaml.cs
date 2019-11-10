@@ -29,6 +29,8 @@ namespace SlideshowCreator
         public double ElementHeight;
         public double TopSpacing;
 
+        public Boolean Grabbed = false;
+
         public TimelineElementControl(TimelineControl timeline, double startTime, double endTime)
         {
             InitializeComponent();
@@ -50,6 +52,10 @@ namespace SlideshowCreator
         {
             tlElementContent.Width = EndTime - StartTime;
             tlElementContent.Height = ElementHeight;
+            if (Grabbed)
+                Canvas.SetZIndex(this, timeline.Elements.Count);
+            else
+                Canvas.SetZIndex(this, timeline.Elements.IndexOf(this));
             Canvas.SetLeft(this, StartTime);
             Canvas.SetTop(this, TopSpacing);
         }
@@ -60,9 +66,22 @@ namespace SlideshowCreator
             this.ElementHeight = timeline.ActualHeight - 27 - 19 - TopSpacing; // -27=Scrollbar, -19=space for music (should be scalable?)
         }
 
+        public void moveAndSwap(double newStartTime, double movingOffset)
+        {
+            double length = EndTime - StartTime;
+            StartTime = newStartTime - movingOffset;
+            EndTime = StartTime + length;
+            swap();
+        }
+
         public void resizeAndPush(double newEndSize)
         {
             EndTime = (newEndSize - StartTime) > 20 ? newEndSize : StartTime + 20;
+            packFollowing();
+        }
+
+        public void packFollowing()
+        {
             update();
 
             TimelineElementControl lastElement = this;
@@ -76,6 +95,26 @@ namespace SlideshowCreator
                     element.update();
                     lastElement = element;
                 }
+            }
+        }
+
+
+        public void swap()
+        {
+            update();
+            int myIndex = timeline.Elements.IndexOf(this);
+
+            if(timeline.Elements.Count > myIndex + 1 && StartTime > timeline.Elements[myIndex + 1].StartTime)
+            {
+                timeline.Elements[myIndex] = timeline.Elements[myIndex + 1];
+                timeline.Elements[myIndex + 1] = this;
+                timeline.pack();
+            }
+            else if (myIndex != 0 && StartTime < timeline.Elements[myIndex - 1].StartTime)
+            {
+                timeline.Elements[myIndex] = timeline.Elements[myIndex - 1];
+                timeline.Elements[myIndex - 1] = this;
+                timeline.pack();
             }
         }
     }

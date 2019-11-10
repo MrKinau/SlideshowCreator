@@ -27,11 +27,6 @@ namespace SlideshowCreator
             InitializeComponent();
         }
 
-        private void exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             pictureExplorerPanel.MaxWidth = (e.NewSize.Width - 30) / 1.5;
@@ -73,6 +68,16 @@ namespace SlideshowCreator
         private void AddTestElement_Click(object sender, RoutedEventArgs e)
         {
             timeline.addTestElement();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void PackButton_Click(object sender, RoutedEventArgs e)
+        {
+            timeline.pack();
         }
     }
 }
