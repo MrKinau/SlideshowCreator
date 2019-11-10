@@ -79,5 +79,14 @@ namespace SlideshowCreator
         {
             timeline.pack();
         }
+
+        private void LsdButton_Click(object sender, RoutedEventArgs e)
+        {
+            Random _rnd = new Random();
+            foreach (TimelineElementControl element in timeline.Elements)
+            {
+                element.tlElementContent.Background = new SolidColorBrush(Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
+            }
+        }
     }
 }

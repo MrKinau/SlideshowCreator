@@ -53,7 +53,7 @@
             <StackPanel Width="150" DockPanel.Dock="Left" x:Name="timelineControls" Orientation="Vertical" Margin="0" VerticalAlignment="Center">
                 <Button x:Name="addTestElement" Content="add Test Element" Margin="10,10,10,5" Click="AddTestElement_Click"/>
                 <Button x:Name="packButton" Content="pack" Margin="10,5" VerticalAlignment="Center" Click="PackButton_Click"/>
-                <Button Content="placeholder" Margin="10,5" VerticalAlignment="Center"/>
+                <Button x:Name="lsdButton" Content="LSD" Margin="10,5" VerticalAlignment="Center" Click="LsdButton_Click"/>
                 <Button Content="placeholder" Margin="10,5,10,10" VerticalAlignment="Center"/>
 
             </StackPanel>
