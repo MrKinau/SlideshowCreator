@@ -42,13 +42,30 @@ namespace SlideshowCreator
             OpenFile.Filter = "ALL supported Graphics| *.jpeg; *.jpg;*.png;";
             if (OpenFile.ShowDialog() == true)
             {
-                Image1.Source = new BitmapImage(new Uri(OpenFile.FileName));
+                foreach(String file in OpenFile.FileNames)
+                {
+                    Add_Image(file);
+                }
             }
         }
+
+        private void Add_Image(string file)
+        {
+            Image new_img = new Image();
+            new_img.Source = new BitmapImage(new Uri(file));
+            Thickness img_thickness = new Thickness();
+            img_thickness.Bottom = 2;
+            img_thickness.Left = 2;
+            img_thickness.Right = 2;
+            img_thickness.Top = 2;
+            new_img.Margin = img_thickness;
+            Picture_Holder.Children.Add(new_img);
+        }
+
         private void Timeline_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (e.HeightChanged)
-            {
+            { 
                 foreach (TimelineElementControl element in timeline.Elements)
                 {
                     element.updateHeight();
@@ -79,6 +96,32 @@ namespace SlideshowCreator
         {
             timeline.pack();
         }
+
+        private void Add_Music_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /* private void Add_Music_Click(object sender, RoutedEventArgs e)
+         {
+             OpenFileDialog OpenFile = new OpenFileDialog();
+             OpenFile.Multiselect = true;
+             OpenFile.Title = "Select Picture(s)";
+             OpenFile.Filter = "Audio Format| *.mp3; *.wav;*.wma;";
+             if (OpenFile.ShowDialog() == true)
+             {
+                 foreach (String file in OpenFile.FileNames)
+                 {
+                     Add_Music(file);
+                 }
+             }
+         }*/
+        /* private void Add_Music(string file)
+         {
+             MediaPlayer player = new MediaPlayer();
+             player.Open(new Uri(file));
+             Music_Holder.Children.Add(player);
+         }*/
 
         private void LsdButton_Click(object sender, RoutedEventArgs e)
         {
