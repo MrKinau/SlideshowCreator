@@ -189,7 +189,9 @@ namespace SlideshowCreator
             _resizing = null;
             _moving = null;
             Mouse.OverrideCursor = null;
+            mainCanvas.Width = ActualWidth > GetLastElementEndtime() + 100 ? ActualWidth : GetLastElementEndtime() + 100;
             pack();
+            updateDrawings();
         }
 
         private bool isVisible(TimelineElementControl element)
