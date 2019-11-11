@@ -10,8 +10,8 @@
 
     <DockPanel x:Name="rootPanel" HorizontalAlignment="Stretch" LastChildFill="True" Background="#FF3C3F41">
 
-        <Menu x:Name="menuPanel" DockPanel.Dock="Top" Background="#FF3C3F41">
-            <MenuItem Header="File"  FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Menu x:Name="menuPanel" FontSize="10" DockPanel.Dock="Top" Background="#FF3C3F41">
+            <MenuItem Header="File"   HorizontalAlignment="Center" VerticalAlignment="Center">
                 <MenuItem Header="New Projekt">
                     <MenuItem Header="Collage"/>
                     <MenuItem Header="Image"/>
@@ -46,7 +46,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Edit" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <MenuItem Header="Edit"  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <MenuItem Header="Add Effekt">
                     <MenuItem.Icon>
                         <Image Source="./Resources/icones/MagicWand_16x_24.bmp"/>
@@ -68,7 +68,7 @@
                 <MenuItem Header="Redo"/>
 
             </MenuItem>
-            <MenuItem Header="Help"  FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <MenuItem Header="Help"  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <MenuItem Header="Help"/>
                 <Separator/>
                 <MenuItem Header="About us"/>
