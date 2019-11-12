@@ -10,8 +10,8 @@
 
     <DockPanel x:Name="rootPanel" HorizontalAlignment="Stretch" LastChildFill="True" Background="#FF3C3F41">
 
-        <Menu x:Name="menuPanel" FontSize="10" DockPanel.Dock="Top" Background="#FF3C3F41">
-            <MenuItem Header="File"   HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Menu x:Name="menuPanel" FontSize="14" DockPanel.Dock="Top" Background="#FF3C3F41" Foreground="White">
+            <MenuItem Header="File" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <MenuItem Header="New Projekt">
                     <MenuItem Header="Collage"/>
                     <MenuItem Header="Image"/>
