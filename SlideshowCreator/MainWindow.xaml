@@ -7,71 +7,70 @@
         xmlns:osc="clr-namespace:OpenSourceControls;assembly=DockPanelSplitter"
         mc:Ignorable="d"
         Title="SlideShow Creator" Height="700" Width="800" WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged">
-
     <DockPanel x:Name="rootPanel" HorizontalAlignment="Stretch" LastChildFill="True" Background="#FF3C3F41">
 
-        <Menu x:Name="menuPanel" FontSize="14" DockPanel.Dock="Top" Background="#FF3C3F41" Foreground="White">
-            <MenuItem Header="File" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <MenuItem Header="New Projekt">
-                    <MenuItem Header="Collage"/>
-                    <MenuItem Header="Image"/>
+        <Menu x:Name="menuPanel" FontSize="14" DockPanel.Dock="Top" Background="{DynamicResource SC_BG_COLOR}">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New Projekt">
+                    <MenuItem Header="_Collage"/>
+                    <MenuItem Header="_Image"/>
                 </MenuItem>
-                <MenuItem Header="Open"/>
-                <MenuItem Header="Add">
+                <MenuItem Header="_Open..."/>
+                <MenuItem Header="_Add">
                     <MenuItem.Icon>
                         <Image Source="./Resources/icones/VSO_Add_whiteNoHalo_12x_16x.png"/>
                     </MenuItem.Icon>
-                    <MenuItem Header="Image"/>
-                    <MenuItem Header="Music"/>
+                    <MenuItem Header="_Image..."/>
+                    <MenuItem Header="_Music..."/>
                 </MenuItem>
-                <MenuItem Header="Save">
+                <MenuItem Header="_Save">
                     <MenuItem.Icon>
                         <Image Source="./Resources/icones/Save_grey_16x_24.bmp"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Save As">
+                <MenuItem Header="Sa_ve As">
                     <MenuItem.Icon>
                         <Image Source="./Resources/icones/SaveAll_16x_24.bmp"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Export/Create"/>
-                <MenuItem Header="Share on">
-                    <MenuItem Header="Facebook"/>
-                    <MenuItem Header="Youtube"/>
+                <MenuItem Header="_Export/Create"/>
+                <MenuItem Header="Sha_re on">
+                    <MenuItem Header="Face_book"/>
+                    <MenuItem Header="You_tube"/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Exit" Click="MenuItem_Click">
+                <MenuItem Header="E_xit" Click="MenuItem_Click">
                     <MenuItem.Icon>
                         <Image Source="./Resources/icones/Close_WhiteNoHalo_12x_16x_24.bmp"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Edit"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                <MenuItem Header="Add Effekt">
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Add Effect">
                     <MenuItem.Icon>
                         <Image Source="./Resources/icones/MagicWand_16x_24.bmp"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Edit Transition"/>
-                <MenuItem Header="Edit Picture">
+                <MenuItem Header="Edit _Transition"/>
+                <MenuItem Header="Edit _Picture">
                     <MenuItem.Icon>
                         <Image Source="./Resources/icones/Image_18x16_24.bmp"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Add Empty File"/>
-                <MenuItem Header="Add Text">
+                <MenuItem Header="_Add Empty File"/>
+                <MenuItem Header="Add _Text">
                     <MenuItem.Icon>
                         <Image Source="./Resources/icones/TextElement_16x.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Endo"/>
-                <MenuItem Header="Redo"/>
+                <MenuItem Header="_Undo"/>
+                <MenuItem Header="_Redo"/>
 
             </MenuItem>
-            <MenuItem Header="Help"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                <MenuItem Header="Help"/>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Help"/>
                 <Separator/>
-                <MenuItem Header="About us"/>
+                <MenuItem Header="_About..."/>
             </MenuItem>
         </Menu>
         <Border DockPanel.Dock="Top" Background="#FF262829" Height="1"/>
