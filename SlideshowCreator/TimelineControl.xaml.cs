@@ -370,6 +370,7 @@ namespace SlideshowCreator
                     mainCanvas.Width = ActualWidth > _resizing.EndTime + 100 ? ActualWidth : _resizing.EndTime + 100;
                 }
                 _resizing.resizeAndPush(x);
+                updateDrawings();
             }
 
             if (_moving != null)
