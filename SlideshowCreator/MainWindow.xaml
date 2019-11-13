@@ -99,9 +99,14 @@
 
 
                     </Grid>
-                    <DockPanel  DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFA59A9A">
-                        <UniformGrid x:Name="Picture_Holder" />
-                    </DockPanel>
+                    <Grid  DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFA59A9A">
+                      
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <WrapPanel Name="Picture_Holder" Orientation="Horizontal"/>
+                            
+                        </ScrollViewer>
+                               
+                    </Grid>
                 </DockPanel>
             </TabItem>
             <TabItem Header="Music">

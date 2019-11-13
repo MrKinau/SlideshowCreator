@@ -21,10 +21,12 @@ namespace SlideshowCreator
     /// </summary>
     public partial class MainWindow : Window
     {
+        
 
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -33,9 +35,11 @@ namespace SlideshowCreator
             pictureExplorerPanel.MinWidth = (e.NewSize.Width - 30) / 4;
             Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
         }
-
+        
         private void Add_Img_Click(object sender, RoutedEventArgs e)
         {
+            
+           
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Multiselect = true;
             OpenFile.Title = "Select Picture(s)";
@@ -48,9 +52,11 @@ namespace SlideshowCreator
                 }
             }
         }
-
+        
+        
         private void Add_Image(string file)
         {
+            Console.WriteLine("Une image"+file);
             Image new_img = new Image();
             new_img.Source = new BitmapImage(new Uri(file));
             Thickness img_thickness = new Thickness();
@@ -59,6 +65,7 @@ namespace SlideshowCreator
             img_thickness.Right = 2;
             img_thickness.Top = 2;
             new_img.Margin = img_thickness;
+            new_img.MaxWidth = new_img.MaxHeight = 100;
             Picture_Holder.Children.Add(new_img);
         }
 
