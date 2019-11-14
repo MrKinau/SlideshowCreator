@@ -247,6 +247,7 @@ namespace SlideshowCreator
                 label.Padding = new Thickness(0);
                 label.Margin = new Thickness(0, -5, 0, 0);
                 label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                label.Foreground = new SolidColorBrush(Colors.White);
 
                 Size s = label.DesiredSize;
 
@@ -266,7 +267,7 @@ namespace SlideshowCreator
                 if (i > mainScrollbar.HorizontalOffset + mainScrollbar.ActualWidth + 100)
                     break;
                 Line line = new Line();
-                line.Stroke = new SolidColorBrush(Colors.Black);
+                line.Stroke = new SolidColorBrush(Colors.White);
                 line.X1 = i;
                 line.X2 = i;
                 line.Y2 = 20;
@@ -290,7 +291,7 @@ namespace SlideshowCreator
             bottomLine.Y1 = 20;
             bottomLine.Y2 = 20;
             bottomLine.StrokeThickness = 0.5;
-            bottomLine.Stroke = new SolidColorBrush(Colors.Black);
+            bottomLine.Stroke = new SolidColorBrush(Colors.White);
 
             mainCanvas.Children.Add(bottomLine);
         }
@@ -369,6 +370,7 @@ namespace SlideshowCreator
                     mainCanvas.Width = ActualWidth > _resizing.EndTime + 100 ? ActualWidth : _resizing.EndTime + 100;
                 }
                 _resizing.resizeAndPush(x);
+                updateDrawings();
             }
 
             if (_moving != null)

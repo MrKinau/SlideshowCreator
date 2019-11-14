@@ -82,6 +82,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\styles\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\styles\DefaultStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\styles\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TimelineControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -119,28 +131,29 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Cursors\grabbing.cur" />
+    <Resource Include="Resources\cursors\grabbing.cur" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icones\Save_grey_16x_24.bmp" />
+    <Resource Include="Resources\icons\Save_grey_16x_24.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icones\Close_WhiteNoHalo_12x_16x_24.bmp" />
+    <Resource Include="Resources\icons\Close_WhiteNoHalo_12x_16x_24.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icones\SaveAll_16x_24.bmp" />
+    <Resource Include="Resources\icons\SaveAll_16x_24.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icones\VSO_Add_whiteNoHalo_12x_16x.png" />
+    <Resource Include="Resources\icons\VSO_Add_whiteNoHalo_12x_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icones\TextElement_16x.png" />
+    <Resource Include="Resources\icons\TextElement_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icones\MagicWand_16x_24.bmp" />
+    <Resource Include="Resources\icons\MagicWand_16x_24.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icones\Image_18x16_24.bmp" />
+    <Resource Include="Resources\icons\Image_18x16_24.bmp" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
