@@ -99,8 +99,10 @@
                         <Button x:Name="Add_Img" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="5,5,5,5" Click="Add_Img_Click"/>
                     </Grid>
                     <Grid DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFA59A9A">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                            <WrapPanel Name="Picture_Holder" Orientation="Horizontal"/>
+
+                            <WrapPanel Name="Picture_Holder" HorizontalAlignment="Center" Orientation="Horizontal"/>
+                            
+
                         </ScrollViewer>
                     </Grid>
                 </DockPanel>
