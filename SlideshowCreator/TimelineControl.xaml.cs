@@ -37,7 +37,25 @@ namespace SlideshowCreator
          *  public methods
          */
 
-        public void addTestElement()
+        public void AddElement(Image image) 
+        {
+            TimelineElementControl element = new TimelineElementControl(this, GetLastElementEndtime(), GetLastElementEndtime() + 200);
+            Elements.Add(element);
+
+            //Random color
+            element.tlElementContent.Background = new SolidColorBrush(Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
+
+            //Add image
+            element.DisplayedImage.Source = image.Source;
+
+            if (mainCanvas.ActualWidth < GetLastElementEndtime())
+            {
+                mainCanvas.Width = GetLastElementEndtime() + 100;
+                mainScrollbar.ScrollToRightEnd();
+            }
+        }
+
+        public void AddTestElement()
         {
             //Create Element
             TimelineElementControl picture = new TimelineElementControl(this, GetLastElementEndtime(), GetLastElementEndtime() + _rnd.Next(121) + 80);
@@ -53,7 +71,7 @@ namespace SlideshowCreator
             }
         }
 
-        public void pack()
+        public void Pack()
         {
             if (Elements.Count < 1)
                 return;
@@ -184,13 +202,13 @@ namespace SlideshowCreator
             if (_moving != null)
             {
                 _moving.Grabbed = false;
-                pack();
+                Pack();
             }
             _resizing = null;
             _moving = null;
             Mouse.OverrideCursor = null;
             mainCanvas.Width = ActualWidth > GetLastElementEndtime() + 100 ? ActualWidth : GetLastElementEndtime() + 100;
-            pack();
+            Pack();
             updateDrawings();
         }
 

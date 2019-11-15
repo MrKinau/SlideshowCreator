@@ -108,13 +108,13 @@ namespace SlideshowCreator
             {
                 timeline.Elements[myIndex] = timeline.Elements[myIndex + 1];
                 timeline.Elements[myIndex + 1] = this;
-                timeline.pack();
+                timeline.Pack();
             }
             else if (myIndex != 0 && StartTime < timeline.Elements[myIndex - 1].StartTime)
             {
                 timeline.Elements[myIndex] = timeline.Elements[myIndex - 1];
                 timeline.Elements[myIndex - 1] = this;
-                timeline.pack();
+                timeline.Pack();
             }
         }
     }
