@@ -83,7 +83,7 @@
                     <Button x:Name="addTestElement" Content="add Test Element" Margin="10,10,10,5" Click="AddTestElement_Click"/>
                     <Button x:Name="packButton" Content="pack" Margin="10,5" VerticalAlignment="Center" Click="PackButton_Click"/>
                     <Button x:Name="lsdButton" Content="LSD" Margin="10,5" VerticalAlignment="Center" Click="LsdButton_Click"/>
-                    <Button Content="placeholder" Margin="10,5,10,10" VerticalAlignment="Center"/>
+                    <Button x:Name="testExport" Content="Export" Margin="10,5,10,10" VerticalAlignment="Center" Click="TestExport_Click"/>
 
                 </StackPanel>
             </Border>

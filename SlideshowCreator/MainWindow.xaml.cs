@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,7 @@ namespace SlideshowCreator
             OpenFile.Multiselect = true;
             OpenFile.Title = "Select Picture(s)";
             OpenFile.Filter = "ALL supported Graphics| *.jpeg; *.jpg;*.png;";
+            OpenFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             if (OpenFile.ShowDialog() == true)
             {
                 foreach(String file in OpenFile.FileNames)
@@ -57,8 +59,8 @@ namespace SlideshowCreator
         private void Add_Image(string file)
         {
             Console.WriteLine("Une image"+file);
-            Image new_img = new Image();
-            new_img.Source = new BitmapImage(new Uri(file));
+            System.Windows.Controls.Image new_img = new System.Windows.Controls.Image();
+            new_img.Source = ImageConverter.ScaleToBitmapImage(new Uri(file), 100, 100);
             Thickness img_thickness = new Thickness();
             img_thickness.Bottom = 2;
             img_thickness.Left = 2;
@@ -66,7 +68,21 @@ namespace SlideshowCreator
             img_thickness.Top = 2;
             new_img.Margin = img_thickness;
             new_img.MaxWidth = new_img.MaxHeight = 100;
+
+            new_img.MouseLeftButtonDown += new MouseButtonEventHandler(OnImgClick);
+
             Picture_Holder.Children.Add(new_img);
+        }
+
+        private void OnImgClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount != 2)
+                return;
+
+            if (sender.GetType() != typeof(System.Windows.Controls.Image))
+                return;
+
+            timeline.AddElement((System.Windows.Controls.Image) sender);
         }
 
         private void Timeline_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -91,7 +107,7 @@ namespace SlideshowCreator
 
         private void AddTestElement_Click(object sender, RoutedEventArgs e)
         {
-            timeline.addTestElement();
+            timeline.AddTestElement();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -101,7 +117,7 @@ namespace SlideshowCreator
 
         private void PackButton_Click(object sender, RoutedEventArgs e)
         {
-            timeline.pack();
+            timeline.Pack();
         }
 
         private void Add_Music_Click(object sender, RoutedEventArgs e)
@@ -135,8 +151,25 @@ namespace SlideshowCreator
             Random _rnd = new Random();
             foreach (TimelineElementControl element in timeline.Elements)
             {
-                element.tlElementContent.Background = new SolidColorBrush(Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
+                element.tlElementContent.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
             }
+        }
+
+        private void TestExport_Click(object sender, RoutedEventArgs e)
+        {
+            VideoCreator videoCreator = new VideoCreator();
+
+            SaveFileDialog sdf = new SaveFileDialog();
+            sdf.Title = "Export Slideshow";
+            sdf.Filter = "All Video Files|*.wmv;*.avi;*.mpeg;*.mp4;*.WMV;*.AVI;*.MPEG;*.MP4";
+            sdf.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+            sdf.FileName = "MySlideshow.mp4";
+
+            if (sdf.ShowDialog() == true)
+            {
+                videoCreator.CreateVideo(timeline.Elements, sdf.FileName, 1080, 720);
+            }
+            //TODO: Add error msg
         }
     }
 }
