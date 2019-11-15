@@ -67,10 +67,8 @@ namespace SlideshowCreator
             img_thickness.Right = 2;
             img_thickness.Top = 2;
             new_img.Margin = img_thickness;
-            new_img.MaxWidth = new_img.MaxHeight = 100;
-
+            new_img.MaxWidth = new_img.MaxHeight = 105;
             new_img.MouseLeftButtonDown += new MouseButtonEventHandler(OnImgClick);
-
             Picture_Holder.Children.Add(new_img);
         }
 
