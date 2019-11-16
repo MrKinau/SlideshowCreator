@@ -82,19 +82,15 @@ namespace SlideshowCreator
 
                     for (int i = 0; i < framesThisSlide; i++)
                     {
-                        try
+                        if (exportWorker.CancellationPending == true)
                         {
-                            if (exportWorker.CancellationPending == true)
-                            {
-                                e.Cancel = true;
-                                return;
-                            }
-                            Console.WriteLine(currFrame + "/" + frames);
-                            writer.WriteVideoFrame(bitmap);
-                            (sender as BackgroundWorker).ReportProgress(currFrame);
-                            currFrame++;
+                            e.Cancel = true;
+                            return;
                         }
-                        catch (ArgumentException ex) { }
+                        Console.WriteLine(currFrame + "/" + frames);
+                        writer.WriteVideoFrame(bitmap);
+                        (sender as BackgroundWorker).ReportProgress(currFrame);
+                        currFrame++;
                     }
                     counter++;
                 }

@@ -24,9 +24,6 @@ namespace SlideshowCreator
     public partial class MainWindow : Window
     {
 
-        //Erstmal nur provisorisch. Der Picture Explorer sollte ggf. in ein Custom Control ausgelagert werden
-        private List<string> imgPaths = new List<string>();
-
         public MainWindow()
         {
             InitializeComponent();
@@ -38,57 +35,6 @@ namespace SlideshowCreator
             pictureExplorerPanel.MaxWidth = (e.NewSize.Width - 30) / 1.5;
             pictureExplorerPanel.MinWidth = (e.NewSize.Width - 30) / 4;
             Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
-        }
-        
-        private void Add_Img_Click(object sender, RoutedEventArgs e)
-        {
-            
-           
-            OpenFileDialog OpenFile = new OpenFileDialog();
-            OpenFile.Multiselect = true;
-            OpenFile.Title = "Select Picture(s)";
-            OpenFile.Filter = "ALL supported Graphics| *.jpeg; *.jpg;*.png;";
-            OpenFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            if (OpenFile.ShowDialog() == true)
-            {
-                foreach(String file in OpenFile.FileNames)
-                {
-                    Add_Image(file);
-                }
-            }
-        }
-        
-        
-        private void Add_Image(string file)
-        {
-            Console.WriteLine("Une image"+file);
-            imgPaths.Add(file);
-            System.Windows.Controls.Image new_img = new System.Windows.Controls.Image();
-            new_img.Source = ImageConverter.ScaleToBitmapImage(new Uri(file), 100, 100);
-            Thickness img_thickness = new Thickness();
-            img_thickness.Bottom = 2;
-            img_thickness.Left = 2;
-            img_thickness.Right = 2;
-            img_thickness.Top = 2;
-            new_img.Margin = img_thickness;
-            new_img.MaxWidth = new_img.MaxHeight = 105;
-            new_img.MouseLeftButtonDown += new MouseButtonEventHandler(OnImgClick);
-            Picture_Holder.Children.Add(new_img);
-        }
-
-        private void OnImgClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ClickCount != 2)
-                return;
-
-            if (sender == null)
-                return;
-
-            if (sender.GetType() != typeof(System.Windows.Controls.Image))
-                return;
-
-            int index = Picture_Holder.Children.IndexOf((System.Windows.Controls.Image)sender);
-            timeline.AddElement(imgPaths[index]);
         }
 
         private void Timeline_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -175,6 +121,11 @@ namespace SlideshowCreator
                 videoCreator.CreateVideo();
             }
             //TODO: Add error msg
+        }
+
+        private void ColumnDefinition_Loaded(object sender, RoutedEventArgs e)
+        {
+            pictureExplorer.Timeline = timeline;
         }
     }
 }

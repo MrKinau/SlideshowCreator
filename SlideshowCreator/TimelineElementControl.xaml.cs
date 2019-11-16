@@ -29,7 +29,7 @@ namespace SlideshowCreator
         public double ElementHeight;
         public double TopSpacing;
 
-        public Boolean Grabbed = false;
+        public bool Grabbed = false;
         public string Thumbnail;
 
 

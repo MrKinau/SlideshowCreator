@@ -50,6 +50,7 @@ namespace SlideshowCreator
                 mainCanvas.Width = GetLastElementEndtime() + 100;
                 mainScrollbar.ScrollToRightEnd();
             }
+            UpdatePreview();
         }
 
         public void AddTestElement()
@@ -167,12 +168,46 @@ namespace SlideshowCreator
             return fittingElement;
         }
 
+        private TimelineElementControl GetElementAtMarker()
+        {
+            int left = (int)Math.Round(Canvas.GetLeft(tlMarker)) + 5;
+            Console.WriteLine("left: " + left + ", elements: " + Elements.Count);
+            TimelineElementControl fittingElement = null;
+            foreach (TimelineElementControl element in Elements)
+            {
+                if (left >= element.StartTime && left <= element.EndTime)
+                {
+                    fittingElement = element;
+                    break;
+                }
+            }
+
+            return fittingElement;
+        }
+
+        private void MoveMarker(int x)
+        {
+            Canvas.SetLeft(tlMarker, Math.Max(x - 5, -5));
+            TimelineElementControl elementAtMarker = GetElementAtMarker();
+            if (elementAtMarker == null)
+                return;
+            UpdatePreview();
+        }
+
+        private void UpdatePreview()
+        {
+            ///\todo make MVVM
+            string thumbnail = GetElementAtMarker().Thumbnail;
+            PreviewControl preview = ((MainWindow)Application.Current.MainWindow).preview;
+            preview.UpdateImageAsync(thumbnail);
+        }
+
         private bool isBetweenElements(double x, double y)
         {
             for (int i = 0; i < Elements.Count; i++)
             {
                 TimelineElementControl element = Elements[i];
-                if (x >= element.StartTime - 4 && x <= element.StartTime + 10
+                if (x >= element.StartTime - 6 && x <= element.StartTime + 6
                     && y > element.TopSpacing && y <= element.TopSpacing + element.ElementHeight)
                 {
                     return true;
@@ -188,7 +223,7 @@ namespace SlideshowCreator
             if (Elements.Count > 0)
             {
                 TimelineElementControl last = Elements[Elements.Count - 1];
-                end = x >= last.EndTime - 4 && x <= last.EndTime + 8
+                end = x >= last.EndTime - 6 && x <= last.EndTime + 6
                     && y > last.TopSpacing && y <= last.TopSpacing + last.ElementHeight;
             }
             return between || end;
@@ -318,12 +353,15 @@ namespace SlideshowCreator
         private void MainCanvas_Loaded(object sender, RoutedEventArgs e)
         {
             mainCanvas.Width = ActualWidth - 10;
+            Canvas.SetZIndex(tlMarker, int.MaxValue);
+            Canvas.SetLeft(tlMarker, -5);
+            tlMarker.markerLine.Y2 = ActualHeight - 10;
         }
 
-        private void MainCanvas_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MainCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Point p = Mouse.GetPosition(this);
-            double x = p.X + mainScrollbar.HorizontalOffset;
+            Point p = Mouse.GetPosition(mainCanvas);
+            double x = p.X;
             double y = p.Y;
 
             if (isBetweenElementsOrAtEnd(x, y))
@@ -336,6 +374,10 @@ namespace SlideshowCreator
                 _movingOffset = x - GetElementAt(x, y).StartTime;
                 _moving.Grabbed = true;
             }
+            else
+            {
+                MoveMarker((int)Math.Round(x));
+            }
         }
 
         private void MainCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -345,8 +387,8 @@ namespace SlideshowCreator
 
         private void MainCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Point p = Mouse.GetPosition(this);
-            double x = p.X + mainScrollbar.HorizontalOffset;
+            Point p = Mouse.GetPosition(mainCanvas);
+            double x = p.X;
             double y = p.Y;
 
             if (!isBetweenElementsOrAtEnd(x, y))
@@ -364,10 +406,11 @@ namespace SlideshowCreator
 
         private void MainCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            Point p = Mouse.GetPosition(this);
-            double x = p.X + mainScrollbar.HorizontalOffset;
+            Point p = Mouse.GetPosition(mainCanvas);
+            double x = p.X;
             double y = p.Y;
 
+            //change cursor to corresponding: resize, move elemenent
             if (isBetweenElementsOrAtEnd(x, y) || _resizing != null)
             {
                 Mouse.OverrideCursor = Cursors.SizeWE;
@@ -378,6 +421,7 @@ namespace SlideshowCreator
                 _resizing = null;
             }
 
+            //resize element
             if (_resizing != null)
             {
                 if (_resizing.EndTime == GetLastElementEndtime())
@@ -386,12 +430,21 @@ namespace SlideshowCreator
                 }
                 _resizing.resizeAndPush(x);
                 updateDrawings();
+                return;
             }
 
+            //move element
             if (_moving != null)
             {
                 Mouse.OverrideCursor = ((TextBlock)Resources["CursorGrabbing"]).Cursor;
                 _moving.moveAndSwap(x, _movingOffset);
+                return;
+            }
+
+            //move marker
+            if (e.LeftButton.HasFlag(MouseButtonState.Pressed))
+            {
+                MoveMarker((int)Math.Round(x));
             }
         }
 
@@ -408,6 +461,7 @@ namespace SlideshowCreator
         private void MainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             updateDrawings();
+            tlMarker.markerLine.Y2 = ActualHeight - 10;
         }
 
         private void MainScrollbar_ScrollChanged(object sender, ScrollChangedEventArgs e)
