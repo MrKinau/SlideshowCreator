@@ -74,11 +74,21 @@ namespace SlideshowCreator
 
             double width = (double)sourceImage.Width / scaleFactor;
             double height = (double)sourceImage.Height / scaleFactor;
+
+            if (width > maxWidth)
+                scaleFactor = (double)sourceImage.Width / (double)maxWidth;
+            else if (height > maxHeight)
+                scaleFactor = (double)sourceImage.Height / (double)maxHeight;
+
+            width = (double)sourceImage.Width / scaleFactor;
+            height = (double)sourceImage.Height / scaleFactor;
+
             return ResizeImage(sourceImage, (int)Math.Floor(width), (int)Math.Floor(height), maxWidth, maxHeight, highQuality);
         }
 
         public static BitmapImage ScaleToBitmapImage(Uri source, int width, int height)
         {
+            ///\Todo load uncommon picture formats (unreadable files) try catch
             Bitmap bitmap = ScaleImage(new Bitmap(source.LocalPath), width, height, false);
 
             return ToBitmapImage(bitmap, source.LocalPath);

@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="SlideshowCreator.TimelineMusicElementControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SlideshowCreator"
+             mc:Ignorable="d">
+    <Grid x:Name="tlElementContent">
+        <Border MinWidth="100" MinHeight="10" Background="Crimson" BorderBrush="DarkMagenta" BorderThickness="1"/>
+        <StackPanel Orientation="Horizontal" Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Image x:Name="Image" Margin="2,4,2,2" Source="pack://application:,,,/Resources/icons/musicThumbnail.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock x:Name="TextBlock" TextWrapping="NoWrap" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" />
+        </StackPanel>
+    </Grid>
+</UserControl>

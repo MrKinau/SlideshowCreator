@@ -6,18 +6,22 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border BorderThickness="1" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" Background="{TemplateBinding Background}">
-                        <ContentPresenter Margin="1,5,1,5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Border x:Name="border" BorderThickness="1" CornerRadius="5" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" TextElement.Foreground="{DynamicResource SC_FG_COLOR_DARK}" Margin="1,5,1,5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource SC_FG_COLOR}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{DynamicResource SC_FG_COLOR}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource SC_BG_COLOR_DARK}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource SC_BG_COLOR_DARK}" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
     <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" />
 </ResourceDictionary>

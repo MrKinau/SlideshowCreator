@@ -18,7 +18,7 @@ namespace SlideshowCreator
     /// <summary>
     /// Interaction logic for TimelineElementControl.xaml
     /// </summary>
-    public partial class TimelineElementControl : UserControl
+    public partial class TimelinePictureElementControl : UserControl
     {
 
         private TimelineControl timeline;
@@ -33,7 +33,7 @@ namespace SlideshowCreator
         public string Thumbnail;
 
 
-        public TimelineElementControl(TimelineControl timeline, double startTime, double endTime, string thumbnail)
+        public TimelinePictureElementControl(TimelineControl timeline, double startTime, double endTime, string thumbnail)
         {
             InitializeComponent();
             DataContext = this;
@@ -46,16 +46,9 @@ namespace SlideshowCreator
             updateHeight();
             update();
 
-            if (thumbnail == null)
-                return;
-
-            BitmapImage bi = ImageConverter.ScaleToBitmapImage(new Uri(thumbnail), 200, 200);
+            Console.WriteLine((int)(endTime - startTime) + "::" + (int)Math.Floor(ElementHeight));
+            BitmapImage bi = ImageConverter.ScaleToBitmapImage(new Uri(thumbnail), (int)(endTime - startTime), (int)Math.Floor(ElementHeight));
             DisplayedImage.Source = bi;
-        }
-
-        public TimelineElementControl()
-        {
-            InitializeComponent();
         }
 
         public void update()
@@ -63,9 +56,9 @@ namespace SlideshowCreator
             tlElementContent.Width = EndTime - StartTime;
             tlElementContent.Height = ElementHeight;
             if (Grabbed)
-                Canvas.SetZIndex(this, timeline.Elements.Count);
+                Canvas.SetZIndex(this, timeline.PictureElements.Count);
             else
-                Canvas.SetZIndex(this, timeline.Elements.IndexOf(this));
+                Canvas.SetZIndex(this, timeline.PictureElements.IndexOf(this));
             Canvas.SetLeft(this, StartTime);
             Canvas.SetTop(this, TopSpacing);
         }
@@ -73,7 +66,7 @@ namespace SlideshowCreator
         public void updateHeight()
         {
             this.ElementHeight = 60 > Math.Min(timeline.mainCanvas.ActualHeight / 2.0 , 100) ? 60 : Math.Min(timeline.mainCanvas.ActualHeight / 2.0, 100);
-            this.TopSpacing = ((timeline.mainCanvas.ActualHeight / 2.0) - (ElementHeight / 2.0)) + 10;
+            this.TopSpacing = ((timeline.mainCanvas.ActualHeight / 2.0) - (ElementHeight / 2.0));
         }
 
         public void moveAndSwap(double newStartTime, double movingOffset)
@@ -94,8 +87,8 @@ namespace SlideshowCreator
         {
             update();
 
-            TimelineElementControl lastElement = this;
-            foreach (TimelineElementControl element in timeline.Elements)
+            TimelinePictureElementControl lastElement = this;
+            foreach (TimelinePictureElementControl element in timeline.PictureElements)
             {
                 if (element.StartTime > StartTime)
                 {
@@ -112,18 +105,18 @@ namespace SlideshowCreator
         public void swap()
         {
             update();
-            int myIndex = timeline.Elements.IndexOf(this);
+            int myIndex = timeline.PictureElements.IndexOf(this);
 
-            if(timeline.Elements.Count > myIndex + 1 && StartTime > timeline.Elements[myIndex + 1].StartTime)
+            if(timeline.PictureElements.Count > myIndex + 1 && StartTime > timeline.PictureElements[myIndex + 1].StartTime)
             {
-                timeline.Elements[myIndex] = timeline.Elements[myIndex + 1];
-                timeline.Elements[myIndex + 1] = this;
+                timeline.PictureElements[myIndex] = timeline.PictureElements[myIndex + 1];
+                timeline.PictureElements[myIndex + 1] = this;
                 timeline.Pack();
             }
-            else if (myIndex != 0 && StartTime < timeline.Elements[myIndex - 1].StartTime)
+            else if (myIndex != 0 && StartTime < timeline.PictureElements[myIndex - 1].StartTime)
             {
-                timeline.Elements[myIndex] = timeline.Elements[myIndex - 1];
-                timeline.Elements[myIndex - 1] = this;
+                timeline.PictureElements[myIndex] = timeline.PictureElements[myIndex - 1];
+                timeline.PictureElements[myIndex - 1] = this;
                 timeline.Pack();
             }
         }

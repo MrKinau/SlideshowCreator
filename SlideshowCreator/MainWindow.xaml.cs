@@ -41,7 +41,7 @@ namespace SlideshowCreator
         {
             if (e.HeightChanged)
             { 
-                foreach (TimelineElementControl element in timeline.Elements)
+                foreach (TimelinePictureElementControl element in timeline.PictureElements)
                 {
                     element.updateHeight();
                     element.update();
@@ -57,11 +57,6 @@ namespace SlideshowCreator
             Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
         }
 
-        private void AddTestElement_Click(object sender, RoutedEventArgs e)
-        {
-            timeline.AddTestElement();
-        }
-
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -70,11 +65,6 @@ namespace SlideshowCreator
         private void PackButton_Click(object sender, RoutedEventArgs e)
         {
             timeline.Pack();
-        }
-
-        private void Add_Music_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         /* private void Add_Music_Click(object sender, RoutedEventArgs e)
@@ -101,7 +91,7 @@ namespace SlideshowCreator
         private void LsdButton_Click(object sender, RoutedEventArgs e)
         {
             Random _rnd = new Random();
-            foreach (TimelineElementControl element in timeline.Elements)
+            foreach (TimelinePictureElementControl element in timeline.PictureElements)
             {
                 element.tlElementContent.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
             }
@@ -111,13 +101,13 @@ namespace SlideshowCreator
         {
             SaveFileDialog sdf = new SaveFileDialog();
             sdf.Title = "Export Slideshow";
-            sdf.Filter = "All Video Files|*.wmv;*.avi;*.mpeg;*.mp4;*.WMV;*.AVI;*.MPEG;*.MP4";
+            sdf.Filter = "All Video Files|*.avi;*.mp4;*.AVI;*.MP4";
             sdf.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
             sdf.FileName = "MySlideshow.mp4";
 
             if (sdf.ShowDialog() == true)
             {
-                VideoCreator videoCreator = new VideoCreator(sdf.FileName, 1080, 720, timeline.Elements);
+                VideoCreator videoCreator = new VideoCreator(sdf.FileName, 1080, 720, timeline.PictureElements);
                 videoCreator.CreateVideo();
             }
             //TODO: Add error msg
@@ -126,6 +116,7 @@ namespace SlideshowCreator
         private void ColumnDefinition_Loaded(object sender, RoutedEventArgs e)
         {
             pictureExplorer.Timeline = timeline;
+            musicExplorer.Timeline = timeline;
         }
     }
 }

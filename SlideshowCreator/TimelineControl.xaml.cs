@@ -21,12 +21,13 @@ namespace SlideshowCreator
     public partial class TimelineControl : UserControl
     {
 
-        private TimelineElementControl _resizing = null;
-        private TimelineElementControl _moving = null;
+        private TimelinePictureElementControl _resizing = null;
+        private TimelinePictureElementControl _moving = null;
         private double _movingOffset = 0;
         private readonly Random _rnd = new Random();
 
-        public List<TimelineElementControl> Elements = new List<TimelineElementControl>();
+        public List<TimelinePictureElementControl> PictureElements = new List<TimelinePictureElementControl>();
+        public List<TimelineMusicElementControl> MusicElements = new List<TimelineMusicElementControl>();
 
         public TimelineControl()
         {
@@ -37,45 +38,41 @@ namespace SlideshowCreator
          *  public methods
          */
 
-        public void AddElement(string imgPath) 
+        public void AddPictureElement(string imgPath)
         {
-            TimelineElementControl element = new TimelineElementControl(this, GetLastElementEndtime(), GetLastElementEndtime() + 200, imgPath);
-            Elements.Add(element);
+            TimelinePictureElementControl element = new TimelinePictureElementControl(this, GetLastPictureElementEndtime(), GetLastPictureElementEndtime() + 200, imgPath);
+            PictureElements.Add(element);
 
             //Random color
             element.tlElementContent.Background = new SolidColorBrush(Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
 
-            if (mainCanvas.ActualWidth < GetLastElementEndtime())
+            if (mainCanvas.ActualWidth < GetLastPictureElementEndtime())
             {
-                mainCanvas.Width = GetLastElementEndtime() + 100;
+                mainCanvas.Width = GetLastPictureElementEndtime() + 100;
                 mainScrollbar.ScrollToRightEnd();
             }
             UpdatePreview();
         }
 
-        public void AddTestElement()
+        public void AddMusicElement(string musicPath)
         {
-            //Create Element
-            TimelineElementControl picture = new TimelineElementControl(this, GetLastElementEndtime(), GetLastElementEndtime() + _rnd.Next(121) + 80, null);
-            Elements.Add(picture);
+            TimelineMusicElementControl element = new TimelineMusicElementControl(this, GetLastMusicElementEndtime(), GetLastMusicElementEndtime() + 200, musicPath);
+            MusicElements.Add(element);
 
-            //Random color
-            picture.tlElementContent.Background = new SolidColorBrush(Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
-
-            if (mainCanvas.ActualWidth < GetLastElementEndtime())
+            if (mainCanvas.ActualWidth < GetLastPictureElementEndtime())
             {
-                mainCanvas.Width = GetLastElementEndtime() + 100;
+                mainCanvas.Width = GetLastPictureElementEndtime() + 100;
                 mainScrollbar.ScrollToRightEnd();
             }
         }
 
         public void Pack()
         {
-            if (Elements.Count < 1)
+            if (PictureElements.Count < 1)
                 return;
 
-            TimelineElementControl lastElement = null;
-            foreach (TimelineElementControl element in Elements)
+            TimelinePictureElementControl lastElement = null;
+            foreach (TimelinePictureElementControl element in PictureElements)
             {
 
                 double alltime = element.EndTime - element.StartTime;
@@ -142,20 +139,30 @@ namespace SlideshowCreator
             return timeStr;
         }
 
-        private double GetLastElementEndtime()
+        private double GetLastPictureElementEndtime()
         {
-            if (Elements.Count > 0)
+            if (PictureElements.Count > 0)
             {
-                TimelineElementControl last = Elements[Elements.Count - 1];
+                TimelinePictureElementControl last = PictureElements[PictureElements.Count - 1];
                 return last.EndTime;
             }
             return 0;
         }
 
-        private TimelineElementControl GetElementAt(double x, double y)
+        private double GetLastMusicElementEndtime()
         {
-            TimelineElementControl fittingElement = null;
-            foreach (TimelineElementControl element in Elements)
+            if (MusicElements.Count > 0)
+            {
+                TimelineMusicElementControl last = MusicElements[MusicElements.Count - 1];
+                return last.EndTime;
+            }
+            return 0;
+        }
+
+        private TimelinePictureElementControl GetPictureElementAt(double x, double y)
+        {
+            TimelinePictureElementControl fittingElement = null;
+            foreach (TimelinePictureElementControl element in PictureElements)
             {
                 if (x >= element.StartTime && x <= element.EndTime
                     && y > element.TopSpacing && y <= element.TopSpacing + element.ElementHeight)
@@ -168,12 +175,12 @@ namespace SlideshowCreator
             return fittingElement;
         }
 
-        private TimelineElementControl GetElementAtMarker()
+        private TimelinePictureElementControl GetPictureElementAtMarker()
         {
             int left = (int)Math.Round(Canvas.GetLeft(tlMarker)) + 5;
-            Console.WriteLine("left: " + left + ", elements: " + Elements.Count);
-            TimelineElementControl fittingElement = null;
-            foreach (TimelineElementControl element in Elements)
+            Console.WriteLine("left: " + left + ", elements: " + PictureElements.Count);
+            TimelinePictureElementControl fittingElement = null;
+            foreach (TimelinePictureElementControl element in PictureElements)
             {
                 if (left >= element.StartTime && left <= element.EndTime)
                 {
@@ -188,7 +195,7 @@ namespace SlideshowCreator
         private void MoveMarker(int x)
         {
             Canvas.SetLeft(tlMarker, Math.Max(x - 5, -5));
-            TimelineElementControl elementAtMarker = GetElementAtMarker();
+            TimelinePictureElementControl elementAtMarker = GetPictureElementAtMarker();
             if (elementAtMarker == null)
                 return;
             UpdatePreview();
@@ -197,16 +204,16 @@ namespace SlideshowCreator
         private void UpdatePreview()
         {
             ///\todo make MVVM
-            string thumbnail = GetElementAtMarker().Thumbnail;
+            string thumbnail = GetPictureElementAtMarker().Thumbnail;
             PreviewControl preview = ((MainWindow)Application.Current.MainWindow).preview;
             preview.UpdateImageAsync(thumbnail);
         }
 
-        private bool isBetweenElements(double x, double y)
+        private bool isBetweenPictureElements(double x, double y)
         {
-            for (int i = 0; i < Elements.Count; i++)
+            for (int i = 0; i < PictureElements.Count; i++)
             {
-                TimelineElementControl element = Elements[i];
+                TimelinePictureElementControl element = PictureElements[i];
                 if (x >= element.StartTime - 6 && x <= element.StartTime + 6
                     && y > element.TopSpacing && y <= element.TopSpacing + element.ElementHeight)
                 {
@@ -216,13 +223,13 @@ namespace SlideshowCreator
             return false;
         }
 
-        private bool isBetweenElementsOrAtEnd(double x, double y)
+        private bool isBetweenPictureElementsOrAtEnd(double x, double y)
         {
-            bool between = isBetweenElements(x, y);
+            bool between = isBetweenPictureElements(x, y);
             bool end = false;
-            if (Elements.Count > 0)
+            if (PictureElements.Count > 0)
             {
-                TimelineElementControl last = Elements[Elements.Count - 1];
+                TimelinePictureElementControl last = PictureElements[PictureElements.Count - 1];
                 end = x >= last.EndTime - 6 && x <= last.EndTime + 6
                     && y > last.TopSpacing && y <= last.TopSpacing + last.ElementHeight;
             }
@@ -239,12 +246,22 @@ namespace SlideshowCreator
             _resizing = null;
             _moving = null;
             Mouse.OverrideCursor = null;
-            mainCanvas.Width = ActualWidth > GetLastElementEndtime() + 100 ? ActualWidth : GetLastElementEndtime() + 100;
+            mainCanvas.Width = ActualWidth > GetLastPictureElementEndtime() + 100 ? ActualWidth : GetLastPictureElementEndtime() + 100;
             Pack();
             updateDrawings();
         }
 
-        private bool isVisible(TimelineElementControl element)
+        private bool isVisible(TimelinePictureElementControl element)
+        {
+            if (element.EndTime > mainScrollbar.HorizontalOffset && element.StartTime < mainScrollbar.HorizontalOffset + mainScrollbar.ActualWidth)
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+        private bool isVisible(TimelineMusicElementControl element)
         {
             if (element.EndTime > mainScrollbar.HorizontalOffset && element.StartTime < mainScrollbar.HorizontalOffset + mainScrollbar.ActualWidth)
             {
@@ -260,7 +277,7 @@ namespace SlideshowCreator
             List<UIElement> toRemove = new List<UIElement>();
             foreach (UIElement child in mainCanvas.Children)
             {
-                if (child.GetType() == typeof(Line) || child.GetType() == typeof(Label) || child.GetType() == typeof(TimelineElementControl))
+                if (child.GetType() == typeof(Line) || child.GetType() == typeof(Label) || child.GetType() == typeof(TimelinePictureElementControl) || child.GetType() == typeof(TimelineMusicElementControl))
                 {
                     toRemove.Add(child);
                 }
@@ -273,7 +290,7 @@ namespace SlideshowCreator
 
             //Draw TimelineElements
 
-            foreach (TimelineElementControl element in Elements)
+            foreach (TimelinePictureElementControl element in PictureElements)
             {
                 if (isVisible(element))
                 {
@@ -282,9 +299,19 @@ namespace SlideshowCreator
                 }
             }
 
+            foreach (TimelineMusicElementControl element in MusicElements)
+            {
+                if (isVisible(element))
+                {
+                    mainCanvas.Children.Add(element);
+                    element.updateHeight();
+                    element.update();
+                }
+            }
+
             //Draw every second timestamp text
 
-            
+
             for (int i = 0; i < mainCanvas.Width; i += 100)
             {
                 if (i < mainScrollbar.HorizontalOffset - 100)
@@ -364,14 +391,14 @@ namespace SlideshowCreator
             double x = p.X;
             double y = p.Y;
 
-            if (isBetweenElementsOrAtEnd(x, y))
+            if (isBetweenPictureElementsOrAtEnd(x, y))
             {
-                _resizing = GetElementAt(x - 15, y);
+                _resizing = GetPictureElementAt(x - 15, y);
             }
-            else if (GetElementAt(x, y) != null)
+            else if (GetPictureElementAt(x, y) != null)
             {
-                _moving = GetElementAt(x, y);
-                _movingOffset = x - GetElementAt(x, y).StartTime;
+                _moving = GetPictureElementAt(x, y);
+                _movingOffset = x - GetPictureElementAt(x, y).StartTime;
                 _moving.Grabbed = true;
             }
             else
@@ -391,10 +418,10 @@ namespace SlideshowCreator
             double x = p.X;
             double y = p.Y;
 
-            if (!isBetweenElementsOrAtEnd(x, y))
+            if (!isBetweenPictureElementsOrAtEnd(x, y))
             {
                 //Recolor Element
-                TimelineElementControl element = GetElementAt(p.X + mainScrollbar.HorizontalOffset, p.Y);
+                TimelinePictureElementControl element = GetPictureElementAt(p.X + mainScrollbar.HorizontalOffset, p.Y);
                 if (element == null)
                 {
                     return;
@@ -411,7 +438,7 @@ namespace SlideshowCreator
             double y = p.Y;
 
             //change cursor to corresponding: resize, move elemenent
-            if (isBetweenElementsOrAtEnd(x, y) || _resizing != null)
+            if (isBetweenPictureElementsOrAtEnd(x, y) || _resizing != null)
             {
                 Mouse.OverrideCursor = Cursors.SizeWE;
             } 
@@ -424,7 +451,7 @@ namespace SlideshowCreator
             //resize element
             if (_resizing != null)
             {
-                if (_resizing.EndTime == GetLastElementEndtime())
+                if (_resizing.EndTime == GetLastPictureElementEndtime())
                 {
                     mainCanvas.Width = ActualWidth > _resizing.EndTime + 100 ? ActualWidth : _resizing.EndTime + 100;
                 }

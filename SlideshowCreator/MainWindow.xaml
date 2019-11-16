@@ -85,7 +85,7 @@
         <DockPanel  x:Name="timelinePanel" DockPanel.Dock="Bottom" MinHeight="160" MaxHeight="300" Margin="10,10,10,10">
             <Border BorderThickness="1" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" Width="150" DockPanel.Dock="Left" >
                 <StackPanel x:Name="timelineControls" Orientation="Vertical" VerticalAlignment="Center">
-                    <Button x:Name="addTestElement" Content="add Test Element" Margin="10,10,10,5" Click="AddTestElement_Click"/>
+                    <Button x:Name="addTestElement" Content="add Test Element" Margin="10,10,10,5"/>
                     <Button x:Name="packButton" Content="pack" Margin="10,5" VerticalAlignment="Center" Click="PackButton_Click"/>
                     <Button x:Name="lsdButton" Content="LSD" Margin="10,5" VerticalAlignment="Center" Click="LsdButton_Click"/>
                     <Button Content="placeholder" Margin="10,5,10,10" VerticalAlignment="Center"/>
@@ -102,14 +102,7 @@
                 <local:PictureExplorerControl x:Name="pictureExplorer"/>
             </TabItem>
             <TabItem Header="Music">
-                <DockPanel>
-                    <Grid DockPanel.Dock="Bottom" Margin="5,5,5,5" Height="75" RenderTransformOrigin="0.5,0.5" Background="#FFC81C07">
-                        <Button x:Name="Add_Music" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="5,5,5,5" Click="Add_Music_Click"/>
-                    </Grid>
-                    <DockPanel DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFAB4545">
-                        <UniformGrid x:Name="Music_Holder" />
-                    </DockPanel>
-                </DockPanel>
+                <local:MusicExplorerControl x:Name="musicExplorer"/>
             </TabItem>
         </TabControl>
         

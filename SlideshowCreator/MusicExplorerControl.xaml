@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="SlideshowCreator.MusicExplorerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SlideshowCreator"
+             mc:Ignorable="d">
+    <DockPanel>
+        <Grid DockPanel.Dock="Bottom" Margin="5,5,5,5" Height="75" RenderTransformOrigin="0.5,0.5" Background="#FFC81C07">
+            <Button x:Name="Add_Music" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="5,5,5,5" Click="Add_Music_Click"/>
+        </Grid>
+        <Grid DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFAB4545">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <WrapPanel Name="Music_Holder" HorizontalAlignment="Center" Orientation="Horizontal"/>
+            </ScrollViewer>
+        </Grid>
+    </DockPanel>
+</UserControl>

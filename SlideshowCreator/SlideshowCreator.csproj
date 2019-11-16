@@ -92,6 +92,12 @@
       <DependentUpon>ExportVideoProgress.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageConverter.cs" />
+    <Compile Include="MusicExplorerControl.xaml.cs">
+      <DependentUpon>MusicExplorerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicExplorerElementControl.xaml.cs">
+      <DependentUpon>MusicExplorerElementControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PictureExplorerControl.xaml.cs">
       <DependentUpon>PictureExplorerControl.xaml</DependentUpon>
     </Compile>
@@ -101,8 +107,11 @@
     <Compile Include="TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TimelineElementControl.xaml.cs">
-      <DependentUpon>TimelineElementControl.xaml</DependentUpon>
+    <Compile Include="TimelineMusicElementControl.xaml.cs">
+      <DependentUpon>TimelineMusicElementControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TimelinePictureElementControl.xaml.cs">
+      <DependentUpon>TimelinePictureElementControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="TimelineMarkerControl.xaml.cs">
       <DependentUpon>TimelineMarkerControl.xaml</DependentUpon>
@@ -124,6 +133,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MusicExplorerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MusicExplorerElementControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PictureExplorerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -152,7 +169,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TimelineElementControl.xaml">
+    <Page Include="TimelineMusicElementControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimelinePictureElementControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,6 +238,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icons\unknownImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\musicThumbnail.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />

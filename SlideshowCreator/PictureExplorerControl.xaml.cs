@@ -89,7 +89,7 @@ namespace SlideshowCreator
                 return;
 
             int index = Picture_Holder.Children.IndexOf((Image)sender);
-            _timeline.AddElement(_imgPaths[index]);
+            _timeline.AddPictureElement(_imgPaths[index]);
         }
 
         private void loadWorker_work(object sender, DoWorkEventArgs e)

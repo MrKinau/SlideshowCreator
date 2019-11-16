@@ -7,6 +7,7 @@
     <SolidColorBrush x:Key="SC_BG_COLOR_BRIGHT" Color="#FF788187"/>
 
     <SolidColorBrush x:Key="SC_FG_COLOR" Color="White"/>
+    <SolidColorBrush x:Key="SC_FG_COLOR_DARK" Color="#FFC8C8C8"/>
     
     <SolidColorBrush x:Key="SC_TL_MARKER_COLOR" Color="#FF00B9FF"/>
     <SolidColorBrush x:Key="SC_TL_MARKER_COLOR_DARK" Color="#FF0068FF"/>
