@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="/Resources/styles/DefaultStyle.xaml" />
                 <ResourceDictionary Source="/Resources/styles/Menu.xaml" />
                 <ResourceDictionary Source="/Resources/styles/Button.xaml" />
+                <ResourceDictionary Source="/Resources/styles/Progressbar.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

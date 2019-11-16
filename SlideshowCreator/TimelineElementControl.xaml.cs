@@ -30,17 +30,27 @@ namespace SlideshowCreator
         public double TopSpacing;
 
         public Boolean Grabbed = false;
+        public string Thumbnail;
 
-        public TimelineElementControl(TimelineControl timeline, double startTime, double endTime)
+
+        public TimelineElementControl(TimelineControl timeline, double startTime, double endTime, string thumbnail)
         {
             InitializeComponent();
+            DataContext = this;
             this.timeline = timeline;
             this.StartTime = startTime;
             this.EndTime = endTime;
+            this.Thumbnail = thumbnail;
 
             timeline.mainCanvas.Children.Add(this);
             updateHeight();
             update();
+
+            if (thumbnail == null)
+                return;
+
+            BitmapImage bi = ImageConverter.ScaleToBitmapImage(new Uri(thumbnail), 200, 200);
+            DisplayedImage.Source = bi;
         }
 
         public TimelineElementControl()

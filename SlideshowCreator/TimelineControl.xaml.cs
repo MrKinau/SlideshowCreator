@@ -37,16 +37,13 @@ namespace SlideshowCreator
          *  public methods
          */
 
-        public void AddElement(Image image) 
+        public void AddElement(string imgPath) 
         {
-            TimelineElementControl element = new TimelineElementControl(this, GetLastElementEndtime(), GetLastElementEndtime() + 200);
+            TimelineElementControl element = new TimelineElementControl(this, GetLastElementEndtime(), GetLastElementEndtime() + 200, imgPath);
             Elements.Add(element);
 
             //Random color
             element.tlElementContent.Background = new SolidColorBrush(Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
-
-            //Add image
-            element.DisplayedImage.Source = image.Source;
 
             if (mainCanvas.ActualWidth < GetLastElementEndtime())
             {
@@ -58,7 +55,7 @@ namespace SlideshowCreator
         public void AddTestElement()
         {
             //Create Element
-            TimelineElementControl picture = new TimelineElementControl(this, GetLastElementEndtime(), GetLastElementEndtime() + _rnd.Next(121) + 80);
+            TimelineElementControl picture = new TimelineElementControl(this, GetLastElementEndtime(), GetLastElementEndtime() + _rnd.Next(121) + 80, null);
             Elements.Add(picture);
 
             //Random color

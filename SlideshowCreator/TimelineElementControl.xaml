@@ -6,6 +6,6 @@
              xmlns:local="clr-namespace:SlideshowCreator"
              mc:Ignorable="d" >
     <Grid x:Name="tlElementContent">
-        <Image x:Name="DisplayedImage" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Image x:Name="DisplayedImage" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

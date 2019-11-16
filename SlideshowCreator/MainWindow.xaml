@@ -34,7 +34,7 @@
                         <Image Source="./Resources/icons/SaveAll_16x_24.bmp"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Export/Create"/>
+                <MenuItem Header="_Export/Create..."/>
                 <MenuItem Header="Sha_re on">
                     <MenuItem Header="Face_book"/>
                     <MenuItem Header="You_tube"/>
@@ -83,7 +83,7 @@
                     <Button x:Name="addTestElement" Content="add Test Element" Margin="10,10,10,5" Click="AddTestElement_Click"/>
                     <Button x:Name="packButton" Content="pack" Margin="10,5" VerticalAlignment="Center" Click="PackButton_Click"/>
                     <Button x:Name="lsdButton" Content="LSD" Margin="10,5" VerticalAlignment="Center" Click="LsdButton_Click"/>
-                    <Button x:Name="testExport" Content="Export" Margin="10,5,10,10" VerticalAlignment="Center" Click="TestExport_Click"/>
+                    <Button Content="placeholder" Margin="10,5,10,10" VerticalAlignment="Center"/>
 
                 </StackPanel>
             </Border>
@@ -92,7 +92,7 @@
 
         <osc:DockPanelSplitter x:Name="timelineSplitter" DockPanel.Dock="Bottom" Height="2" Background="{DynamicResource SC_BG_COLOR_DARK}"/>
 
-        <TabControl x:Name="pictureExplorerPanel" DockPanel.Dock="Left" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" BorderThickness="2" Margin="10,10,10,10"  Width="350">
+        <TabControl x:Name="pictureExplorerPanel" DockPanel.Dock="Left" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" BorderThickness="2" Margin="10,10,10,10"  Width="365">
             <TabItem Header="Pictures">
                 <DockPanel>
                     <Grid DockPanel.Dock="Bottom" Margin="5,5,5,5" Height="75" RenderTransformOrigin="0.5,0.5" Background="#FFCFD032">
@@ -101,8 +101,6 @@
                     <Grid DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFA59A9A">
                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                             <WrapPanel Name="Picture_Holder" HorizontalAlignment="Center" Orientation="Horizontal"/>
-                            
-
                         </ScrollViewer>
                     </Grid>
                 </DockPanel>
@@ -122,7 +120,18 @@
         <osc:DockPanelSplitter x:Name="pictureExplorerSplitter" DockPanel.Dock="Left" Width="2" Background="{DynamicResource SC_BG_COLOR_DARK}"/>
 
         <DockPanel x:Name="previewPanel" DockPanel.Dock="Right" Margin="10,32,10,10">
-            <Border x:Name="finishButton" DockPanel.Dock="Bottom" BorderBrush="#FF0808C7" BorderThickness="2" Background="#FF5630FF" Height="50" />
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition MinWidth="250"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="2" x:Name="finishButton" Click="FinishButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,10,0" FontSize="20">Create Slideshow</TextBlock>
+                        <Image Width="30" Height="30" Source="Resources/icons/checkmark.png" Margin="10,0,0,0" />
+                    </StackPanel>
+                </Button>
+            </Grid>
             <Border x:Name="preview" DockPanel.Dock="Top" BorderBrush="#FF75993F" BorderThickness="2" Background="#FF279D2D" Margin="0, 0, 0, 20" />
         </DockPanel>
 

@@ -1,0 +1,18 @@
+﻿<Window x:Class="SlideshowCreator.ExportVideoProgress"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SlideshowCreator"
+        mc:Ignorable="d"
+        Title="Slideshow exporting" Height="150" Width="280"
+        Background="{DynamicResource SC_BG_COLOR}" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo x:Name="taskbarItemInfo"/>
+    </Window.TaskbarItemInfo>
+    <StackPanel Margin="10, 10, 10, 10">
+        <TextBlock x:Name="progressText" Text="Export in progress (0.0% completed)" Foreground="White" FontSize="14"/>
+        <ProgressBar x:Name="progressBar" Height="20" Margin="0, 10, 0, 0"/>
+        <Button x:Name="cancelButton" Content="cancel" MaxWidth="50" Width="50" Margin="0, 10, 0, 0" HorizontalAlignment="Right" Click="CancelButton_Click" />
+    </StackPanel>
+</Window>

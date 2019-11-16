@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,9 @@ namespace SlideshowCreator
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
+        //Erstmal nur provisorisch. Der Picture Explorer sollte ggf. in ein Custom Control ausgelagert werden
+        private List<string> imgPaths = new List<string>();
 
         public MainWindow()
         {
@@ -59,6 +62,7 @@ namespace SlideshowCreator
         private void Add_Image(string file)
         {
             Console.WriteLine("Une image"+file);
+            imgPaths.Add(file);
             System.Windows.Controls.Image new_img = new System.Windows.Controls.Image();
             new_img.Source = ImageConverter.ScaleToBitmapImage(new Uri(file), 100, 100);
             Thickness img_thickness = new Thickness();
@@ -77,10 +81,14 @@ namespace SlideshowCreator
             if (e.ClickCount != 2)
                 return;
 
+            if (sender == null)
+                return;
+
             if (sender.GetType() != typeof(System.Windows.Controls.Image))
                 return;
 
-            timeline.AddElement((System.Windows.Controls.Image) sender);
+            int index = Picture_Holder.Children.IndexOf((System.Windows.Controls.Image)sender);
+            timeline.AddElement(imgPaths[index]);
         }
 
         private void Timeline_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -153,10 +161,8 @@ namespace SlideshowCreator
             }
         }
 
-        private void TestExport_Click(object sender, RoutedEventArgs e)
+        private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            VideoCreator videoCreator = new VideoCreator();
-
             SaveFileDialog sdf = new SaveFileDialog();
             sdf.Title = "Export Slideshow";
             sdf.Filter = "All Video Files|*.wmv;*.avi;*.mpeg;*.mp4;*.WMV;*.AVI;*.MPEG;*.MP4";
@@ -165,7 +171,8 @@ namespace SlideshowCreator
 
             if (sdf.ShowDialog() == true)
             {
-                videoCreator.CreateVideo(timeline.Elements, sdf.FileName, 1080, 720);
+                VideoCreator videoCreator = new VideoCreator(sdf.FileName, 1080, 720, timeline.Elements);
+                videoCreator.CreateVideo();
             }
             //TODO: Add error msg
         }
