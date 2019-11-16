@@ -104,6 +104,11 @@ namespace SlideshowCreator
 
         private void exportWorker_completed(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Cancelled)
+            {
+                exportWindow.taskbarItemInfo.ProgressState = TaskbarItemProgressState.Error;
+                File.Delete(fileName);
+            }
             exportWindow.Close();
         }
 
