@@ -42,6 +42,8 @@ namespace SlideshowCreator
 
         public void AddMusic(string file)
         {
+            if (_musicPaths.Contains(file))
+                return;
             _musicPaths.Add(file);
 
             MusicExplorerElementControl musicItem = new MusicExplorerElementControl();

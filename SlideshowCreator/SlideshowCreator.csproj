@@ -234,15 +234,6 @@
     <Resource Include="Resources\icons\VSO_Add_whiteNoHalo_12x_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icons\TextElement_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icons\MagicWand_16x_24.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icons\Image_18x16_24.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\icons\checkmark.png" />
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +241,23 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icons\musicThumbnail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\addEffect.png" />
+    <Resource Include="Resources\icons\addEmptySlide.png" />
+    <Resource Include="Resources\icons\editTransition.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\addText.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\help.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icons\add.png" />

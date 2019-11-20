@@ -66,6 +66,8 @@ namespace SlideshowCreator
 
         private void Add_Image(string file)
         {
+            if (_imgPaths.Contains(file))
+                return;
             _imgPaths.Add(file);
 
             Image newImg = new Image();
