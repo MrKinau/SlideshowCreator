@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>star-24-64.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
       <HintPath>..\packages\Accord.3.8.0\lib\net46\Accord.dll</HintPath>
@@ -70,6 +73,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -88,6 +92,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataStore.cs" />
     <Compile Include="ExportVideoProgress.xaml.cs">
       <DependentUpon>ExportVideoProgress.xaml</DependentUpon>
     </Compile>
@@ -104,9 +109,11 @@
     <Compile Include="PreviewControl.xaml.cs">
       <DependentUpon>PreviewControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TimelineElementData.cs" />
     <Compile Include="TimelineMusicElementControl.xaml.cs">
       <DependentUpon>TimelineMusicElementControl.xaml</DependentUpon>
     </Compile>
@@ -165,6 +172,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\styles\Scrollbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\styles\Tabcontrol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TimelineControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,13 +228,7 @@
     <Resource Include="Resources\cursors\grabbing.cur" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icons\Save_grey_16x_24.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\icons\Close_WhiteNoHalo_12x_16x_24.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icons\SaveAll_16x_24.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icons\VSO_Add_whiteNoHalo_12x_16x.png" />
@@ -241,6 +250,31 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icons\musicThumbnail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\save.png" />
+    <Resource Include="Resources\icons\saveAs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\share.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="star-24-64.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />

@@ -6,10 +6,17 @@
              xmlns:local="clr-namespace:SlideshowCreator"
              mc:Ignorable="d">
     <DockPanel>
-        <Grid DockPanel.Dock="Bottom" Margin="5,5,5,5" Height="75" RenderTransformOrigin="0.5,0.5" Background="#FFC81C07">
-            <Button x:Name="Add_Music" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="5,5,5,5" Click="Add_Music_Click"/>
+        <Grid DockPanel.Dock="Top" Height="30" Background="{DynamicResource SC_BG_COLOR}">
+            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}">
+                <Button x:Name="Add_Music" Style="{DynamicResource ExplorerButtonStyle}" Margin="2,0,2,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Add_Music_Click" Background="Transparent">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="15" Height="15" Source="Resources/icons/add.png" Margin="2,-2,2,-2"/>
+                        <TextBlock Text="Add Music" Margin="0,-3,2,-5"/>
+                    </StackPanel>
+                </Button>
+            </Border>
         </Grid>
-        <Grid DockPanel.Dock="Top"  Margin="5,5,5,5" Background="#FFAB4545">
+        <Grid DockPanel.Dock="Top"  Margin="5,5,5,5" Background="{DynamicResource SC_BG_COLOR_BRIGHT}">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <WrapPanel Name="Music_Holder" HorizontalAlignment="Center" Orientation="Horizontal"/>
             </ScrollViewer>

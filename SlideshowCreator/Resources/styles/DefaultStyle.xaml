@@ -2,13 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <!-- Colors -->
-    <SolidColorBrush x:Key="SC_BG_COLOR" Color="#FF3C3F41"/>
-    <SolidColorBrush x:Key="SC_BG_COLOR_DARK" Color="#FF181a1b"/>
-    <SolidColorBrush x:Key="SC_BG_COLOR_BRIGHT" Color="#FF788187"/>
+    <SolidColorBrush x:Key="SC_BG_COLOR_BRIGHT" Color="#FF828282"/>
+    <SolidColorBrush x:Key="SC_BG_COLOR" Color="#FF3C3C3C"/>
+    <SolidColorBrush x:Key="SC_BG_COLOR_MEDIUM" Color="#FF2D2D2D"/>
+    <SolidColorBrush x:Key="SC_BG_COLOR_DARK" Color="#FF1A1A1A"/>
 
     <SolidColorBrush x:Key="SC_FG_COLOR" Color="White"/>
     <SolidColorBrush x:Key="SC_FG_COLOR_DARK" Color="#FFC8C8C8"/>
-    
+    <SolidColorBrush x:Key="SC_FG_COLOR_DARKER" Color="#FFA0A0A0"/>
+
+
     <SolidColorBrush x:Key="SC_TL_MARKER_COLOR" Color="#FF00B9FF"/>
     <SolidColorBrush x:Key="SC_TL_MARKER_COLOR_DARK" Color="#FF0068FF"/>
 
@@ -18,4 +21,5 @@
         <Setter Property="Foreground" Value="{DynamicResource SC_FG_COLOR}" />
         <Setter Property="FontSize" Value="13" />
     </Style>
+
 </ResourceDictionary>

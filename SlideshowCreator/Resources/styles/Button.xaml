@@ -16,7 +16,7 @@
                             <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{DynamicResource SC_FG_COLOR}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource SC_BG_COLOR_DARK}" />
+                            <Setter Property="Background" Value="{DynamicResource SC_BG_COLOR_MEDIUM}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -24,4 +24,25 @@
         </Setter>
     </Style>
     <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}" />
+
+    <!-- Button -->
+    <Style TargetType="Button" x:Key="ExplorerButtonStyle" BasedOn="{StaticResource DefaultStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" CornerRadius="2" BorderThickness="1" BorderBrush="Transparent" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" TextElement.Foreground="{DynamicResource SC_FG_COLOR_DARK}" Margin="1,5,1,5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource SC_BG_COLOR_DARK}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SC_BG_COLOR_MEDIUM}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

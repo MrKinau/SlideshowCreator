@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SlideshowCreator"
              mc:Ignorable="d">
 
-    <Border BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" BorderThickness="1">
+    <!--<Border BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" BorderThickness="1">-->
         <Image x:Name="previewImage" />
-    </Border>
+    <!--</Border>-->
 </UserControl>

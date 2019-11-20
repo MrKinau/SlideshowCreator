@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -38,9 +39,9 @@ namespace SlideshowCreator
          *  public methods
          */
 
-        public void AddPictureElement(string imgPath)
+        public void AddPictureElement(double startTime, double endTime, string thumbnail)
         {
-            TimelinePictureElementControl element = new TimelinePictureElementControl(this, GetLastPictureElementEndtime(), GetLastPictureElementEndtime() + 200, imgPath);
+            TimelinePictureElementControl element = new TimelinePictureElementControl(this, startTime, endTime, thumbnail);
             PictureElements.Add(element);
 
             //Random color
@@ -51,7 +52,11 @@ namespace SlideshowCreator
                 mainCanvas.Width = GetLastPictureElementEndtime() + 100;
                 mainScrollbar.ScrollToRightEnd();
             }
-            UpdatePreview();
+        }
+
+        public void AddPictureElement(string imgPath)
+        {
+            AddPictureElement(GetLastPictureElementEndtime(), GetLastPictureElementEndtime() + 200, imgPath);
         }
 
         public void AddMusicElement(string musicPath)
@@ -81,6 +86,14 @@ namespace SlideshowCreator
                 element.update();
                 lastElement = element;
             }
+        }
+
+        public void UpdatePreview()
+        {
+            ///\todo make MVVM
+            string thumbnail = GetPictureElementAtMarker().Thumbnail;
+            PreviewControl preview = ((MainWindow)Application.Current.MainWindow).preview;
+            preview.UpdateImageAsync(thumbnail);
         }
 
         /**
@@ -199,14 +212,6 @@ namespace SlideshowCreator
             if (elementAtMarker == null)
                 return;
             UpdatePreview();
-        }
-
-        private void UpdatePreview()
-        {
-            ///\todo make MVVM
-            string thumbnail = GetPictureElementAtMarker().Thumbnail;
-            PreviewControl preview = ((MainWindow)Application.Current.MainWindow).preview;
-            preview.UpdateImageAsync(thumbnail);
         }
 
         private bool isBetweenPictureElements(double x, double y)
@@ -421,7 +426,7 @@ namespace SlideshowCreator
             if (!isBetweenPictureElementsOrAtEnd(x, y))
             {
                 //Recolor Element
-                TimelinePictureElementControl element = GetPictureElementAt(p.X + mainScrollbar.HorizontalOffset, p.Y);
+                TimelinePictureElementControl element = GetPictureElementAt(p.X, p.Y);
                 if (element == null)
                 {
                     return;

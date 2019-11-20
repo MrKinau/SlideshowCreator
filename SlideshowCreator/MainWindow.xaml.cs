@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 using Microsoft.Win32;
 
 namespace SlideshowCreator
@@ -24,10 +27,19 @@ namespace SlideshowCreator
     public partial class MainWindow : Window
     {
 
+        private string _loadFromFile;
+
+        public Settings SCSettings = new Settings();
+
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        public MainWindow(string loadFromFile)
+        {
+            _loadFromFile = loadFromFile;
+            InitializeComponent();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -117,6 +129,58 @@ namespace SlideshowCreator
         {
             pictureExplorer.Timeline = timeline;
             musicExplorer.Timeline = timeline;
+        }
+
+        private void SaveMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (SCSettings.SavingPath == null)
+            {
+                SaveAsMenu_Click(null, null);
+                return;
+            }
+
+            DataStore ds = new DataStore(timeline, pictureExplorer, musicExplorer);
+            ds.Update();
+            ds.SaveTo(SCSettings.SavingPath);
+        }
+
+        private void SaveAsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DataStore ds = new DataStore(timeline, pictureExplorer, musicExplorer);
+            ds.Update();
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Slideshow Creator Project|*.ssc;*.SSC";
+            if (sfd.ShowDialog() == true)
+            {
+                SCSettings.SavingPath = sfd.FileName;
+                Title = "Slideshow Creator // " + SCSettings.SavingPath;
+                ds.SaveTo(SCSettings.SavingPath);
+            }
+        }
+
+        private void OpenMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DataStore ds = new DataStore(timeline, pictureExplorer, musicExplorer);
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Slideshow Creator Project|*.ssc;*.SSC";
+            if (ofd.ShowDialog() == true)
+            {
+                SCSettings.SavingPath = ofd.FileName;
+                Title = "Slideshow Creator // " + SCSettings.SavingPath;
+                ds.LoadFrom(SCSettings.SavingPath);
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SCSettings.EnsureAssociationsSet(".ssc", "SSC_PROJECT_FILE", "Slideshow Creator Project", System.Reflection.Assembly.GetExecutingAssembly().Location);
+            if (_loadFromFile == null)
+                return;
+            SCSettings.SavingPath = _loadFromFile;
+            _loadFromFile = null;
+            Title = "Slideshow Creator // " + SCSettings.SavingPath;
+            DataStore ds = new DataStore(timeline, pictureExplorer, musicExplorer);
+            ds.LoadFrom(SCSettings.SavingPath);
         }
     }
 }

@@ -6,48 +6,62 @@
         xmlns:local="clr-namespace:SlideshowCreator"
         xmlns:osc="clr-namespace:OpenSourceControls;assembly=DockPanelSplitter"
         mc:Ignorable="d"
-        Title="SlideShow Creator" Height="700" Width="800" WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged">
+        Title="SlideShow Creator" Height="700" Width="800" WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged" Loaded="Window_Loaded">
 
     <Window.DataContext>
         <local:PreviewControl />
     </Window.DataContext>
     
-    <DockPanel x:Name="rootPanel" HorizontalAlignment="Stretch" LastChildFill="True" Background="#FF3C3F41">
+    <DockPanel x:Name="rootPanel" HorizontalAlignment="Stretch" LastChildFill="True" Background="{DynamicResource SC_BG_COLOR}">
 
         <Menu x:Name="menuPanel" DockPanel.Dock="Top" Background="{DynamicResource SC_BG_COLOR}">
             <MenuItem Header="_File">
-                <MenuItem Header="_New Projekt">
+                <MenuItem Header="_New Project">
+                    <MenuItem.Icon>
+                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/new.png"/>
+                    </MenuItem.Icon>
                     <MenuItem Header="_Collage"/>
-                    <MenuItem Header="_Picture"/>
+                    <MenuItem Header="S_lideshow"/>
                 </MenuItem>
-                <MenuItem Header="_Open..."/>
+                <MenuItem x:Name="openMenu" Header="_Open..." Click="OpenMenu_Click">
+                    <MenuItem.Icon>
+                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/open.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="_Add">
                     <MenuItem.Icon>
-                        <Image Source="./Resources/icons/VSO_Add_whiteNoHalo_12x_16x.png"/>
+                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/add.png"/>
                     </MenuItem.Icon>
-                    <MenuItem Header="_Image..."/>
+                    <MenuItem Header="_Pictures..."/>
                     <MenuItem Header="_Music..."/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="_Save">
+                <MenuItem x:Name="saveMenu" Header="_Save" Click="SaveMenu_Click">
                     <MenuItem.Icon>
-                        <Image Source="./Resources/icons/Save_grey_16x_24.bmp"/>
+                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/save.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Sa_ve As">
+                <MenuItem x:Name="saveAsMenu" Header="Sa_ve As" Click="SaveAsMenu_Click">
                     <MenuItem.Icon>
-                        <Image Source="./Resources/icons/SaveAll_16x_24.bmp"/>
+                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/saveAs.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Export/Create..."/>
+                <MenuItem Header="Export/_Create...">
+                    <MenuItem.Icon>
+                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/export.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="Sha_re on">
+                    <MenuItem.Icon>
+                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/share.png"/>
+                    </MenuItem.Icon>
                     <MenuItem Header="Face_book"/>
                     <MenuItem Header="You_tube"/>
                 </MenuItem>
                 <Separator/>
                 <MenuItem Header="E_xit" Click="MenuItem_Click">
                     <MenuItem.Icon>
-                        <Image Source="./Resources/icons/Close_WhiteNoHalo_12x_16x_24.bmp"/>
+                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/exit.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -97,11 +111,11 @@
 
         <osc:DockPanelSplitter x:Name="timelineSplitter" DockPanel.Dock="Bottom" Height="2" Background="{DynamicResource SC_BG_COLOR_DARK}"/>
 
-        <TabControl x:Name="pictureExplorerPanel" DockPanel.Dock="Left" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" BorderThickness="2" Margin="10,10,10,10"  Width="350">
+        <TabControl x:Name="pictureExplorerPanel" DockPanel.Dock="Left" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" BorderThickness="2" Margin="10"  Width="350">
             <TabItem Header="Pictures">
                 <local:PictureExplorerControl x:Name="pictureExplorer"/>
             </TabItem>
-            <TabItem Header="Music">
+            <TabItem Header="Music" Margin="-1,0,0,0">
                 <local:MusicExplorerControl x:Name="musicExplorer"/>
             </TabItem>
         </TabControl>
