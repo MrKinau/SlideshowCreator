@@ -36,12 +36,12 @@
                     <MenuItem Header="_Music..."/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem x:Name="saveMenu" Header="_Save" Click="SaveMenu_Click">
+                <MenuItem x:Name="saveMenu" Header="_Save" Click="SaveMenu_Click" InputGestureText="CTRL+S">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/save.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="saveAsMenu" Header="Sa_ve As" Click="SaveAsMenu_Click">
+                <MenuItem x:Name="saveAsMenu" Header="Sa_ve As" Click="SaveAsMenu_Click" InputGestureText="CTRL+SHIFT+S">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/saveAs.png"/>
                     </MenuItem.Icon>

@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 namespace SlideshowCreator
 {
     /// <summary>
-    /// Interaction logic for ExportVideoProgress.xaml
+    /// Interaction logic for ExportVideoProgressWindow.xaml
     /// </summary>
-    public partial class ExportVideoProgress : Window
+    public partial class ExportVideoProgressWindow : Window
     {
 
         private VideoCreator _videoCreator;
 
-        public ExportVideoProgress(VideoCreator videoCreator)
+        public ExportVideoProgressWindow(VideoCreator videoCreator)
         {
             this._videoCreator = videoCreator;
             InitializeComponent();

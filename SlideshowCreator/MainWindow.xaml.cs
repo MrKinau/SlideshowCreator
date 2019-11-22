@@ -111,18 +111,8 @@ namespace SlideshowCreator
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog sdf = new SaveFileDialog();
-            sdf.Title = "Export Slideshow";
-            sdf.Filter = "All Video Files|*.avi;*.mp4;*.AVI;*.MP4";
-            sdf.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
-            sdf.FileName = "MySlideshow.mp4";
-
-            if (sdf.ShowDialog() == true)
-            {
-                VideoCreator videoCreator = new VideoCreator(sdf.FileName, 1080, 720, timeline.PictureElements);
-                videoCreator.CreateVideo();
-            }
-            //TODO: Add error msg
+            ExportVideoSettingsWindow videoSettings = new ExportVideoSettingsWindow(timeline);
+            videoSettings.ShowDialog();
         }
 
         private void ColumnDefinition_Loaded(object sender, RoutedEventArgs e)

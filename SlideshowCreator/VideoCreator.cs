@@ -17,13 +17,13 @@ namespace SlideshowCreator
     {
 
         private readonly BackgroundWorker exportWorker = new BackgroundWorker();
-        private ExportVideoProgress exportWindow;
+        private ExportVideoProgressWindow exportWindow;
         private string fileName;
         private int width;
         private int height;
         private List<TimelinePictureElementControl> timelineElements;
 
-        private int frameRate = 30;
+        private int frameRate;
         private int frames;
         private int bitrate;
 
@@ -31,22 +31,23 @@ namespace SlideshowCreator
         /*
          * Bitrate calculation from: https://www.ezs3.com/public/What_bitrate_should_I_use_when_encoding_my_video_How_do_I_optimize_my_video_for_the_web.cfm
          */
-        public VideoCreator(string fileName, int width, int height, List<TimelinePictureElementControl> timelineElements)
+        public VideoCreator(string fileName, int width, int height, int bitrate, int fps, List<TimelinePictureElementControl> timelineElements)
         {
             this.fileName = fileName;
             this.width = width;
             this.height = height;
             this.timelineElements = timelineElements;
+            this.bitrate = bitrate;
+            this.frameRate = fps;
 
             ///\todo exception, when no content is added (disable create button if no content is in timeline)
             int timeInSeconds = (int)(timelineElements[timelineElements.Count - 1].EndTime / 100);
             frames = timeInSeconds * frameRate;
-            bitrate = (int)Math.Round(height * width * 5 * 0.07) * timeInSeconds;
         }
 
         public void CreateVideo()
         {
-            exportWindow = new ExportVideoProgress(this);
+            exportWindow = new ExportVideoProgressWindow(this);
             exportWindow.progressBar.Maximum = frames;
             exportWorker.WorkerSupportsCancellation = true;
             exportWorker.WorkerReportsProgress = true;
