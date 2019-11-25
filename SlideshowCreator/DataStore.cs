@@ -19,6 +19,7 @@ namespace SlideshowCreator
         private TimelineControl _timeline;
         private PictureExplorerControl _pictureExplorer;
         private MusicExplorerControl _musicExplorer;
+        private StatusbarControl _statusBar;
 
         [DataMember] private List<string> _picturePaths;
         [DataMember] private List<string> _musicPaths;
@@ -26,11 +27,15 @@ namespace SlideshowCreator
         [DataMember] private double _tlMarkerPos;
         [DataMember] private double _tlWidth;
 
-        public DataStore(TimelineControl timeline, PictureExplorerControl pictureExplorer, MusicExplorerControl musicExplorer)
+        [DataMember] public ExportData ExportData;
+
+        public DataStore(TimelineControl timeline, StatusbarControl statusbar, PictureExplorerControl pictureExplorer, MusicExplorerControl musicExplorer, ExportData exportData)
         {
             _timeline = timeline;
+            _statusBar = statusbar;
             _pictureExplorer = pictureExplorer;
             _musicExplorer = musicExplorer;
+            ExportData = exportData;
         }
 
         public void Update()
@@ -57,6 +62,13 @@ namespace SlideshowCreator
                 ds = (DataStore)serializer.ReadObject(s);
             }
 
+            if (ds.ExportData != null)
+            {
+                ExportData = new ExportData(_timeline, _statusBar, ds.ExportData.Resolution, ds.ExportData.FPS);
+                ExportData.Bitrate = ds.ExportData.Bitrate;
+                ExportData.ExportPath = ds.ExportData.ExportPath;
+            }
+
             _pictureExplorer.Reset();            _musicExplorer.Reset();            _timeline.PictureElements.Clear();
 
             _timeline.mainCanvas.Width = ds._tlWidth;
@@ -72,11 +84,12 @@ namespace SlideshowCreator
 
             _pictureExplorer.AddImages(ds._picturePaths.ToArray());
 
-            Mouse.OverrideCursor = null;        }
+            Mouse.OverrideCursor = null;            Console.WriteLine(ExportData.Bitrate);        }
 
         public void SaveTo(string fileName)
         {
             Mouse.OverrideCursor = Cursors.AppStarting;
+            ExportData.ExportPath = fileName;
             DataContractSerializer serializer = new DataContractSerializer(typeof(DataStore));
             XmlWriterSettings settings = new XmlWriterSettings() { Indent = true };
             using (XmlWriter w = XmlWriter.Create(fileName, settings))

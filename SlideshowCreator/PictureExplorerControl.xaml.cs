@@ -29,8 +29,9 @@ namespace SlideshowCreator
         private int _loadingImgCount;
         private BackgroundWorker loadWorker;
 
-        public TimelineControl Timeline { set { _timeline = value; } }
+        public StatusbarControl StatusBar;
 
+        public TimelineControl Timeline { set { _timeline = value; } }
         public List<string> ImgPaths { get { return _imgPaths; } }
 
         public PictureExplorerControl()
@@ -56,11 +57,15 @@ namespace SlideshowCreator
             }
             _loadingImgCount = Picture_Holder.Children.Count;
 
+            if (StatusBar != null)
+                StatusBar.AddLoadingProgress("Loading images...", _loadingImgCount);
+
             loadWorker = new BackgroundWorker();
             loadWorker.WorkerReportsProgress = true;
             loadWorker.WorkerSupportsCancellation = true;
             loadWorker.DoWork += loadWorker_work;
             loadWorker.ProgressChanged += loadWorker_updateImg;
+            loadWorker.RunWorkerCompleted += loadWorker_completed;
             loadWorker.RunWorkerAsync();
         }
 
@@ -123,10 +128,18 @@ namespace SlideshowCreator
         {
             if (e.ProgressPercentage > Picture_Holder.Children.Count - 1)
                 return;
-            Image img = (Image) Picture_Holder.Children[e.ProgressPercentage];
+            if (StatusBar != null)
+                StatusBar.LoadingValue = e.ProgressPercentage;
+            Image img = (Image)Picture_Holder.Children[e.ProgressPercentage];
             img.Margin = new Thickness(2);
             img.MaxWidth = img.MaxHeight = 100;
             img.Source = _loadingImg;
+        }
+
+        private void loadWorker_completed(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (StatusBar != null)
+                StatusBar.LoadingText = "";
         }
     }
 }

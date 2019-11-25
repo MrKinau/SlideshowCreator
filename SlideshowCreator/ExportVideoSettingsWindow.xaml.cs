@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,10 +27,10 @@ namespace SlideshowCreator
         private ExportData _exportData;
         private TimelineControl _timeline;
 
-        public ExportVideoSettingsWindow(TimelineControl timeline)
+        public ExportVideoSettingsWindow(TimelineControl timeline, ExportData exportData)
         {
             InitializeComponent();
-            DataContext = _exportData = new ExportData(timeline, 1, 10);
+            DataContext = _exportData = exportData;
             _timeline = timeline;
         }
 
@@ -50,6 +51,7 @@ namespace SlideshowCreator
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
+            Close();
             VideoCreator videoCreator = new VideoCreator(
                 _exportData.ExportPath,
                 _exportData.GetResolution().Width,
@@ -61,34 +63,39 @@ namespace SlideshowCreator
         }
     }
 
+    [DataContract]
     public class ExportData : INotifyPropertyChanged
     {
-        private readonly List<Resolution> _validResolutions = new Resolution[]
-        {
-            new Resolution(2560, 1440),
-            new Resolution(1920, 1080),
-            new Resolution(1280, 720),
-            new Resolution(858, 480),
-            new Resolution(480, 360),
-            new Resolution(352, 240)
-        }.ToList();
+        private static readonly List<Resolution> _validResolutions = new Resolution[]
+                {
+                    new Resolution(2560, 1440),
+                    new Resolution(1920, 1080),
+                    new Resolution(1280, 720),
+                    new Resolution(858, 480),
+                    new Resolution(480, 360),
+                    new Resolution(352, 240)
+                }.ToList();
 
+        private StatusbarControl _statusBar;
         private TimelineControl _timeline;
         private string _exportPath;
         private Resolution _resolution;
         private int _bitrate;
         private int _fps;
 
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ExportData(TimelineControl timeline, int defaultResolution, int defaultFps)
+        public ExportData(TimelineControl timeline, StatusbarControl statusBar, int defaultResolution, int defaultFps)
         {
             _resolution = _validResolutions[defaultResolution];
             _timeline = timeline;
             _fps = defaultFps;
+            _statusBar = statusBar;
             calcBitrate();
         }
 
+        [DataMember]
         public string ExportPath
         {
             get { return _exportPath ?? System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), "MySlideshow.mp4"); }
@@ -96,9 +103,12 @@ namespace SlideshowCreator
             {
                 _exportPath = value;
                 OnPropertyChanged();
+                if (_statusBar != null)
+                    _statusBar.SavingPath = value;
             }
         }
 
+        [DataMember]
         public int Resolution
         {
             get { return _validResolutions.IndexOf(_resolution); }
@@ -110,6 +120,7 @@ namespace SlideshowCreator
             }
         }
 
+        [DataMember]
         public int Bitrate
         {
             get { return _bitrate; }
@@ -120,6 +131,7 @@ namespace SlideshowCreator
             }
         }
 
+        [DataMember]
         public int FPS
         {
             get { return _fps; }
@@ -135,6 +147,8 @@ namespace SlideshowCreator
          */
         private void calcBitrate()
         {
+            if (_timeline == null || _timeline.PictureElements.Count <= 0)
+                return;
             int timeInSeconds = (int)(_timeline.PictureElements[_timeline.PictureElements.Count - 1].EndTime / 100);
             Bitrate = (int)Math.Round(_resolution.Height * _resolution.Width * 5 * 0.07) * timeInSeconds;
         }
@@ -150,10 +164,11 @@ namespace SlideshowCreator
         }
     }
 
+    [DataContract]
     public class Resolution
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
+        [DataMember] public int Width { get; set; }
+        [DataMember] public int Height { get; set; }
 
         public Resolution(int width, int height)
         {

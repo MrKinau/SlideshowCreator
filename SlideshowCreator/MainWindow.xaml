@@ -116,7 +116,8 @@
         </Menu>
         <Border DockPanel.Dock="Top" Background="{DynamicResource SC_BG_COLOR_DARK}" Height="1"/>
 
-        <DockPanel  x:Name="timelinePanel" DockPanel.Dock="Bottom" MinHeight="160" MaxHeight="300" Margin="10,10,10,10">
+        <local:StatusbarControl x:Name="statusBar" DockPanel.Dock="Bottom" />
+        <DockPanel x:Name="timelinePanel" DockPanel.Dock="Bottom" MinHeight="160" MaxHeight="300" Margin="10,10,10,10">
             <Border BorderThickness="1" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" Width="150" DockPanel.Dock="Left" >
                 <StackPanel x:Name="timelineControls" Orientation="Vertical" VerticalAlignment="Center">
                     <Button x:Name="addTestElement" Content="add Test Element" Margin="10,10,10,5"/>

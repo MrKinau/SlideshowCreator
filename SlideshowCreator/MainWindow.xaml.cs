@@ -28,6 +28,7 @@ namespace SlideshowCreator
     {
 
         private string _loadFromFile;
+        private DataStore _dataStore;
 
         public Settings SCSettings = new Settings();
 
@@ -111,7 +112,8 @@ namespace SlideshowCreator
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            ExportVideoSettingsWindow videoSettings = new ExportVideoSettingsWindow(timeline);
+            _dataStore = _dataStore ?? new DataStore(timeline, statusBar, pictureExplorer, musicExplorer, new ExportData(timeline, statusBar, 1, 10));
+            ExportVideoSettingsWindow videoSettings = new ExportVideoSettingsWindow(timeline, _dataStore.ExportData);
             videoSettings.ShowDialog();
         }
 
@@ -129,48 +131,52 @@ namespace SlideshowCreator
                 return;
             }
 
-            DataStore ds = new DataStore(timeline, pictureExplorer, musicExplorer);
+            DataStore ds = _dataStore ?? new DataStore(timeline, statusBar, pictureExplorer, musicExplorer, new ExportData(timeline, statusBar, 1, 10));
             ds.Update();
             ds.SaveTo(SCSettings.SavingPath);
+            _dataStore = ds;
         }
 
         private void SaveAsMenu_Click(object sender, RoutedEventArgs e)
         {
-            DataStore ds = new DataStore(timeline, pictureExplorer, musicExplorer);
+            DataStore ds = _dataStore ?? new DataStore(timeline, statusBar, pictureExplorer, musicExplorer, new ExportData(timeline, statusBar, 1, 10));
             ds.Update();
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "Slideshow Creator Project|*.ssc;*.SSC";
+            sfd.FileName = "MySlideshow.ssc";
             if (sfd.ShowDialog() == true)
             {
                 SCSettings.SavingPath = sfd.FileName;
                 Title = "Slideshow Creator // " + SCSettings.SavingPath;
                 ds.SaveTo(SCSettings.SavingPath);
+                _dataStore = ds;
             }
         }
 
         private void OpenMenu_Click(object sender, RoutedEventArgs e)
         {
-            DataStore ds = new DataStore(timeline, pictureExplorer, musicExplorer);
+            _dataStore = new DataStore(timeline, statusBar, pictureExplorer, musicExplorer, new ExportData(timeline, statusBar, 1, 10));
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Slideshow Creator Project|*.ssc;*.SSC";
             if (ofd.ShowDialog() == true)
             {
                 SCSettings.SavingPath = ofd.FileName;
                 Title = "Slideshow Creator // " + SCSettings.SavingPath;
-                ds.LoadFrom(SCSettings.SavingPath);
+                _dataStore.LoadFrom(SCSettings.SavingPath);
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SCSettings.EnsureAssociationsSet(".ssc", "SSC_PROJECT_FILE", "Slideshow Creator Project", System.Reflection.Assembly.GetExecutingAssembly().Location);
+            pictureExplorer.StatusBar = statusBar;
             if (_loadFromFile == null)
                 return;
+            _dataStore = new DataStore(timeline, statusBar, pictureExplorer, musicExplorer, new ExportData(timeline, statusBar, 1, 10));
             SCSettings.SavingPath = _loadFromFile;
             _loadFromFile = null;
             Title = "Slideshow Creator // " + SCSettings.SavingPath;
-            DataStore ds = new DataStore(timeline, pictureExplorer, musicExplorer);
-            ds.LoadFrom(SCSettings.SavingPath);
+            _dataStore.LoadFrom(SCSettings.SavingPath);
         }
     }
 }

@@ -14,7 +14,7 @@
     </UserControl.Resources>
     <Border x:Name="border" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" Background="{DynamicResource SC_BG_COLOR}" BorderThickness="1" MinHeight="100" MinWidth="400">
         <ScrollViewer x:Name="mainScrollbar" Style="{DynamicResource SCScrollViewer}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden" ScrollChanged="MainScrollbar_ScrollChanged">
-            <Canvas x:Name="mainCanvas" Margin="4" Background="{DynamicResource SC_BG_COLOR}" MouseLeftButtonDown="MainCanvas_MouseLeftButtonDown" MouseRightButtonDown="MainCanvas_MouseRightButtonDown" MouseMove="MainCanvas_MouseMove" HorizontalAlignment="Left" MinWidth="392" MouseLeftButtonUp="MainCanvas_MouseLeftButtonUp" MouseLeave="MainCanvas_MouseLeave" MouseWheel="MainCanvas_MouseWheel" Loaded="MainCanvas_Loaded" SizeChanged="MainCanvas_SizeChanged">
+            <Canvas x:Name="mainCanvas" Margin="4" Background="{DynamicResource SC_BG_COLOR}" MouseLeftButtonDown="MainCanvas_MouseLeftButtonDown" MouseMove="MainCanvas_MouseMove" HorizontalAlignment="Left" MinWidth="392" MouseLeftButtonUp="MainCanvas_MouseLeftButtonUp" MouseLeave="MainCanvas_MouseLeave" MouseWheel="MainCanvas_MouseWheel" Loaded="MainCanvas_Loaded" SizeChanged="MainCanvas_SizeChanged">
                 <local:TimelineMarkerControl Margin="0,8,0,0" x:Name="tlMarker" />
             </Canvas>
         </ScrollViewer>

@@ -135,5 +135,19 @@ namespace SlideshowCreator
             DisplayedImage.Source = _loadingImg;
             timeline.UpdatePreview();
         }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            _loadingImg = null;
+            if (loadWorker != null && loadWorker.IsBusy)
+            {
+                loadWorker.CancelAsync();
+                loadWorker = null;
+            }
+
+            timeline.RemovePictureElement(this);
+            timeline = null;
+            Thumbnail = null;
+        }
     }
 }
