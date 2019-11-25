@@ -98,6 +98,8 @@ namespace SlideshowCreator
         public void UpdatePreview()
         {
             ///\todo make MVVM
+            if (GetPictureElementAtMarker() == null || GetPictureElementAtMarker().Thumbnail == null)
+                return;
             string thumbnail = GetPictureElementAtMarker().Thumbnail;
             PreviewControl preview = ((MainWindow)Application.Current.MainWindow).preview;
             preview.UpdateImageAsync(thumbnail);
