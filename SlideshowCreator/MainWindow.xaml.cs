@@ -80,27 +80,7 @@ namespace SlideshowCreator
             timeline.Pack();
         }
 
-        /* private void Add_Music_Click(object sender, RoutedEventArgs e)
-         {
-             OpenFileDialog OpenFile = new OpenFileDialog();
-             OpenFile.Multiselect = true;
-             OpenFile.Title = "Select Picture(s)";
-             OpenFile.Filter = "Audio Format| *.mp3; *.wav;*.wma;";
-             if (OpenFile.ShowDialog() == true)
-             {
-                 foreach (String file in OpenFile.FileNames)
-                 {
-                     Add_Music(file);
-                 }
-             }
-         }*/
-        /* private void Add_Music(string file)
-         {
-             MediaPlayer player = new MediaPlayer();
-             player.Open(new Uri(file));
-             Music_Holder.Children.Add(player);
-         }*/
-
+       
         private void LsdButton_Click(object sender, RoutedEventArgs e)
         {
             Random _rnd = new Random();
@@ -123,6 +103,11 @@ namespace SlideshowCreator
             musicExplorer.Timeline = timeline;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //timeline.preview();
+        }
+        
         private void SaveMenu_Click(object sender, RoutedEventArgs e)
         {
             if (SCSettings.SavingPath == null)
