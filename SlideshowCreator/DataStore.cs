@@ -69,7 +69,9 @@ namespace SlideshowCreator
                 ExportData.ExportPath = ds.ExportData.ExportPath;
             }
 
-            _pictureExplorer.Reset();            _musicExplorer.Reset();            _timeline.PictureElements.Clear();
+            _pictureExplorer.Reset();
+            _musicExplorer.Reset();
+            _timeline.PictureElements.Clear();
 
             _timeline.mainCanvas.Width = ds._tlWidth;
             _timeline.mainScrollbar.ScrollToRightEnd();
@@ -80,11 +82,16 @@ namespace SlideshowCreator
             foreach (TimelineElementData elData in ds._timelineData)
             {
                 _timeline.AddPictureElement(elData.StartTime, elData.EndTime, elData.Thumbnail);
-            }            Canvas.SetLeft(_timeline.tlMarker, ds._tlMarkerPos);
+            }
+
+            Canvas.SetLeft(_timeline.tlMarker, ds._tlMarkerPos);
 
             _pictureExplorer.AddImages(ds._picturePaths.ToArray());
 
-            Mouse.OverrideCursor = null;            Console.WriteLine(ExportData.Bitrate);        }
+            Mouse.OverrideCursor = null;
+
+            Console.WriteLine(ExportData.Bitrate);
+        }
 
         public void SaveTo(string fileName)
         {
