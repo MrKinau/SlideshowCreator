@@ -44,7 +44,6 @@ namespace SlideshowCreator
             musicItem.TextBlock.ToolTip = Path.GetFileName(file);
             musicItem.Margin = new Thickness(2);
             musicItem.MouseDoubleClick += OnMusicClick;
-
             Music_Holder.Children.Add(musicItem);
         }
 

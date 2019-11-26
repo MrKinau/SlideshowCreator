@@ -24,10 +24,13 @@ namespace SlideshowCreator
         private TimelinePictureElementControl _resizing = null;
         private TimelinePictureElementControl _moving = null;
         private double _movingOffset = 0;
+        private bool is_preview = false;
         private readonly Random _rnd = new Random();
 
         public List<TimelinePictureElementControl> PictureElements = new List<TimelinePictureElementControl>();
         public List<TimelineMusicElementControl> MusicElements = new List<TimelineMusicElementControl>();
+        public List<MediaPlayer> MusicMediaElements = new List<MediaPlayer>();
+        
 
         public TimelineControl()
         {
@@ -56,9 +59,12 @@ namespace SlideshowCreator
 
         public void AddMusicElement(string musicPath)
         {
-            TimelineMusicElementControl element = new TimelineMusicElementControl(this, GetLastMusicElementEndtime(), GetLastMusicElementEndtime() + 200, musicPath);
+            TimelineMusicElementControl element = new TimelineMusicElementControl(this, GetLastMusicElementEndtime(), GetLastMusicElementEndtime() +200, musicPath);
+            MediaPlayer media = new MediaPlayer();
+            media.Open(new Uri(musicPath, UriKind.Relative));
+            media.Play();
             MusicElements.Add(element);
-
+            MusicMediaElements.Add(media);
             if (mainCanvas.ActualWidth < GetLastPictureElementEndtime())
             {
                 mainCanvas.Width = GetLastPictureElementEndtime() + 100;
@@ -191,7 +197,19 @@ namespace SlideshowCreator
 
             return fittingElement;
         }
+        private TimelineMusicElementControl isAtMusicElement(double x, double y)
+        {
+            TimelineMusicElementControl selectelement = null;
+            foreach(TimelineMusicElementControl element in MusicElements)
+            {
+                if (x >= element.StartTime && x <= (element.EndTime - 17)
+                    && y > element.TopSpacing && y <= element.TopSpacing + element.ElementHeight)
+                    selectelement = element;
+                Console.WriteLine("xxxxxxxxxxxxxxxxxxxxxxxx");
 
+            }
+            return selectelement;
+        }
         private void MoveMarker(int x)
         {
             Canvas.SetLeft(tlMarker, Math.Max(x - 5, -5));
@@ -387,6 +405,7 @@ namespace SlideshowCreator
 
         private void MainCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+
             Point p = Mouse.GetPosition(mainCanvas);
             double x = p.X;
             double y = p.Y;
@@ -401,11 +420,18 @@ namespace SlideshowCreator
                 _movingOffset = x - GetPictureElementAt(x, y).StartTime;
                 _moving.Grabbed = true;
             }
+            else if (isAtMusicElement(x, y) != null)
+            {
+                TimelineMusicElementControl ElementSelect = isAtMusicElement(x, y);
+                ElementSelect.MovingMusicElement((int)Math.Round(x));
+            }
             else
             {
                 MoveMarker((int)Math.Round(x));
             }
         }
+
+       
 
         private void MainCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -475,6 +501,8 @@ namespace SlideshowCreator
             }
         }
 
+
+
         private void MainCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
             cancelAllActions();
@@ -495,5 +523,50 @@ namespace SlideshowCreator
         {
             updateDrawings();
         }
+
+        public void preview()
+        {
+            if (!is_preview)
+            {
+                if (PictureElements.Count == 0) return;
+                else
+                {
+                    bool is_music_on = false;
+                    int index = 0;
+                    int last = (int)GetLastPictureElementEndtime()-5;
+                    int i = 5;
+                    while (i < last){
+                        Canvas.SetLeft(tlMarker, (double)i);
+                        UpdatePreview();
+                        i++;
+                        
+                    }
+                    /*hier wird irgendwie abgespiel*/
+                    int left = (int)Math.Round(Canvas.GetLeft(tlMarker)) + 5;
+                   
+                    foreach (TimelineMusicElementControl element in MusicElements)
+                    {
+                        
+                        if(element.StartTime == left)
+                        {
+                            if (is_music_on) {
+                                MusicMediaElements[index].Stop();
+                                index = MusicElements.IndexOf(element);
+                                MusicMediaElements[index].Play();
+                            }
+                            else
+                            {
+                                is_music_on = true;
+                                index = MusicElements.IndexOf(element);
+                                MusicMediaElements[index].Play();
+                            }
+                            
+                        }
+                    }
+                }
+            }
+
+        }
+     
     }
 }

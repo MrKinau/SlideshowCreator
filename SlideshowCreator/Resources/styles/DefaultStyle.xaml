@@ -11,7 +11,7 @@
     
     <SolidColorBrush x:Key="SC_TL_MARKER_COLOR" Color="#FF00B9FF"/>
     <SolidColorBrush x:Key="SC_TL_MARKER_COLOR_DARK" Color="#FF0068FF"/>
-
+    <SolidColorBrush x:Key="Music_TL_Color_Red" Color="Red"/>
     <!-- Default style -->
     <Style x:Key="DefaultStyle" TargetType="Control">
         <Setter Property="Background" Value="{DynamicResource SC_BG_COLOR}" />

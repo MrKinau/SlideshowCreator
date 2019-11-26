@@ -44,8 +44,7 @@ namespace SlideshowCreator
             timeline.mainCanvas.Children.Add(this);
             updateHeight();
             update();
-
-            TextBlock.Text = Path.GetFileName(musicPath);
+            TextBlock.ToolTip = Path.GetFileName(musicPath);
         }
 
         public void update()
@@ -58,12 +57,21 @@ namespace SlideshowCreator
                 Canvas.SetZIndex(this, timeline.MusicElements.IndexOf(this));
             Canvas.SetLeft(this, StartTime);
             Canvas.SetTop(this, TopSpacing);
+            Console.WriteLine(Musikline.ActualWidth);
         }
 
         public void updateHeight()
         {
-            this.ElementHeight = 25;
+            this.ElementHeight = 200;
             this.TopSpacing = ((timeline.mainCanvas.ActualHeight / 2.0) - (ElementHeight / 2.0)) + (60 > Math.Min(timeline.mainCanvas.ActualHeight / 2.0, 100) ? 60 : Math.Min(timeline.mainCanvas.ActualHeight / 2.0, 100)) - 20;
+        }
+
+
+        public void MovingMusicElement(int x)
+        {
+            StartTime = x;
+            EndTime = x + 200;
+            update();
         }
     }
 }

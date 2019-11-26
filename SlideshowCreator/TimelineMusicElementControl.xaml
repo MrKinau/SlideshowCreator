@@ -5,11 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SlideshowCreator"
              mc:Ignorable="d">
-    <Grid x:Name="tlElementContent">
-        <Border MinWidth="100" MinHeight="10" Background="Crimson" BorderBrush="DarkMagenta" BorderThickness="1"/>
+    <Grid x:Name="tlElementContent" Width="14" >
         <StackPanel Orientation="Horizontal" Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Image x:Name="Image" Margin="2,4,2,2" Source="pack://application:,,,/Resources/icons/musicThumbnail.png" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock x:Name="TextBlock" TextWrapping="NoWrap" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" />
+            <Line x:Name="Musikline" X1="5" Y1="10" X2="5" Y2="100" Stroke="{DynamicResource Music_TL_Color_Red}" StrokeThickness="2"/>
+            <TextBlock x:Name="TextBlock" TextWrapping="NoWrap" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Width="12" Height="88" />
         </StackPanel>
     </Grid>
 </UserControl>
