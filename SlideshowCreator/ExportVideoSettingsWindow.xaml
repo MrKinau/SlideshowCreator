@@ -1,0 +1,51 @@
+﻿<Window x:Class="SlideshowCreator.ExportVideoSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:SlideshowCreator"
+        mc:Ignorable="d"
+        Background="{DynamicResource SC_BG_COLOR}"
+        Foreground="{DynamicResource SC_FG_COLOR}"
+        Title="Video exportieren" Height="250" Width="340" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="1.2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Exportlocation:" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <DockPanel Grid.Column="1" VerticalAlignment="Center" MaxHeight="22">
+            <Button x:Name="changeSavepath" DockPanel.Dock="Right" Foreground="{DynamicResource SC_FG_COLOR}" MaxWidth="26" MinWidth="26" Margin="5,0,0,0" MinHeight="22" MaxHeight="22" Click="ChangeSavepath_Click">
+                <Image Source="Resources/icons/changeSavepath.png" HorizontalAlignment="Center" Width="15" Height="20" Margin="-5"/>
+            </Button>
+            <TextBox x:Name="exportLocation" DockPanel.Dock="Left" Text="{Binding Path=ExportPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto"/>
+        </DockPanel>
+        <TextBlock Text="Resolution:" FontSize="16" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        <ComboBox x:Name="resolution" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" SelectedIndex="{Binding Path=Resolution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12">
+            <ComboBoxItem Content="2560x1440 [QHD]"/>
+            <ComboBoxItem Content="1920x1080 [FULL HD]"/>
+            <ComboBoxItem Content="1280x720 [HD]"/>
+            <ComboBoxItem Content="858x480 [SD]"/>
+            <ComboBoxItem Content="480x360 [360p]"/>
+            <ComboBoxItem Content="352x240 [240p]"/>
+        </ComboBox>
+        <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="0,0,10,0" Grid.Row="2" Text="Bitrate:" VerticalAlignment="Center"/>
+        <xctk:IntegerUpDown Minimum="1" Grid.Column="1" Grid.Row="2" FontSize="13" Height="22" x:Name="bitrate" Value="{Binding Path=Bitrate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock HorizontalAlignment="Left" FontSize="16" Margin="0,0,10,0" Grid.Row="3" Text="FPS:" VerticalAlignment="Center"/>
+        <xctk:IntegerUpDown Minimum="1" Maximum="1000" Grid.Column="1" Grid.Row="3" FontSize="13" Height="22" x:Name="fps" Value="{Binding Path=FPS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button x:Name="export" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="4" VerticalAlignment="Center" Click="Export_Click">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Margin="3,0,5,0" FontSize="16">Create Slideshow</TextBlock>
+                <Image Width="20" Height="20" Source="Resources/icons/checkmark.png" Margin="0,0,3,0" />
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

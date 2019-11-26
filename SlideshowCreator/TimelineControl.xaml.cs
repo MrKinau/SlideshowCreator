@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -22,10 +24,11 @@ namespace SlideshowCreator
     {
 
         private TimelinePictureElementControl _resizing = null;
-        private TimelinePictureElementControl _moving = null;
+        private TimelinePictureElementControl _marked = null;
         private double _movingOffset = 0;
         private bool is_preview = false;
         private readonly Random _rnd = new Random();
+        private bool _mayMove = false;
 
         public List<TimelinePictureElementControl> PictureElements = new List<TimelinePictureElementControl>();
         public List<TimelineMusicElementControl> MusicElements = new List<TimelineMusicElementControl>();
@@ -41,20 +44,21 @@ namespace SlideshowCreator
          *  public methods
          */
 
-        public void AddPictureElement(string imgPath)
+        public void AddPictureElement(double startTime, double endTime, string thumbnail)
         {
-            TimelinePictureElementControl element = new TimelinePictureElementControl(this, GetLastPictureElementEndtime(), GetLastPictureElementEndtime() + 200, imgPath);
+            TimelinePictureElementControl element = new TimelinePictureElementControl(this, startTime, endTime, thumbnail);
             PictureElements.Add(element);
-
-            //Random color
-            element.tlElementContent.Background = new SolidColorBrush(Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
 
             if (mainCanvas.ActualWidth < GetLastPictureElementEndtime())
             {
                 mainCanvas.Width = GetLastPictureElementEndtime() + 100;
                 mainScrollbar.ScrollToRightEnd();
             }
-            UpdatePreview();
+        }
+
+        public void AddPictureElement(string imgPath)
+        {
+            AddPictureElement(GetLastPictureElementEndtime(), GetLastPictureElementEndtime() + 200, imgPath);
         }
 
         public void AddMusicElement(string musicPath)
@@ -72,6 +76,15 @@ namespace SlideshowCreator
             }
         }
 
+        public void RemovePictureElement(TimelinePictureElementControl element)
+        {
+            if (!PictureElements.Contains(element))
+                return;
+            PictureElements.Remove(element);
+            Pack();
+            updateDrawings();
+        }
+
         public void Pack()
         {
             if (PictureElements.Count < 1)
@@ -87,6 +100,16 @@ namespace SlideshowCreator
                 element.update();
                 lastElement = element;
             }
+        }
+
+        public void UpdatePreview()
+        {
+            ///\todo make MVVM
+            if (GetPictureElementAtMarker() == null || GetPictureElementAtMarker().Thumbnail == null)
+                return;
+            string thumbnail = GetPictureElementAtMarker().Thumbnail;
+            PreviewControl preview = ((MainWindow)Application.Current.MainWindow).preview;
+            preview.UpdateImageAsync(thumbnail);
         }
 
         /**
@@ -219,14 +242,6 @@ namespace SlideshowCreator
             UpdatePreview();
         }
 
-        private void UpdatePreview()
-        {
-            ///\todo make MVVM
-            string thumbnail = GetPictureElementAtMarker().Thumbnail;
-            PreviewControl preview = ((MainWindow)Application.Current.MainWindow).preview;
-            preview.UpdateImageAsync(thumbnail);
-        }
-
         private bool isBetweenPictureElements(double x, double y)
         {
             for (int i = 0; i < PictureElements.Count; i++)
@@ -256,13 +271,13 @@ namespace SlideshowCreator
 
         private void cancelAllActions()
         {
-            if (_moving != null)
+            if (_mayMove == true)
             {
-                _moving.Grabbed = false;
+                _marked.Grabbed = false;
                 Pack();
             }
             _resizing = null;
-            _moving = null;
+            _mayMove = false;
             Mouse.OverrideCursor = null;
             mainCanvas.Width = ActualWidth > GetLastPictureElementEndtime() + 100 ? ActualWidth : GetLastPictureElementEndtime() + 100;
             Pack();
@@ -416,9 +431,12 @@ namespace SlideshowCreator
             }
             else if (GetPictureElementAt(x, y) != null)
             {
-                _moving = GetPictureElementAt(x, y);
+                if (_marked != null)
+                    _marked.Border.Background = FindResource("SC_BG_COLOR_BRIGHT") as SolidColorBrush;
+                _marked = GetPictureElementAt(x, y);
+                _marked.Border.Background = FindResource("SC_BG_COLOR_MEDIUM") as SolidColorBrush;
+                _mayMove = true;
                 _movingOffset = x - GetPictureElementAt(x, y).StartTime;
-                _moving.Grabbed = true;
             }
             else if (isAtMusicElement(x, y) != null)
             {
@@ -438,25 +456,6 @@ namespace SlideshowCreator
             cancelAllActions();
         }
 
-        private void MainCanvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Point p = Mouse.GetPosition(mainCanvas);
-            double x = p.X;
-            double y = p.Y;
-
-            if (!isBetweenPictureElementsOrAtEnd(x, y))
-            {
-                //Recolor Element
-                TimelinePictureElementControl element = GetPictureElementAt(p.X + mainScrollbar.HorizontalOffset, p.Y);
-                if (element == null)
-                {
-                    return;
-                }
-                element.tlElementContent.Background = new SolidColorBrush(Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256)));
-
-            }
-        }
-
         private void MainCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             Point p = Mouse.GetPosition(mainCanvas);
@@ -464,11 +463,11 @@ namespace SlideshowCreator
             double y = p.Y;
 
             //change cursor to corresponding: resize, move elemenent
-            if (isBetweenPictureElementsOrAtEnd(x, y) || _resizing != null)
+            if (_mayMove == false && (isBetweenPictureElementsOrAtEnd(x, y) || _resizing != null))
             {
                 Mouse.OverrideCursor = Cursors.SizeWE;
             } 
-            else if (_moving == null)
+            else if (_mayMove == false)
             {
                 Mouse.OverrideCursor = Cursors.Arrow;
                 _resizing = null;
@@ -487,10 +486,11 @@ namespace SlideshowCreator
             }
 
             //move element
-            if (_moving != null)
+            if (_mayMove == true)
             {
                 Mouse.OverrideCursor = ((TextBlock)Resources["CursorGrabbing"]).Cursor;
-                _moving.moveAndSwap(x, _movingOffset);
+                _marked.moveAndSwap(x, _movingOffset);
+                _marked.Grabbed = true;
                 return;
             }
 

@@ -25,18 +25,25 @@ namespace SlideshowCreator
         private List<string> _musicPaths = new List<string>();
         private TimelineControl _timeline;
 
-        public TimelineControl Timeline
-        {
-            set { _timeline = value; }
-        }
+        public TimelineControl Timeline { set { _timeline = value; } }
+
+        public List<string> MusicPaths { get { return _musicPaths; } }
 
         public MusicExplorerControl()
         {
             InitializeComponent();
         }
 
-        private void AddMusic(string file)
+        public void Reset()
         {
+            Music_Holder.Children.Clear();
+            _musicPaths.Clear();
+        }
+
+        public void AddMusic(string file)
+        {
+            if (_musicPaths.Contains(file))
+                return;
             _musicPaths.Add(file);
 
             MusicExplorerElementControl musicItem = new MusicExplorerElementControl();

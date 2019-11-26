@@ -5,7 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SlideshowCreator"
              mc:Ignorable="d" >
-    <Grid x:Name="tlElementContent">
-        <Image x:Name="DisplayedImage" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+    <Border x:Name="Border" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" BorderThickness="1" Background="{DynamicResource SC_BG_COLOR_BRIGHT}">
+        <Grid x:Name="tlElementContent">
+            <Image x:Name="DisplayedImage" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Grid.ContextMenu>
+                <ContextMenu Background="{DynamicResource SC_BG_COLOR}">
+                    <MenuItem x:Name="Delete" Header="Delete" Click="Delete_Click">
+                        <MenuItem.Icon>
+                            <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/delete.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </Grid.ContextMenu>
+        </Grid>
+    </Border>
 </UserControl>

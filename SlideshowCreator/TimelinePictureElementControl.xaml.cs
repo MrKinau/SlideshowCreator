@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,6 +24,8 @@ namespace SlideshowCreator
     {
 
         private TimelineControl timeline;
+        private BackgroundWorker loadWorker;
+        private BitmapImage _loadingImg;
 
         public double StartTime;
         public double EndTime;
@@ -36,7 +40,6 @@ namespace SlideshowCreator
         public TimelinePictureElementControl(TimelineControl timeline, double startTime, double endTime, string thumbnail)
         {
             InitializeComponent();
-            DataContext = this;
             this.timeline = timeline;
             this.StartTime = startTime;
             this.EndTime = endTime;
@@ -46,9 +49,10 @@ namespace SlideshowCreator
             updateHeight();
             update();
 
-            Console.WriteLine((int)(endTime - startTime) + "::" + (int)Math.Floor(ElementHeight));
-            BitmapImage bi = ImageConverter.ScaleToBitmapImage(new Uri(thumbnail), (int)(endTime - startTime), (int)Math.Floor(ElementHeight));
-            DisplayedImage.Source = bi;
+            loadWorker = new BackgroundWorker();
+            loadWorker.DoWork += loadWorker_work;
+            loadWorker.RunWorkerCompleted += loadWorker_completed;
+            loadWorker.RunWorkerAsync();
         }
 
         public void update()
@@ -119,6 +123,31 @@ namespace SlideshowCreator
                 timeline.PictureElements[myIndex - 1] = this;
                 timeline.Pack();
             }
+        }
+
+        private void loadWorker_work(object sender, DoWorkEventArgs e)
+        {
+            _loadingImg = ImageConverter.ScaleToBitmapImage(new Uri(Thumbnail), (int)(EndTime - StartTime), (int)Math.Floor(ElementHeight));
+        }
+
+        private void loadWorker_completed(object sender, AsyncCompletedEventArgs e)
+        {
+            DisplayedImage.Source = _loadingImg;
+            timeline.UpdatePreview();
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            _loadingImg = null;
+            if (loadWorker != null && loadWorker.IsBusy)
+            {
+                loadWorker.CancelAsync();
+                loadWorker = null;
+            }
+
+            timeline.RemovePictureElement(this);
+            timeline = null;
+            Thumbnail = null;
         }
     }
 }

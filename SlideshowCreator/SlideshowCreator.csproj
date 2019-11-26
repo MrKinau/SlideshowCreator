@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>star-24-64.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
       <HintPath>..\packages\Accord.3.8.0\lib\net46\Accord.dll</HintPath>
@@ -70,6 +73,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -90,6 +94,20 @@
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Forms.2.3.3.193\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.6.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.6.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -97,8 +115,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ExportVideoProgress.xaml.cs">
-      <DependentUpon>ExportVideoProgress.xaml</DependentUpon>
+    <Compile Include="DataStore.cs" />
+    <Compile Include="ExportVideoProgressWindow.xaml.cs">
+      <DependentUpon>ExportVideoProgressWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExportVideoSettingsWindow.xaml.cs">
+      <DependentUpon>ExportVideoSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageConverter.cs" />
     <Compile Include="MusicExplorerControl.xaml.cs">
@@ -113,9 +135,14 @@
     <Compile Include="PreviewControl.xaml.cs">
       <DependentUpon>PreviewControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="StatusbarControl.xaml.cs">
+      <DependentUpon>StatusbarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TimelineElementData.cs" />
     <Compile Include="TimelineMusicElementControl.xaml.cs">
       <DependentUpon>TimelineMusicElementControl.xaml</DependentUpon>
     </Compile>
@@ -126,7 +153,11 @@
       <DependentUpon>TimelineMarkerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="VideoCreator.cs" />
-    <Page Include="ExportVideoProgress.xaml">
+    <Page Include="ExportVideoProgressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExportVideoSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +202,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\styles\Progressbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\styles\Scrollbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\styles\Tabcontrol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatusbarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,27 +265,6 @@
     <Resource Include="Resources\cursors\grabbing.cur" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\icons\Save_grey_16x_24.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icons\Close_WhiteNoHalo_12x_16x_24.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icons\SaveAll_16x_24.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icons\VSO_Add_whiteNoHalo_12x_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icons\TextElement_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icons\MagicWand_16x_24.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icons\Image_18x16_24.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\icons\checkmark.png" />
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +272,54 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icons\musicThumbnail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\addEffect.png" />
+    <Resource Include="Resources\icons\addEmptySlide.png" />
+    <Resource Include="Resources\icons\editTransition.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\addText.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\save.png" />
+    <Resource Include="Resources\icons\saveAs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\share.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="star-24-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\changeSavepath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\delete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />

@@ -35,7 +35,7 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
     <!-- TopLevelItem -->
     <ControlTemplate x:Key="{x:Static MenuItem.TopLevelItemTemplateKey}" TargetType="MenuItem">
         <Border Name="Border">
@@ -52,7 +52,7 @@
     
     <!-- SubmenuItem -->
     <ControlTemplate x:Key="{x:Static MenuItem.SubmenuItemTemplateKey}" TargetType="MenuItem">
-        <Border Name="Border">
+        <Border Name="Border" Background="{DynamicResource SC_BG_COLOR}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="32" SharedSizeGroup="Icon" />
@@ -118,7 +118,7 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
     <!-- MenuItem Style -->
     <Style x:Key="{x:Type MenuItem}" TargetType="MenuItem" BasedOn="{StaticResource DefaultStyle}">
         <Setter Property="OverridesDefaultStyle" Value="True" />

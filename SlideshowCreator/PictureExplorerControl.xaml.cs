@@ -27,25 +27,58 @@ namespace SlideshowCreator
         private TimelineControl _timeline;
         private ImageSource _loadingImg;
         private int _loadingImgCount;
+        private BackgroundWorker loadWorker;
 
-        public TimelineControl Timeline
-        {
-            set { _timeline = value; }
-        }
+        public StatusbarControl StatusBar;
+
+        public TimelineControl Timeline { set { _timeline = value; } }
+        public List<string> ImgPaths { get { return _imgPaths; } }
 
         public PictureExplorerControl()
         {
             InitializeComponent();
         }
 
+        public void Reset()
+        {
+            if (loadWorker != null && loadWorker.IsBusy)
+                loadWorker.CancelAsync();
+            Picture_Holder.Children.Clear();
+            _imgPaths.Clear();
+            _loadingImg = null;
+            _loadingImgCount = 0;
+        }
+
+        public void AddImages(string[] fileNames)
+        {
+            foreach (String file in fileNames)
+            {
+                Add_Image(file);
+            }
+            _loadingImgCount = Picture_Holder.Children.Count;
+
+            if (StatusBar != null)
+                StatusBar.AddLoadingProgress("Loading images...", _loadingImgCount);
+
+            loadWorker = new BackgroundWorker();
+            loadWorker.WorkerReportsProgress = true;
+            loadWorker.WorkerSupportsCancellation = true;
+            loadWorker.DoWork += loadWorker_work;
+            loadWorker.ProgressChanged += loadWorker_updateImg;
+            loadWorker.RunWorkerCompleted += loadWorker_completed;
+            loadWorker.RunWorkerAsync();
+        }
+
         private void Add_Image(string file)
         {
+            if (_imgPaths.Contains(file))
+                return;
             _imgPaths.Add(file);
 
             Image newImg = new Image();
             newImg.Source = new BitmapImage(new Uri(@"pack://application:,,,/Resources/icons/unknownImage.png", UriKind.Absolute));
-            newImg.Margin = new Thickness(2);
-            newImg.MaxWidth = newImg.MaxHeight = 100;
+            newImg.Margin = new Thickness(12);
+            newImg.MaxWidth = newImg.MaxHeight = 80;
             newImg.MouseLeftButtonDown += new MouseButtonEventHandler(OnImgClick);
 
             Picture_Holder.Children.Add(newImg);
@@ -63,17 +96,7 @@ namespace SlideshowCreator
             OpenFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             if (OpenFile.ShowDialog() == true)
             {
-                foreach (String file in OpenFile.FileNames)
-                {
-                    Add_Image(file);
-                }
-                _loadingImgCount = Picture_Holder.Children.Count;
-
-                BackgroundWorker loadWorker = new BackgroundWorker();
-                loadWorker.WorkerReportsProgress = true;
-                loadWorker.DoWork += loadWorker_work;
-                loadWorker.ProgressChanged += loadWorker_updateImg;
-                loadWorker.RunWorkerAsync();
+                AddImages(OpenFile.FileNames);
             }
         }
 
@@ -103,8 +126,20 @@ namespace SlideshowCreator
 
         private void loadWorker_updateImg(object sender, ProgressChangedEventArgs e)
         {
-            Image img = (Image) Picture_Holder.Children[e.ProgressPercentage];
+            if (e.ProgressPercentage > Picture_Holder.Children.Count - 1)
+                return;
+            if (StatusBar != null)
+                StatusBar.LoadingValue = e.ProgressPercentage;
+            Image img = (Image)Picture_Holder.Children[e.ProgressPercentage];
+            img.Margin = new Thickness(2);
+            img.MaxWidth = img.MaxHeight = 100;
             img.Source = _loadingImg;
+        }
+
+        private void loadWorker_completed(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (StatusBar != null)
+                StatusBar.LoadingText = "";
         }
     }
 }
