@@ -127,7 +127,10 @@ namespace SlideshowCreator
 
         private void loadWorker_work(object sender, DoWorkEventArgs e)
         {
-            _loadingImg = ImageConverter.ScaleToBitmapImage(new Uri(Thumbnail), (int)(EndTime - StartTime), (int)Math.Floor(ElementHeight));
+            if (Thumbnail != null)
+                _loadingImg = ImageConverter.ScaleToBitmapImage(new Uri(Thumbnail), (int)(EndTime - StartTime), (int)Math.Floor(ElementHeight));
+            else
+                _loadingImg = ImageConverter.ToBitmapImage(ImageConverter.CreateBlankImage((int)(EndTime - StartTime) - 50, (int)Math.Floor(ElementHeight)));
         }
 
         private void loadWorker_completed(object sender, AsyncCompletedEventArgs e)

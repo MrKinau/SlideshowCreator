@@ -57,7 +57,6 @@ namespace SlideshowCreator
                 Canvas.SetZIndex(this, timeline.MusicElements.IndexOf(this));
             Canvas.SetLeft(this, StartTime);
             Canvas.SetTop(this, TopSpacing);
-            Console.WriteLine(Musikline.ActualWidth);
         }
 
         public void updateHeight()

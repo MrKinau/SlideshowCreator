@@ -47,7 +47,6 @@ namespace SlideshowCreator
         {
             pictureExplorerPanel.MaxWidth = (e.NewSize.Width - 30) / 1.5;
             pictureExplorerPanel.MinWidth = (e.NewSize.Width - 30) / 4;
-            Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
         }
 
         private void Timeline_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -67,7 +66,6 @@ namespace SlideshowCreator
                     timeline.mainCanvas.Width = e.NewSize.Width;
                 }
             }
-            Console.WriteLine("Size changed: " + e.NewSize.Height + "/" + e.NewSize.Width);
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -162,6 +160,11 @@ namespace SlideshowCreator
             _loadFromFile = null;
             Title = "Slideshow Creator // " + SCSettings.SavingPath;
             _dataStore.LoadFrom(SCSettings.SavingPath);
+        }
+
+        private void AddEmptySlide_Click(object sender, RoutedEventArgs e)
+        {
+            timeline.AddEmptySlide();
         }
     }
 }

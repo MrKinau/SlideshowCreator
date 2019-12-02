@@ -72,8 +72,6 @@ namespace SlideshowCreator
 
         private void OnMusicClick(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("TEST");
-
             if (sender == null)
                 return;
 

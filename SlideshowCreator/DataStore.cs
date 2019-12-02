@@ -89,8 +89,6 @@ namespace SlideshowCreator
             _pictureExplorer.AddImages(ds._picturePaths.ToArray());
 
             Mouse.OverrideCursor = null;
-
-            Console.WriteLine(ExportData.Bitrate);
         }
 
         public void SaveTo(string fileName)
