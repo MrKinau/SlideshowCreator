@@ -50,7 +50,12 @@ namespace SlideshowCreator
         private void worker_work(object sender, DoWorkEventArgs e)
         {
             if (ActualWidth > 0 && ActualHeight > 0)
-                _bitmap = ImageConverter.ScaleToBitmapImage(new Uri(_imgSrc), (int)Math.Floor(ActualWidth), (int)Math.Floor(ActualHeight));
+            {
+                if (_imgSrc != null)
+                    _bitmap = ImageConverter.ScaleToBitmapImage(new Uri(_imgSrc), (int)Math.Floor(ActualWidth), (int)Math.Floor(ActualHeight));
+                else
+                    _bitmap = ImageConverter.ToBitmapImage(ImageConverter.CreateBlankImage((int)Math.Floor(ActualWidth), (int)Math.Floor(ActualHeight)));
+            }
         }
 
         private void worker_completed(object sender, RunWorkerCompletedEventArgs e)

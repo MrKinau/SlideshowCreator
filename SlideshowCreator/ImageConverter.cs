@@ -91,10 +91,10 @@ namespace SlideshowCreator
             ///\Todo load uncommon picture formats (unreadable files) try catch
             Bitmap bitmap = ScaleImage(new Bitmap(source.LocalPath), width, height, false);
 
-            return ToBitmapImage(bitmap, source.LocalPath);
+            return ToBitmapImage(bitmap);
         }
 
-        public static BitmapImage ToBitmapImage(Bitmap bitmap, string origSource)
+        public static BitmapImage ToBitmapImage(Bitmap bitmap)
         {
             using (var memory = new MemoryStream())
             {
@@ -110,6 +110,26 @@ namespace SlideshowCreator
 
                 return bitmapImage;
             }
+        }
+
+        public static Bitmap CreateBlankImage(int width, int height)
+        {
+            Bitmap bitmap = new Bitmap(width, height);
+
+            using (var graphics = Graphics.FromImage(bitmap))
+            {
+                graphics.CompositingQuality = CompositingQuality.HighSpeed;
+                graphics.InterpolationMode = InterpolationMode.Low;
+                graphics.SmoothingMode = SmoothingMode.HighSpeed;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.FillRectangle(new SolidBrush(Color.Black), 0, 0, width, height);
+                }
+            }
+            return bitmap;
         }
     }
 }

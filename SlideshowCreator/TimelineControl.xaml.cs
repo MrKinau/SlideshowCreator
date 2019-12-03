@@ -61,6 +61,18 @@ namespace SlideshowCreator
             AddPictureElement(GetLastPictureElementEndtime(), GetLastPictureElementEndtime() + 200, imgPath);
         }
 
+        public void AddEmptySlide()
+        {
+            TimelinePictureElementControl element = new TimelinePictureElementControl(this, GetLastPictureElementEndtime(), GetLastPictureElementEndtime() + 200, null);
+            PictureElements.Add(element);
+
+            if (mainCanvas.ActualWidth < GetLastPictureElementEndtime())
+            {
+                mainCanvas.Width = GetLastPictureElementEndtime() + 100;
+                mainScrollbar.ScrollToRightEnd();
+            }
+        }
+
         public void AddMusicElement(string musicPath)
         {
             TimelineMusicElementControl element = new TimelineMusicElementControl(this, GetLastMusicElementEndtime(), GetLastMusicElementEndtime() +200, musicPath);
@@ -105,7 +117,7 @@ namespace SlideshowCreator
         public void UpdatePreview()
         {
             ///\todo make MVVM
-            if (GetPictureElementAtMarker() == null || GetPictureElementAtMarker().Thumbnail == null)
+            if (GetPictureElementAtMarker() == null)
                 return;
             string thumbnail = GetPictureElementAtMarker().Thumbnail;
             PreviewControl preview = ((MainWindow)Application.Current.MainWindow).preview;
@@ -207,7 +219,6 @@ namespace SlideshowCreator
         private TimelinePictureElementControl GetPictureElementAtMarker()
         {
             int left = (int)Math.Round(Canvas.GetLeft(tlMarker)) + 5;
-            Console.WriteLine("left: " + left + ", elements: " + PictureElements.Count);
             TimelinePictureElementControl fittingElement = null;
             foreach (TimelinePictureElementControl element in PictureElements)
             {
@@ -228,8 +239,6 @@ namespace SlideshowCreator
                 if (x >= element.StartTime - 10 && x <= (element.EndTime - 17)
                     && y > element.TopSpacing && y <= element.TopSpacing + element.ElementHeight)
                     selectelement = element;
-                Console.WriteLine("xxxxxxxxxxxxxxxxxxxxxxxx");
-
             }
             return selectelement;
         }

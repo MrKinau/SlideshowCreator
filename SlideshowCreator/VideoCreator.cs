@@ -79,7 +79,12 @@ namespace SlideshowCreator
                 int counter = 0;
                 foreach (TimelinePictureElementControl element in timelineElements)
                 {
-                    Bitmap bitmap = ImageConverter.ScaleImage(new Bitmap(element.Thumbnail), width, height, true);
+                    Bitmap bitmap;
+                    if (element.Thumbnail != null)
+                        bitmap = ImageConverter.ScaleImage(new Bitmap(element.Thumbnail), width, height, true);
+                    else
+                        bitmap = ImageConverter.CreateBlankImage(width, height);
+
                     int framesThisSlide = (int)((element.EndTime - element.StartTime) * frameRate) / 100;
 
                     for (int i = 0; i < framesThisSlide; i++)
@@ -89,7 +94,6 @@ namespace SlideshowCreator
                             e.Cancel = true;
                             return;
                         }
-                        Console.WriteLine(currFrame + "/" + frames);
                         writer.WriteVideoFrame(bitmap);
                         (sender as BackgroundWorker).ReportProgress(currFrame);
                         currFrame++;
