@@ -11,6 +11,7 @@
     <Window.DataContext>
         <local:PreviewControl />
     </Window.DataContext>
+ 
     
     <DockPanel x:Name="rootPanel" HorizontalAlignment="Stretch" LastChildFill="True" Background="{DynamicResource SC_BG_COLOR}">
 
@@ -41,7 +42,7 @@
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/save.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="saveAsMenu" Header="Sa_ve As" Click="SaveAsMenu_Click" InputGestureText="CTRL+SHIFT+S">
+                <MenuItem x:Name="saveAsMenu" Header="Sa_ve As" Click="SaveAsMenu_Click" Command="SaveAs" InputGestureText="CTRL+SHIFT+S">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/saveAs.png"/>
                     </MenuItem.Icon>
@@ -59,10 +60,11 @@
                     <MenuItem Header="You_tube"/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="E_xit" Click="MenuItem_Click">
+                <MenuItem Header="E_xit"  Name="Exit" Click="MenuItem_Click" InputGestureText="CTRL+x" >
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/exit.png"/>
                     </MenuItem.Icon>
+
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Edit">

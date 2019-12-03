@@ -80,8 +80,17 @@ namespace SlideshowCreator
             newImg.Margin = new Thickness(12);
             newImg.MaxWidth = newImg.MaxHeight = 80;
             newImg.MouseLeftButtonDown += new MouseButtonEventHandler(OnImgClick);
+            newImg.MouseRightButtonDown += new MouseButtonEventHandler(RightClick);
 
             Picture_Holder.Children.Add(newImg);
+        }
+
+        private void RightClick(object sender, MouseButtonEventArgs e)
+        {
+            Edit_Picture window = new Edit_Picture();
+            int index = Picture_Holder.Children.IndexOf((Image)sender);
+            window.set_source(_imgPaths[index]);
+            window.Show();
         }
 
         private void Add_Img_Click(object sender, RoutedEventArgs e)
@@ -141,5 +150,17 @@ namespace SlideshowCreator
             if (StatusBar != null)
                 StatusBar.LoadingText = "";
         }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        //private void Edit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Edit_Picture window = new Edit_Picture();
+        //    //window.set_source();
+        //    window.Show();
+        //}
     }
 }
