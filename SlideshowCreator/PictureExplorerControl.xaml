@@ -17,8 +17,24 @@
             </Border>
         </Grid>
         <Grid DockPanel.Dock="Top" Background="{DynamicResource SC_BG_COLOR_BRIGHT}">
+
             <ScrollViewer Style="{DynamicResource SCScrollViewer}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                <WrapPanel Name="Picture_Holder" HorizontalAlignment="Center" Orientation="Horizontal"/>
+                <WrapPanel Name="Picture_Holder" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <!--<WrapPanel.ContextMenu>
+                        <ContextMenu Background="{DynamicResource SC_BG_COLOR}">
+                            <MenuItem x:Name="Delete" Header="Delete" Click="Delete_Click">
+                                <MenuItem.Icon>
+                                    <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="Edit" Header="Edit">
+                                <MenuItem.Icon>
+                                    <Image MaxWidth="15" MinHeight="15" Source="./Resources/icons/unknownImage.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </WrapPanel.ContextMenu>-->
+                </WrapPanel>
             </ScrollViewer>
         </Grid>
     </DockPanel>

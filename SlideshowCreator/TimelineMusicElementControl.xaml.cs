@@ -62,7 +62,7 @@ namespace SlideshowCreator
 
         public void updateHeight()
         {
-            this.ElementHeight = 200;
+            this.ElementHeight = 100;
             this.TopSpacing = ((timeline.mainCanvas.ActualHeight / 2.0) - (ElementHeight / 2.0)) + (60 > Math.Min(timeline.mainCanvas.ActualHeight / 2.0, 100) ? 60 : Math.Min(timeline.mainCanvas.ActualHeight / 2.0, 100)) - 20;
         }
 
