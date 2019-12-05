@@ -27,6 +27,7 @@ namespace SlideshowCreator
         [DataMember] private double _tlMarkerPos;
         [DataMember] private double _tlWidth;
 
+        [DataMember] public string SavingPath;      //only set directly
         [DataMember] public ExportData ExportData;
 
         public DataStore(TimelineControl timeline, StatusbarControl statusbar, PictureExplorerControl pictureExplorer, MusicExplorerControl musicExplorer, ExportData exportData)

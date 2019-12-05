@@ -10,10 +10,8 @@ namespace SlideshowCreator
     /*
      * File association parts stolen from: https://stackoverflow.com/a/44816953
      */
-    public class Settings
+    public class AssociationSettings
     {
-        public string SavingPath;
-
         // needed so that Explorer windows get refreshed after the registry is updated
         [System.Runtime.InteropServices.DllImport("Shell32.dll")]
         private static extern int SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
