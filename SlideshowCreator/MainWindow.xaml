@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:SlideshowCreator"
         xmlns:osc="clr-namespace:OpenSourceControls;assembly=DockPanelSplitter"
         mc:Ignorable="d"
@@ -119,13 +120,20 @@
         <local:StatusbarControl x:Name="statusBar" DockPanel.Dock="Bottom" />
         <DockPanel x:Name="timelinePanel" DockPanel.Dock="Bottom" MinHeight="160" MaxHeight="300" Margin="10,10,10,10">
             <Border BorderThickness="1" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" Width="150" DockPanel.Dock="Left" >
-                <StackPanel x:Name="timelineControls" Orientation="Vertical" VerticalAlignment="Center">
-                    <Button x:Name="addTestElement" Content="add Test Element" Margin="10,10,10,5"/>
-                    <Button x:Name="packButton" Content="pack" Margin="10,5" VerticalAlignment="Center" Click="PackButton_Click"/>
-                    <Button x:Name="lsdButton" Content="LSD" Margin="10,5" VerticalAlignment="Center" Click="LsdButton_Click"/>
-                    <Button Content="Preview" Margin="10,5,10,10" VerticalAlignment="Center" Click="Button_Click"/>
-
-                </StackPanel>
+                <Grid x:Name="timelineControls" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Transition" Margin="0,0,10,0"/>
+                    <ComboBox Grid.Column="1"/>
+                    <TextBlock Grid.Row="1" Text="Transitiontime" Margin="0,0,10,0"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" FormatString="{}{0}ms" Minimum="1" Maximum="30000"/>
+                </Grid>
             </Border>
             <local:TimelineControl x:Name="timeline" DockPanel.Dock="Right" SizeChanged="Timeline_SizeChanged" />
         </DockPanel>
