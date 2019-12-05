@@ -1,4 +1,5 @@
 ﻿using Accord.Video.FFMPEG;
+using SlideshowCreator.transitions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -87,6 +88,7 @@ namespace SlideshowCreator
 
                     int framesThisSlide = (int)((element.EndTime - element.StartTime) * frameRate) / 100;
 
+                    //Draw image to slideshow
                     for (int i = 0; i < framesThisSlide; i++)
                     {
                         if (exportWorker.CancellationPending == true)
@@ -97,6 +99,22 @@ namespace SlideshowCreator
                         writer.WriteVideoFrame(bitmap);
                         (sender as BackgroundWorker).ReportProgress(currFrame);
                         currFrame++;
+                    }
+
+                    //Draw transition to slideshow
+                    if (timelineElements.Count <= timelineElements.IndexOf(element) + 1)
+                        continue;
+                    FadeTransition transition = new FadeTransition();
+                    Bitmap next = ImageConverter.ScaleImage(new Bitmap(timelineElements[timelineElements.IndexOf(element) + 1].Thumbnail), width, height, true);
+                    List<Bitmap> transitionImages = transition.Render(bitmap, next, 20);
+                    foreach (Bitmap transImg in transitionImages)
+                    {
+                        if (exportWorker.CancellationPending == true)
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
+                        writer.WriteVideoFrame(transImg);
                     }
                     counter++;
                 }

@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:SlideshowCreator"
              mc:Ignorable="d">
 
-    <!--<Border BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" BorderThickness="1">-->
-        <Image x:Name="previewImage" />
-    <!--</Border>-->
+    <DockPanel>
+        <Image DockPanel.Dock="Top" x:Name="previewImage" />
+        <StackPanel x:Name="previewControls" DockPanel.Dock="Bottom" Orientation="Horizontal">
+            <Button Content="Play" HorizontalAlignment="Center"></Button>
+        </StackPanel>
+    </DockPanel>
 </UserControl>

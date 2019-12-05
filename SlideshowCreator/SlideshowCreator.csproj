@@ -115,6 +115,8 @@
       <DependentUpon>ExportVideoSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageConverter.cs" />
+    <Compile Include="transitions\FadeTransition.cs" />
+    <Compile Include="transitions\ITransition.cs" />
     <Compile Include="MusicExplorerControl.xaml.cs">
       <DependentUpon>MusicExplorerControl.xaml</DependentUpon>
     </Compile>
