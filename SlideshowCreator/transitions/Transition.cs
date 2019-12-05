@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace SlideshowCreator
 {
-    interface ITransition
+    public abstract class Transition
     {
-        List<Bitmap> Render(Bitmap start, Bitmap end, int frames);
+        public int ExecutionTime = 1000; //default: 1s
+
+        public abstract List<Bitmap> Render(Bitmap start, Bitmap end, int frames);
     }
 }

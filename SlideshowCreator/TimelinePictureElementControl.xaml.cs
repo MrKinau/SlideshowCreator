@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlideshowCreator.transitions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -36,6 +37,7 @@ namespace SlideshowCreator
         public bool Grabbed = false;
         public string Thumbnail;
 
+        public Transition Transition;
 
         public TimelinePictureElementControl(TimelineControl timeline, double startTime, double endTime, string thumbnail)
         {
@@ -48,6 +50,9 @@ namespace SlideshowCreator
             timeline.mainCanvas.Children.Add(this);
             updateHeight();
             update();
+
+            //Default transition
+            Transition = new PushTransition();
 
             loadWorker = new BackgroundWorker();
             loadWorker.DoWork += loadWorker_work;

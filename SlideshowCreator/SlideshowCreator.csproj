@@ -116,7 +116,8 @@
     </Compile>
     <Compile Include="ImageConverter.cs" />
     <Compile Include="transitions\FadeTransition.cs" />
-    <Compile Include="transitions\ITransition.cs" />
+    <Compile Include="transitions\PushTransition.cs" />
+    <Compile Include="transitions\Transition.cs" />
     <Compile Include="MusicExplorerControl.xaml.cs">
       <DependentUpon>MusicExplorerControl.xaml</DependentUpon>
     </Compile>
@@ -314,6 +315,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icons\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="transitions\SlideTransition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />

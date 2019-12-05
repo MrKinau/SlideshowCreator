@@ -149,8 +149,14 @@ namespace SlideshowCreator
         {
             if (_timeline == null || _timeline.PictureElements.Count <= 0)
                 return;
-            int timeInSeconds = (int)(_timeline.PictureElements[_timeline.PictureElements.Count - 1].EndTime / 100);
-            Bitrate = (int)Math.Round(_resolution.Height * _resolution.Width * 5 * 0.07) * timeInSeconds;
+            double timeInSeconds = 0;
+
+            foreach (TimelinePictureElementControl element in _timeline.PictureElements)
+            {
+                timeInSeconds += (element.EndTime - element.StartTime) / 100.0;
+                timeInSeconds += element.Transition == null ? 0 : (element.Transition.ExecutionTime / 1000.0);
+            }
+            Bitrate = (int)Math.Round(_resolution.Height * _resolution.Width * 5 * 0.07) * (int)timeInSeconds;
         }
 
         public Resolution GetResolution()

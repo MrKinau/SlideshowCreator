@@ -42,8 +42,16 @@ namespace SlideshowCreator
             this.frameRate = fps;
 
             ///\todo exception, when no content is added (disable create button if no content is in timeline)
-            int timeInSeconds = (int)(timelineElements[timelineElements.Count - 1].EndTime / 100);
-            frames = timeInSeconds * frameRate;
+
+            double timeInSeconds = 0;
+            
+            foreach (TimelinePictureElementControl element in timelineElements)
+            {
+                timeInSeconds += (element.EndTime - element.StartTime) / 100.0;
+                timeInSeconds += element.Transition == null ? 0 : (element.Transition.ExecutionTime / 1000.0);
+            }
+
+            frames = (int)Math.Floor(timeInSeconds) * frameRate;
         }
 
         public void CreateVideo()
@@ -80,15 +88,39 @@ namespace SlideshowCreator
                 int counter = 0;
                 foreach (TimelinePictureElementControl element in timelineElements)
                 {
+                    //Current element image
                     Bitmap bitmap;
                     if (element.Thumbnail != null)
                         bitmap = ImageConverter.ScaleImage(new Bitmap(element.Thumbnail), width, height, true);
                     else
                         bitmap = ImageConverter.CreateBlankImage(width, height);
 
-                    int framesThisSlide = (int)((element.EndTime - element.StartTime) * frameRate) / 100;
+                    //Draw transition to slideshow
+                    if (element.Transition != null)
+                    {
+                        Bitmap previous;
+                        if (timelineElements.IndexOf(element) != 0)
+                            previous = ImageConverter.ScaleImage(new Bitmap(timelineElements[timelineElements.IndexOf(element) - 1].Thumbnail), width, height, true);
+                        else
+                            previous = ImageConverter.CreateBlankImage(bitmap.Width, bitmap.Height);
+
+                        List<Bitmap> transitionImages = element.Transition.Render(previous, bitmap, (int)Math.Floor((element.Transition.ExecutionTime / 1000.0) * frameRate));
+                        foreach (Bitmap transImg in transitionImages)
+                        {
+                            if (exportWorker.CancellationPending == true)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
+                            writer.WriteVideoFrame(transImg);
+                            (sender as BackgroundWorker).ReportProgress(currFrame);
+                            currFrame++;
+                        }
+                    }
 
                     //Draw image to slideshow
+                    int framesThisSlide = (int)((element.EndTime - element.StartTime) * frameRate) / 100;
+
                     for (int i = 0; i < framesThisSlide; i++)
                     {
                         if (exportWorker.CancellationPending == true)
@@ -99,22 +131,6 @@ namespace SlideshowCreator
                         writer.WriteVideoFrame(bitmap);
                         (sender as BackgroundWorker).ReportProgress(currFrame);
                         currFrame++;
-                    }
-
-                    //Draw transition to slideshow
-                    if (timelineElements.Count <= timelineElements.IndexOf(element) + 1)
-                        continue;
-                    FadeTransition transition = new FadeTransition();
-                    Bitmap next = ImageConverter.ScaleImage(new Bitmap(timelineElements[timelineElements.IndexOf(element) + 1].Thumbnail), width, height, true);
-                    List<Bitmap> transitionImages = transition.Render(bitmap, next, 20);
-                    foreach (Bitmap transImg in transitionImages)
-                    {
-                        if (exportWorker.CancellationPending == true)
-                        {
-                            e.Cancel = true;
-                            return;
-                        }
-                        writer.WriteVideoFrame(transImg);
                     }
                     counter++;
                 }

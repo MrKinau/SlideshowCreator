@@ -95,7 +95,6 @@ namespace SlideshowCreator
         public void SaveTo(string fileName)
         {
             Mouse.OverrideCursor = Cursors.AppStarting;
-            ExportData.ExportPath = fileName;
             DataContractSerializer serializer = new DataContractSerializer(typeof(DataStore));
             XmlWriterSettings settings = new XmlWriterSettings() { Indent = true };
             using (XmlWriter w = XmlWriter.Create(fileName, settings))
