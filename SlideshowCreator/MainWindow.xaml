@@ -119,22 +119,7 @@
 
         <local:StatusbarControl x:Name="statusBar" DockPanel.Dock="Bottom" />
         <DockPanel x:Name="timelinePanel" DockPanel.Dock="Bottom" MinHeight="160" MaxHeight="300" Margin="10,10,10,10">
-            <Border BorderThickness="1" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}" Width="150" DockPanel.Dock="Left" >
-                <Grid x:Name="timelineControls" VerticalAlignment="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Transition" Margin="0,0,10,0"/>
-                    <ComboBox Grid.Column="1"/>
-                    <TextBlock Grid.Row="1" Text="Transitiontime" Margin="0,0,10,0"/>
-                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" FormatString="{}{0}ms" Minimum="1" Maximum="30000"/>
-                </Grid>
-            </Border>
+            <local:TimelineSettingsControl x:Name="timelineControls" DockPanel.Dock="Left"/>
             <local:TimelineControl x:Name="timeline" DockPanel.Dock="Right" SizeChanged="Timeline_SizeChanged" />
         </DockPanel>
 

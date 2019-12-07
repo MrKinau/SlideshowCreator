@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="SlideshowCreator.TimelineSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SlideshowCreator"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d">
+    <Border BorderThickness="1" BorderBrush="{DynamicResource SC_BG_COLOR_DARK}">
+        <Grid x:Name="timelineControls" VerticalAlignment="Top" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Displaytime" Margin="0,0,10,0" Foreground="{DynamicResource SC_FG_COLOR}" />
+            <xctk:IntegerUpDown x:Name="DisplayTime" Value="2000" Grid.Column="1" FormatString="{}{0}ms" Minimum="200" MinWidth="80" Margin="0,2,0,2" IsEnabled="False" Increment="10" ValueChanged="DisplayTime_ValueChanged"/>
+            <TextBlock Grid.Row="1" Text="Transition" Margin="0,0,10,0" Foreground="{DynamicResource SC_FG_COLOR}"/>
+            <ComboBox x:Name="Transition" Grid.Row="1" Grid.Column="1" IsEnabled="False" Margin="0,2,0,2" SelectionChanged="Transition_SelectionChanged">
+                <ComboBoxItem Content="No Transition"/>
+                <ComboBoxItem Content="Fade"/>
+                <ComboBoxItem Content="Push"/>
+                <ComboBoxItem Content="Slide"/>
+            </ComboBox>
+            <TextBlock Grid.Row="2" Text="Transitiontime" Margin="0,0,10,0" Foreground="{DynamicResource SC_FG_COLOR}"/>
+            <xctk:IntegerUpDown x:Name="TransitionTime" Value="200" Grid.Row="2" Grid.Column="1" FormatString="{}{0}ms" Minimum="1" Maximum="30000" MinWidth="80" IsEnabled="False" Margin="0,2,0,2" ValueChanged="TransitionTime_ValueChanged"/>
+        </Grid>
+    </Border>
+</UserControl>

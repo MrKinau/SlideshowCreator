@@ -55,8 +55,8 @@ namespace SlideshowCreator
             { 
                 foreach (TimelinePictureElementControl element in timeline.PictureElements)
                 {
-                    element.updateHeight();
-                    element.update();
+                    element.UpdateHeight();
+                    element.Update();
                 }
             }
             else if (e.WidthChanged)

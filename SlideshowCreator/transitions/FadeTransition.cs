@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Accord.Video.FFMPEG;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -12,29 +14,32 @@ namespace SlideshowCreator.transitions
     class FadeTransition : Transition
     {
 
-        public override List<Bitmap> Render(Bitmap start, Bitmap end, int frames)
+        public override int Render(Bitmap start, Bitmap end, int frames, VideoFileWriter writer, BackgroundWorker progressReporter, int currFrame)
         {
-            List<Bitmap> bitmaps = new List<Bitmap>();
             for (int i = 0; i < frames; i++)
             {
-                Bitmap currImg = new Bitmap(start);
-                using (var graphics = Graphics.FromImage(currImg))
+                using (Bitmap currImg = new Bitmap(start))
                 {
-                    graphics.CompositingQuality = CompositingQuality.HighQuality;
-                    graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    graphics.SmoothingMode = SmoothingMode.HighQuality;
-                    graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    using (var graphics = Graphics.FromImage(currImg))
+                    {
+                        graphics.CompositingQuality = CompositingQuality.HighQuality;
+                        graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        graphics.SmoothingMode = SmoothingMode.HighQuality;
+                        graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 
-                    ColorMatrix opacityMatrix = new ColorMatrix();
-                    opacityMatrix.Matrix33 = (1.0F / (float)frames) * i;
-                    ImageAttributes imgAttributes = new ImageAttributes();
-                    imgAttributes.SetColorMatrix(opacityMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-                    graphics.DrawImage(end, new Rectangle(0, 0, start.Width, start.Height), 0, 0, start.Width, start.Height, GraphicsUnit.Pixel, imgAttributes);
+                        ColorMatrix opacityMatrix = new ColorMatrix();
+                        opacityMatrix.Matrix33 = (1.0F / (float)frames) * i;
+                        ImageAttributes imgAttributes = new ImageAttributes();
+                        imgAttributes.SetColorMatrix(opacityMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                        graphics.DrawImage(end, new Rectangle(0, 0, start.Width, start.Height), 0, 0, start.Width, start.Height, GraphicsUnit.Pixel, imgAttributes);
+                    }
+                    writer.WriteVideoFrame(currImg);
+                    progressReporter.ReportProgress(currFrame);
+                    currFrame++;
                 }
-                bitmaps.Add(currImg);
             }
-            return bitmaps;
+            return currFrame;
         }
     }
 }

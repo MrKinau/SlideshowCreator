@@ -104,18 +104,7 @@ namespace SlideshowCreator
                         else
                             previous = ImageConverter.CreateBlankImage(bitmap.Width, bitmap.Height);
 
-                        List<Bitmap> transitionImages = element.Transition.Render(previous, bitmap, (int)Math.Floor((element.Transition.ExecutionTime / 1000.0) * frameRate));
-                        foreach (Bitmap transImg in transitionImages)
-                        {
-                            if (exportWorker.CancellationPending == true)
-                            {
-                                e.Cancel = true;
-                                return;
-                            }
-                            writer.WriteVideoFrame(transImg);
-                            (sender as BackgroundWorker).ReportProgress(currFrame);
-                            currFrame++;
-                        }
+                        currFrame = element.Transition.Render(previous, bitmap, (int)Math.Floor((element.Transition.ExecutionTime / 1000.0) * frameRate), writer, (sender as BackgroundWorker), currFrame);
                     }
 
                     //Draw image to slideshow

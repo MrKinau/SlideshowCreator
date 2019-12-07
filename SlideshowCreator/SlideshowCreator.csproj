@@ -115,6 +115,9 @@
       <DependentUpon>ExportVideoSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageConverter.cs" />
+    <Compile Include="TimelineSettingsControl.xaml.cs">
+      <DependentUpon>TimelineSettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="transitions\FadeTransition.cs" />
     <Compile Include="transitions\PushTransition.cs" />
     <Compile Include="transitions\Transition.cs" />
@@ -225,6 +228,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TimelineMarkerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimelineSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

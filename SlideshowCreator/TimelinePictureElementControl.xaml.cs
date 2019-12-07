@@ -48,8 +48,8 @@ namespace SlideshowCreator
             this.Thumbnail = thumbnail;
 
             timeline.mainCanvas.Children.Add(this);
-            updateHeight();
-            update();
+            UpdateHeight();
+            Update();
 
             //Default transition
             Transition = new PushTransition();
@@ -60,7 +60,7 @@ namespace SlideshowCreator
             loadWorker.RunWorkerAsync();
         }
 
-        public void update()
+        public void Update()
         {
             tlElementContent.Width = EndTime - StartTime;
             tlElementContent.Height = ElementHeight;
@@ -70,31 +70,38 @@ namespace SlideshowCreator
                 Canvas.SetZIndex(this, timeline.PictureElements.IndexOf(this));
             Canvas.SetLeft(this, StartTime);
             Canvas.SetTop(this, TopSpacing);
+
+            TimelineSettingsControl tlControls = ((MainWindow)Application.Current.MainWindow).timelineControls;
+            if (tlControls == null || tlControls.DisplayTime.IsEnabled == false || timeline.Marked == null || timeline.Marked != this)
+                return;
+            int newValue = ((int)Math.Floor(EndTime - StartTime)) * 10;
+            if (tlControls.DisplayTime.Value != newValue)
+                tlControls.DisplayTime.Value = newValue;
         }
 
-        public void updateHeight()
+        public void UpdateHeight()
         {
             this.ElementHeight = 60 > Math.Min(timeline.mainCanvas.ActualHeight / 2.0 , 100) ? 60 : Math.Min(timeline.mainCanvas.ActualHeight / 2.0, 100);
             this.TopSpacing = ((timeline.mainCanvas.ActualHeight / 2.0) - (ElementHeight / 2.0));
         }
 
-        public void moveAndSwap(double newStartTime, double movingOffset)
+        public void MoveAndSwap(double newStartTime, double movingOffset)
         {
             double length = EndTime - StartTime;
             StartTime = newStartTime - movingOffset;
             EndTime = StartTime + length;
-            swap();
+            Swap();
         }
 
-        public void resizeAndPush(double newEndSize)
+        public void ResizeAndPush(double newEndSize)
         {
             EndTime = (newEndSize - StartTime) > 20 ? newEndSize : StartTime + 20;
-            packFollowing();
+            PackFollowing();
         }
 
-        public void packFollowing()
+        public void PackFollowing()
         {
-            update();
+            Update();
 
             TimelinePictureElementControl lastElement = this;
             foreach (TimelinePictureElementControl element in timeline.PictureElements)
@@ -104,16 +111,15 @@ namespace SlideshowCreator
                     double alltime = element.EndTime - element.StartTime;
                     element.StartTime = lastElement.EndTime;
                     element.EndTime = element.StartTime + alltime;
-                    element.update();
+                    element.Update();
                     lastElement = element;
                 }
             }
         }
 
-
-        public void swap()
+        public void Swap()
         {
-            update();
+            Update();
             int myIndex = timeline.PictureElements.IndexOf(this);
 
             if(timeline.PictureElements.Count > myIndex + 1 && StartTime > timeline.PictureElements[myIndex + 1].StartTime)
@@ -128,6 +134,20 @@ namespace SlideshowCreator
                 timeline.PictureElements[myIndex - 1] = this;
                 timeline.Pack();
             }
+        }
+
+        public void Select()
+        {
+            TimelineSettingsControl tlControls = ((MainWindow) Application.Current.MainWindow).timelineControls;
+            if (tlControls == null)
+                return;
+            tlControls.DisplayTime.IsEnabled = true;
+            tlControls.Transition.IsEnabled = true;
+            tlControls.TransitionTime.IsEnabled = Transition != null;
+
+            tlControls.DisplayTime.Value = (int)Math.Floor(EndTime - StartTime) * 10;
+            tlControls.Transition.SelectedIndex = Transition.getID(Transition);
+            tlControls.TransitionTime.Value = Transition == null ? 0 : Transition.ExecutionTime;
         }
 
         private void loadWorker_work(object sender, DoWorkEventArgs e)
