@@ -12,7 +12,6 @@
     <Window.DataContext>
         <local:PreviewControl />
     </Window.DataContext>
- 
     
     <DockPanel x:Name="rootPanel" HorizontalAlignment="Stretch" LastChildFill="True" Background="{DynamicResource SC_BG_COLOR}">
 
@@ -43,7 +42,7 @@
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/save.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="saveAsMenu" Header="Sa_ve As" Click="SaveAsMenu_Click" Command="SaveAs" InputGestureText="CTRL+SHIFT+S">
+                <MenuItem x:Name="saveAsMenu" Header="Sa_ve As" Click="SaveAsMenu_Click" InputGestureText="CTRL+V">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/saveAs.png"/>
                     </MenuItem.Icon>
@@ -61,25 +60,20 @@
                     <MenuItem Header="You_tube"/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="E_xit"  Name="Exit" Click="MenuItem_Click" InputGestureText="CTRL+x" >
+                <MenuItem Header="E_xit" Click="MenuItem_Click" InputGestureText="CTRL+X">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/exit.png"/>
                     </MenuItem.Icon>
-
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Add Effect">
-                    <MenuItem.Icon>
-                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/addEffect.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Edit _Transition" InputGestureText="CTRL+T">
+
+                <MenuItem Header="Edit _Transition" x:Name="Edit_Transition" InputGestureText="CTRL+T" Click="Edit_Transition_Click">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/editTransition.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Edit _Picture" InputGestureText="CTRL+E">
+                <MenuItem x:Name="Edit_Picture" Header="Edit _Picture" InputGestureText="CTRL+E" Click="Edit_Picture_Click">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/unknownImage.png"/>
                     </MenuItem.Icon>
@@ -95,12 +89,12 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="_Undo" InputGestureText="CTRL+Z">
+                <MenuItem x:Name="Undo" Header="_Undo" InputGestureText="CTRL+Z" Click="Undo_Click">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/undo.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Redo" InputGestureText="CTRL+SHIFT+Z">
+                <MenuItem x:Name="Redo" Header="_Redo" InputGestureText="SHIFT+Z" Click="Redo_Click">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/redo.png"/>
                     </MenuItem.Icon>
@@ -108,7 +102,7 @@
 
             </MenuItem>
             <MenuItem Header="_Help">
-                <MenuItem Header="_Help" InputGestureText="F1">
+                <MenuItem x:Name="Help" Header="_Help" InputGestureText="F1" Click="Help_Click">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/help.png"/>
                     </MenuItem.Icon>

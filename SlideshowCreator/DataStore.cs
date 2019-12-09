@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,7 +27,6 @@ namespace SlideshowCreator
         [DataMember] private double _tlMarkerPos;
         [DataMember] private double _tlWidth;
 
-        [DataMember] public string SavingPath;      //only set directly
         [DataMember] public ExportData ExportData;
 
         public DataStore(TimelineControl timeline, StatusbarControl statusbar, PictureExplorerControl pictureExplorer, MusicExplorerControl musicExplorer, ExportData exportData)
@@ -70,7 +69,7 @@ namespace SlideshowCreator
                 ExportData.ExportPath = ds.ExportData.ExportPath;
             }
 
-            _pictureExplorer.Reset();
+            //_pictureExplorer.Reset();
             _musicExplorer.Reset();
             _timeline.PictureElements.Clear();
 
@@ -90,11 +89,14 @@ namespace SlideshowCreator
             _pictureExplorer.AddImages(ds._picturePaths.ToArray());
 
             Mouse.OverrideCursor = null;
+
+            Console.WriteLine(ExportData.Bitrate);
         }
 
         public void SaveTo(string fileName)
         {
             Mouse.OverrideCursor = Cursors.AppStarting;
+            ExportData.ExportPath = fileName;
             DataContractSerializer serializer = new DataContractSerializer(typeof(DataStore));
             XmlWriterSettings settings = new XmlWriterSettings() { Indent = true };
             using (XmlWriter w = XmlWriter.Create(fileName, settings))

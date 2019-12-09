@@ -133,6 +133,9 @@
     <Compile Include="PictureExplorerControl.xaml.cs">
       <DependentUpon>PictureExplorerControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Picture_ContextMenu.xaml.cs">
+      <DependentUpon>Picture_ContextMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PreviewControl.xaml.cs">
       <DependentUpon>PreviewControl.xaml</DependentUpon>
     </Compile>
@@ -155,8 +158,8 @@
     </Compile>
     <Compile Include="VideoCreator.cs" />
     <Page Include="Edit_Picture.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ExportVideoProgressWindow.xaml">
       <SubType>Designer</SubType>
@@ -187,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PictureExplorerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Picture_ContextMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

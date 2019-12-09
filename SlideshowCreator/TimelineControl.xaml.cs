@@ -236,7 +236,7 @@ namespace SlideshowCreator
             TimelineMusicElementControl selectelement = null;
             foreach(TimelineMusicElementControl element in MusicElements)
             {
-                if (x >= element.StartTime - 10 && x <= (element.EndTime - 17)
+                if (x >= element.StartTime && x <= (element.EndTime - 17)
                     && y > element.TopSpacing && y <= element.TopSpacing + element.ElementHeight)
                     selectelement = element;
             }
@@ -507,17 +507,7 @@ namespace SlideshowCreator
             //move marker
             if (e.LeftButton.HasFlag(MouseButtonState.Pressed))
             {
-            
-                if (isAtMusicElement(x, y) != null)
-                {
-                    TimelineMusicElementControl ElementSelect = isAtMusicElement(x, y);
-                    ElementSelect.MovingMusicElement((int)Math.Round(x));
-                }
-                else
-                {
-                    MoveMarker((int)Math.Round(x));
-
-                }
+                MoveMarker((int)Math.Round(x));
             }
         }
 
