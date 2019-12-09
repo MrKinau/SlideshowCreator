@@ -52,9 +52,9 @@ namespace SlideshowCreator
             if (ActualWidth > 0 && ActualHeight > 0)
             {
                 if (_imgSrc != null)
-                    _bitmap = ImageConverter.ScaleToBitmapImage(new Uri(_imgSrc), (int)Math.Floor(ActualWidth), (int)Math.Floor(ActualHeight));
+                    _bitmap = ImageConverter.ScaleToBitmapImage(new Uri(_imgSrc), (int)Math.Floor(ActualWidth), (int)Math.Floor(ActualHeight - 25));
                 else
-                    _bitmap = ImageConverter.ToBitmapImage(ImageConverter.CreateBlankImage((int)Math.Floor(ActualWidth), (int)Math.Floor(ActualHeight)));
+                    _bitmap = ImageConverter.ToBitmapImage(ImageConverter.CreateBlankImage((int)Math.Floor(ActualWidth), (int)Math.Floor(ActualHeight - 25)));
             }
         }
 

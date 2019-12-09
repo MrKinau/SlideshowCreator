@@ -24,12 +24,12 @@ namespace SlideshowCreator
     {
 
         private TimelinePictureElementControl _resizing = null;
-        private TimelinePictureElementControl _marked = null;
         private double _movingOffset = 0;
         private bool is_preview = false;
         private readonly Random _rnd = new Random();
         private bool _mayMove = false;
 
+        public TimelinePictureElementControl Marked = null;
         public List<TimelinePictureElementControl> PictureElements = new List<TimelinePictureElementControl>();
         public List<TimelineMusicElementControl> MusicElements = new List<TimelineMusicElementControl>();
         public List<MediaPlayer> MusicMediaElements = new List<MediaPlayer>();
@@ -109,7 +109,7 @@ namespace SlideshowCreator
                 double alltime = element.EndTime - element.StartTime;
                 element.StartTime = lastElement == null ? 0 : lastElement.EndTime;
                 element.EndTime = element.StartTime + alltime;
-                element.update();
+                element.Update();
                 lastElement = element;
             }
         }
@@ -282,7 +282,7 @@ namespace SlideshowCreator
         {
             if (_mayMove == true)
             {
-                _marked.Grabbed = false;
+                Marked.Grabbed = false;
                 Pack();
             }
             _resizing = null;
@@ -337,7 +337,7 @@ namespace SlideshowCreator
                 if (isVisible(element))
                 {
                     mainCanvas.Children.Add(element);
-                    element.update();
+                    element.Update();
                 }
             }
 
@@ -440,10 +440,11 @@ namespace SlideshowCreator
             }
             else if (GetPictureElementAt(x, y) != null)
             {
-                if (_marked != null)
-                    _marked.Border.Background = FindResource("SC_BG_COLOR_BRIGHT") as SolidColorBrush;
-                _marked = GetPictureElementAt(x, y);
-                _marked.Border.Background = FindResource("SC_BG_COLOR_MEDIUM") as SolidColorBrush;
+                if (Marked != null)
+                    Marked.Border.Background = FindResource("SC_BG_COLOR_BRIGHT") as SolidColorBrush;
+                Marked = GetPictureElementAt(x, y);
+                Marked.Border.Background = FindResource("SC_BG_COLOR_MEDIUM") as SolidColorBrush;
+                Marked.Select();
                 _mayMove = true;
                 _movingOffset = x - GetPictureElementAt(x, y).StartTime;
             }
@@ -489,7 +490,7 @@ namespace SlideshowCreator
                 {
                     mainCanvas.Width = ActualWidth > _resizing.EndTime + 100 ? ActualWidth : _resizing.EndTime + 100;
                 }
-                _resizing.resizeAndPush(x);
+                _resizing.ResizeAndPush(x);
                 updateDrawings();
                 return;
             }
@@ -498,8 +499,8 @@ namespace SlideshowCreator
             if (_mayMove == true)
             {
                 Mouse.OverrideCursor = ((TextBlock)Resources["CursorGrabbing"]).Cursor;
-                _marked.moveAndSwap(x, _movingOffset);
-                _marked.Grabbed = true;
+                Marked.MoveAndSwap(x, _movingOffset);
+                Marked.Grabbed = true;
                 return;
             }
 
