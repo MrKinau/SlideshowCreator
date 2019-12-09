@@ -77,7 +77,7 @@
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/unknownImage.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Add Empty Slide">
+                <MenuItem x:Name="AddEmptySlide" Header="_Add Empty Slide" Click="AddEmptySlide_Click">
                     <MenuItem.Icon>
                         <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/addEmptySlide.png"/>
                     </MenuItem.Icon>
