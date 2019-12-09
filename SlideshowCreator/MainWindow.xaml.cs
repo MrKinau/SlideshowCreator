@@ -35,35 +35,15 @@ namespace SlideshowCreator
         public MainWindow()
         {
             InitializeComponent();
-            RoutedCommand Newcmd = new RoutedCommand();
-            Newcmd.InputGestures.Add(new KeyGesture(Key.X, ModifierKeys.Control));
-            CommandBindings.Add(new CommandBinding(Newcmd, MenuItem_Click));
-            RoutedCommand Newcmd1 = new RoutedCommand();
-            Newcmd1.InputGestures.Add(new KeyGesture(Key.V, ModifierKeys.Control));
-            CommandBindings.Add(new CommandBinding(Newcmd1, SaveAsMenu_Click));
-            RoutedCommand Newcmd2 = new RoutedCommand();
-            Newcmd2.InputGestures.Add(new KeyGesture(Key.T, ModifierKeys.Control));
-            CommandBindings.Add(new CommandBinding(Newcmd2, Edit_Transition_Click));
-            RoutedCommand Newcmd3 = new RoutedCommand();
-            Newcmd3.InputGestures.Add(new KeyGesture(Key.E, ModifierKeys.Control));
-            CommandBindings.Add(new CommandBinding(Newcmd3, Edit_Picture_Click));
-            RoutedCommand Newcmd4 = new RoutedCommand();
-            Newcmd4.InputGestures.Add(new KeyGesture(Key.Z, ModifierKeys.Control));
-            CommandBindings.Add(new CommandBinding(Newcmd4, Undo_Click));
-            RoutedCommand Newcmd5 = new RoutedCommand();
-            Newcmd5.InputGestures.Add(new KeyGesture(Key.R, ModifierKeys.Control));
-            CommandBindings.Add(new CommandBinding(Newcmd5, Redo_Click));
-            RoutedCommand Newcmd6 = new RoutedCommand();
-            Newcmd6.InputGestures.Add(new KeyGesture(Key.F1));
-            CommandBindings.Add(new CommandBinding(Newcmd6, Help_Click));
-
-
+            
         }
+        
 
         public MainWindow(string loadFromFile)
         {
             _loadFromFile = loadFromFile;
             InitializeComponent();
+            
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -183,35 +163,9 @@ namespace SlideshowCreator
             _dataStore.LoadFrom(_dataStore.SavingPath);
         }
 
-
-        private void Edit_Transition_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Edit_Picture_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Undo_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Redo_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Help_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         private void AddEmptySlide_Click(object sender, RoutedEventArgs e)
         {
             timeline.AddEmptySlide();
-
         }
     }
 }

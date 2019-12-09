@@ -25,7 +25,7 @@ namespace SlideshowCreator
 
         private List<string> _imgPaths = new List<string>();
         private TimelineControl _timeline;
-        //private ImageSource _loadingImg;
+        private ImageSource _loadingImg;
         private int _loadingImgCount;
         private BackgroundWorker loadWorker;
 
@@ -45,7 +45,7 @@ namespace SlideshowCreator
                 loadWorker.CancelAsync();
             Picture_Holder.Children.Clear();
             _imgPaths.Clear();
-            //_loadingImg = null;
+            _loadingImg = null;
             _loadingImgCount = 0;
         }
 
@@ -53,12 +53,7 @@ namespace SlideshowCreator
         {
             foreach (String file in fileNames)
             {
-                
-                Picture_ContextMenu NewPic = new Picture_ContextMenu(this, file);
-                NewPic.MouseLeftButtonDown += new MouseButtonEventHandler(OnImgClick);
-                if (_imgPaths.Contains(file))
-                    return;
-                _imgPaths.Add(file);
+                Add_Image(file);
             }
             _loadingImgCount = Picture_Holder.Children.Count;
 
@@ -74,11 +69,33 @@ namespace SlideshowCreator
             loadWorker.RunWorkerAsync();
         }
 
-       
+        private void Add_Image(string file)
+        {
+            if (_imgPaths.Contains(file))
+                return;
+            _imgPaths.Add(file);
+
+            Image newImg = new Image();
+            newImg.Source = new BitmapImage(new Uri(@"pack://application:,,,/Resources/icons/unknownImage.png", UriKind.Absolute));
+            newImg.Margin = new Thickness(12);
+            newImg.MaxWidth = newImg.MaxHeight = 80;
+            newImg.MouseLeftButtonDown += new MouseButtonEventHandler(OnImgClick);
+            newImg.MouseRightButtonDown += new MouseButtonEventHandler(RightClick);
+
+            Picture_Holder.Children.Add(newImg);
+        }
+
+        private void RightClick(object sender, MouseButtonEventArgs e)
+        {
+            Edit_Picture window = new Edit_Picture();
+            int index = Picture_Holder.Children.IndexOf((Image)sender);
+            window.set_source(_imgPaths[index]);
+            window.Show();
+        }
+
         private void Add_Img_Click(object sender, RoutedEventArgs e)
         {
-
-           // _loadingImg = null;
+            _loadingImg = null;
             _loadingImgCount = 0;
 
             OpenFileDialog OpenFile = new OpenFileDialog();
@@ -100,11 +117,10 @@ namespace SlideshowCreator
             if (sender == null)
                 return;
 
-            if (sender.GetType() != typeof(Picture_ContextMenu))
+            if (sender.GetType() != typeof(Image))
                 return;
 
-            int index = Picture_Holder.Children.IndexOf((Picture_ContextMenu)sender);
-            
+            int index = Picture_Holder.Children.IndexOf((Image)sender);
             _timeline.AddPictureElement(_imgPaths[index]);
         }
 
@@ -112,7 +128,7 @@ namespace SlideshowCreator
         {
             for (int i = 0; i < _loadingImgCount; i++)
             {
-                //_loadingImg = ImageConverter.ScaleToBitmapImage(new Uri(_imgPaths[i]), 100, 100);
+                _loadingImg = ImageConverter.ScaleToBitmapImage(new Uri(_imgPaths[i]), 100, 100);
                 (sender as BackgroundWorker).ReportProgress(i);
             }
         }
@@ -123,10 +139,10 @@ namespace SlideshowCreator
                 return;
             if (StatusBar != null)
                 StatusBar.LoadingValue = e.ProgressPercentage;
-            //Picture_ContextMenu img = (Picture_ContextMenu)Picture_Holder.Children[e.ProgressPercentage];
-            //img.added_Img.Margin = new Thickness(2);
-            //img.added_Img.MaxWidth = img.added_Img.MaxHeight = 100;
-            //img.added_Img.Source = _loadingImg;
+            Image img = (Image)Picture_Holder.Children[e.ProgressPercentage];
+            img.Margin = new Thickness(2);
+            img.MaxWidth = img.MaxHeight = 100;
+            img.Source = _loadingImg;
         }
 
         private void loadWorker_completed(object sender, RunWorkerCompletedEventArgs e)
@@ -134,5 +150,17 @@ namespace SlideshowCreator
             if (StatusBar != null)
                 StatusBar.LoadingText = "";
         }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        //private void Edit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Edit_Picture window = new Edit_Picture();
+        //    //window.set_source();
+        //    window.Show();
+        //}
     }
 }
