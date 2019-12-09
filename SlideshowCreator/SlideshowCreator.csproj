@@ -108,6 +108,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataStore.cs" />
+    <Compile Include="Edit_Picture.xaml.cs">
+      <DependentUpon>Edit_Picture.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExportVideoProgressWindow.xaml.cs">
       <DependentUpon>ExportVideoProgressWindow.xaml</DependentUpon>
     </Compile>
@@ -151,6 +154,10 @@
       <DependentUpon>TimelineMarkerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="VideoCreator.cs" />
+    <Page Include="Edit_Picture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ExportVideoProgressWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

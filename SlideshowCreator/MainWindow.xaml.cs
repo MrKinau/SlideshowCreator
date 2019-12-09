@@ -35,12 +35,15 @@ namespace SlideshowCreator
         public MainWindow()
         {
             InitializeComponent();
+            
         }
+        
 
         public MainWindow(string loadFromFile)
         {
             _loadFromFile = loadFromFile;
             InitializeComponent();
+            
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
