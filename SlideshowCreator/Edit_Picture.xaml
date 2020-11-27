@@ -1,0 +1,49 @@
+﻿<Window x:Class="SlideshowCreator.Edit_Picture"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SlideshowCreator"
+        mc:Ignorable="d"
+        Title="Edit Picture" MinHeight="510" MinWidth="400">
+    <Grid Background="{DynamicResource SC_BG_COLOR}">
+        <Menu Background="{DynamicResource SC_BG_COLOR}" MinHeight="30" Margin="0,0,-0.4,444.4" >
+            <MenuItem x:Name="Save" Header="Save" InputGestureText="Ctrl+S" Click="Save_Click"/>
+            <MenuItem x:Name="Exit" Header="Exit" InputGestureText="Strg+X" Click="Exit_Click"/>
+        </Menu>
+        <Grid x:Name="EditPictureGrid" Margin="10,57,17.6,8.4" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="247*"/>
+                <ColumnDefinition Width="147*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="2">
+                <Button x:Name="Effect_1" Content="Green" Margin="2,2,1.8,2" Click="effect1_Click"/>
+                <Button x:Name="Effect_2" Content="Blue" Margin="2,2,1.8,2" Click="effect2_Click"/>
+                <Button x:Name="Effect_3" Content="Black and White" Margin="2,2,1.8,2" Click="effect3_Click"/>
+                <Button x:Name="Reload" Content="Reset" Margin="2,5,1.8,2" Click="reload_Click"/>
+                <TextBlock TextAlignment="Center" Margin="2,25,2,2" Foreground="White">Brightness</TextBlock>
+                <Slider x:Name="Bright" Margin="2,2,2,2" ValueChanged="bright_ValueChanged" Value="5"/>
+                <TextBlock TextAlignment="Center" Margin="2,25,2,2" Foreground="White">Contrast</TextBlock>
+                <Slider x:Name="Contrast" Margin="2,2,2,2" ValueChanged="Contrast_ValueChanged" Value="5"/>
+                <MenuItem x:Name="Rotate" Header="Rotate" Margin="2,10,2,2" Click="Drehen_Click">
+                    <MenuItem.Icon>
+                        <Image Margin="2,2,2,2" Source="./Resources/icons/Drehen.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="MirrorLeft" Header="Left" Margin="2,10,2,2" RenderTransformOrigin="0.505,1.056" Click="left_Click">
+                    <MenuItem.Icon>
+                        <Image Margin="2,2,2,2" Source="./Resources/icons/Drehen.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="MirrorRight" Header="Right" Margin="2,10,2,2" RenderTransformOrigin="0.505,1.056" Click="Right_Click">
+                    <MenuItem.Icon>
+                        <Image Margin="2,2,2,2" Source="./Resources/icons/Drehen.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            
+            </StackPanel>
+            <Image Grid.Column="0" Stretch="Fill" Margin="5,5,5,5" VerticalAlignment="Bottom" HorizontalAlignment="Center" x:Name="img" Source="{Binding image}"/>
+
+        </Grid>
+    </Grid>
+</Window>

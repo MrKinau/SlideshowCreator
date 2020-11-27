@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="SlideshowCreator.TimelineMusicElementControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SlideshowCreator"
+             mc:Ignorable="d">
+    <Grid x:Name="TLElementContent" Width="14" >
+        
+        <StackPanel Orientation="Horizontal" Margin="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Line x:Name="Musicline" X1="5" Y1="10" X2="5" Y2="100" Stroke="{DynamicResource Music_TL_Color_Red}" StrokeThickness="2"/>
+            <TextBlock x:Name="Text" TextWrapping="NoWrap" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Left" Width="12" Height="88" />
+        </StackPanel>
+        <Grid.ContextMenu>
+            <ContextMenu Background="{DynamicResource SC_BG_COLOR}">
+                <MenuItem x:Name="Delete" Header="Delete" Click="Delete_Click" >
+                    <MenuItem.Icon>
+                        <Image MaxWidth="15" MaxHeight="15" Source="./Resources/icons/delete.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Grid.ContextMenu>
+    </Grid>
+</UserControl>
